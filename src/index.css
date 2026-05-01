@@ -1,1 +1,72 @@
 @import "tailwindcss";
+
+button,
+[role='button'],
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* Theme tokens */
+.theme-light {
+  --app-bg: #f8fafc;
+  --app-text: #0f172a;
+}
+
+.theme-dark {
+  --app-bg: #0b1220;
+  --app-text: #e2e8f0;
+  color-scheme: dark;
+}
+
+.theme-colorful {
+  --app-bg: linear-gradient(180deg, #f0f9ff 0%, #eef2ff 45%, #fdf2f8 100%);
+  --app-text: #1e1b4b;
+}
+
+.theme-light,
+.theme-dark,
+.theme-colorful {
+  background: var(--app-bg);
+  color: var(--app-text);
+}
+
+/* Utility overrides for dark theme without color inversion */
+.theme-dark .bg-white,
+.theme-dark .bg-slate-50,
+.theme-dark .bg-slate-100 {
+  background-color: #111827 !important;
+}
+
+.theme-dark .text-slate-900,
+.theme-dark .text-slate-700,
+.theme-dark .text-slate-600,
+.theme-dark .text-slate-500,
+.theme-dark .text-slate-400 {
+  color: #d1d5db !important;
+}
+
+.theme-dark .border-slate-100,
+.theme-dark .border-slate-200 {
+  border-color: #374151 !important;
+}
+
+.theme-dark .hover\:bg-slate-50:hover,
+.theme-dark .hover\:bg-slate-100:hover,
+.theme-dark .hover\:bg-slate-200:hover {
+  background-color: #1f2937 !important;
+}
+
+/* Colorful accent tuning */
+.theme-colorful .bg-white {
+  background-color: #ffffffd9 !important;
+  backdrop-filter: blur(2px);
+}
+
+.theme-colorful .text-slate-900 {
+  color: #312e81 !important;
+}
+
+.theme-colorful .border-slate-100,
+.theme-colorful .border-slate-200 {
+  border-color: #c7d2fe !important;
+}

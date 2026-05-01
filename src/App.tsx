@@ -24,12 +24,16 @@ const Dashboard = ({
   topics, 
   stats, 
   onSelectTopic,
-  onClearStats
+  onClearStats,
+  theme,
+  setTheme
 }: { 
   topics: string[], 
   stats: UserStats | null, 
   onSelectTopic: (topic: string, mode: 'training' | 'exam', options?: { limit?: number, variant?: number, source?: 'quiz' | 'selfControl' }) => void,
-  onClearStats: () => void
+  onClearStats: () => void,
+  theme: 'light' | 'dark' | 'colorful',
+  setTheme: (theme: 'light' | 'dark' | 'colorful') => void
 }) => {
   const [mainMode, setMainMode] = useState<'root' | 'topics' | 'variants'>('root');
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
@@ -133,19 +137,24 @@ const Dashboard = ({
             На основі офіційних тестових завдань 2025 року
           </p>
         </div>
+        <div className="flex items-center gap-2 bg-white/90 border border-slate-200 rounded-2xl p-1 shadow-sm">
+          <button onClick={() => setTheme('light')} className={`px-3 py-1.5 text-xs font-bold rounded-xl transition-colors ${theme === 'light' ? 'bg-indigo-600 text-white' : 'text-slate-600 hover:bg-slate-100'}`}>Світла</button>
+          <button onClick={() => setTheme('dark')} className={`px-3 py-1.5 text-xs font-bold rounded-xl transition-colors ${theme === 'dark' ? 'bg-indigo-600 text-white' : 'text-slate-600 hover:bg-slate-100'}`}>Темна</button>
+          <button onClick={() => setTheme('colorful')} className={`px-3 py-1.5 text-xs font-bold rounded-xl transition-colors ${theme === 'colorful' ? 'bg-indigo-600 text-white' : 'text-slate-600 hover:bg-slate-100'}`}>Кольорова</button>
+        </div>
         {stats && (
           <div className="flex items-center gap-4">
             <div className="bg-white rounded-3xl p-5 shadow-sm border border-slate-100 flex items-center gap-8">
               <div className="flex flex-col items-center">
                 <span className="text-3xl font-black text-indigo-600 leading-none">{stats.streak}</span>
-                <span className="text-[10px] text-slate-400 uppercase tracking-[0.2em] font-black mt-2">Days Streak</span>
+                <span className="text-[10px] text-slate-400 uppercase tracking-[0.2em] font-black mt-2">ДНІ ПОСПІЛЬ</span>
               </div>
               <div className="w-px h-12 bg-slate-100" />
               <div className="flex flex-col items-center">
                 <span className="text-3xl font-black text-slate-900 leading-none">
                   {stats.totalAnswers > 0 ? Math.round((stats.correctAnswers / stats.totalAnswers) * 100) : 0}%
                 </span>
-                <span className="text-[10px] text-slate-400 uppercase tracking-[0.2em] font-black mt-2">Accuracy</span>
+                <span className="text-[10px] text-slate-400 uppercase tracking-[0.2em] font-black mt-2">ТОЧНІСТЬ</span>
               </div>
             </div>
             <button 
@@ -555,6 +564,11 @@ export default function App() {
     questions: Question[] 
   } | null>(null);
   const [lastResults, setLastResults] = useState<{ correct: number, total: number } | null>(null);
+  const [theme, setTheme] = useState<'light' | 'dark' | 'colorful'>(() => {
+    const saved = localStorage.getItem('krok_theme_v1');
+    if (saved === 'dark' || saved === 'colorful') return saved;
+    return 'light';
+  });
 
   const loadStats = (): UserStats => {
     try {
@@ -618,6 +632,10 @@ export default function App() {
     }
     return updated;
   };
+
+  useEffect(() => {
+    localStorage.setItem('krok_theme_v1', theme);
+  }, [theme]);
 
   useEffect(() => {
     const init = async () => {
@@ -695,7 +713,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-indigo-100 selection:text-indigo-900">
+    <div className={`min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-indigo-100 selection:text-indigo-900 theme-${theme}`}>
       <AnimatePresence mode="wait">
         {view === 'dashboard' && (
           <motion.div key="dashboard" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
@@ -704,6 +722,8 @@ export default function App() {
               stats={stats} 
               onSelectTopic={handleStartQuiz} 
               onClearStats={handleClearStats}
+              theme={theme}
+              setTheme={setTheme}
             />
           </motion.div>
         )}
