@@ -1,1 +1,16 @@
 @import "tailwindcss";
+
+button,
+[role='button'] {
+  cursor: pointer;
+}
+
+.theme-dark {
+  filter: invert(1) hue-rotate(180deg);
+  background: #0f172a;
+}
+
+.theme-colorful {
+  filter: saturate(1.25) hue-rotate(-10deg);
+  background: linear-gradient(180deg, #eef2ff 0%, #f5f3ff 40%, #fff1f2 100%);
+}
