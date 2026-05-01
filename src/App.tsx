@@ -168,6 +168,32 @@ const Dashboard = ({
             На основі офіційних тестових завдань 2025 року
           </p>
         </div>
+        <div className="ml-auto flex items-center gap-3 bg-white/90 border border-slate-200 rounded-2xl px-3 py-2 shadow-sm">
+          <span className="text-[11px] font-black uppercase tracking-wider text-slate-500">Тема</span>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setTheme('light')}
+              title="Світла тема"
+              className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all ${theme === 'light' ? 'bg-amber-400 border-amber-500 text-white shadow-md shadow-amber-500/30' : 'bg-white text-slate-500 border-slate-200 hover:bg-amber-50 hover:text-amber-500'}`}
+            >
+              <Sun className="w-4 h-4" />
+            </button>
+            <button
+              onClick={() => setTheme('dark')}
+              title="Темна тема"
+              className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all ${theme === 'dark' ? 'bg-indigo-600 border-indigo-600 text-white shadow-md shadow-indigo-600/30' : 'bg-white text-slate-500 border-slate-200 hover:bg-indigo-50 hover:text-indigo-600'}`}
+            >
+              <Moon className="w-4 h-4" />
+            </button>
+            <button
+              onClick={() => setTheme('colorful')}
+              title="Кольорова тема"
+              className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all ${theme === 'colorful' ? 'bg-gradient-to-br from-fuchsia-500 via-indigo-500 to-cyan-500 border-indigo-500 text-white shadow-md shadow-indigo-600/30' : 'bg-white text-slate-500 border-slate-200 hover:bg-violet-50 hover:text-violet-600'}`}
+            >
+              <Palette className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
         {stats && (
           <div className="flex items-center gap-4">
             <div className="bg-white rounded-3xl p-5 shadow-sm border border-slate-100 flex items-center gap-8">
@@ -448,7 +474,7 @@ const QuizView = ({
             <div className="flex flex-col gap-1">
               <button 
                 onClick={() => setShowHint(!showHint)}
-                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-extrabold tracking-wide border transition-all ${showHint ? 'text-amber-900 bg-amber-100 border-amber-400 shadow-sm shadow-amber-500/20' : 'text-indigo-700 bg-indigo-50 border-indigo-200 hover:bg-indigo-100 hover:text-indigo-800'} theme-dark:text-indigo-200 theme-dark:bg-indigo-500/15 theme-dark:border-indigo-400/40 theme-dark:hover:bg-indigo-500/25 theme-dark:hover:text-indigo-100`}
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-extrabold tracking-wide border transition-all ${showHint ? 'text-amber-100 bg-amber-500/20 border-amber-400/70 shadow-sm shadow-amber-500/20' : 'text-indigo-700 bg-indigo-50 border-indigo-200 hover:bg-indigo-100 hover:text-indigo-800'} theme-dark:text-indigo-200 theme-dark:bg-indigo-500/15 theme-dark:border-indigo-400/40 theme-dark:hover:bg-indigo-500/25 theme-dark:hover:text-indigo-100`}
               >
                 <Lightbulb className={`w-3.5 h-3.5 ${showHint ? 'fill-amber-500' : ''}`} />
                 {showHint ? 'ПРИХОВАТИ ПІДКАЗКУ' : 'ПОКАЗАТИ ПІДКАЗКУ'}
