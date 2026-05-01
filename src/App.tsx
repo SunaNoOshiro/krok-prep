@@ -254,10 +254,10 @@ const Dashboard = ({
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: i * 0.05 }}
                   onClick={() => onSelectTopic(`Варіант ${v}`, 'exam', { variant: v, source: 'selfControl' })}
-                  className="bg-white aspect-square rounded-[2rem] border border-slate-100 shadow flex flex-col items-center justify-center gap-4 hover:border-amber-500 hover:shadow-lg transition-all group"
+                  className="bg-white aspect-square rounded-[2rem] border border-slate-200 shadow-sm flex flex-col items-center justify-center gap-4 hover:border-amber-500 hover:bg-amber-50/30 hover:shadow-lg transition-all group"
                 >
-                  <span className="text-6xl font-black text-slate-100 group-hover:text-amber-500 transition-colors">{v}</span>
-                  <span className="text-sm font-bold text-slate-400 group-hover:text-slate-900 uppercase tracking-widest">ВАРІАНТ</span>
+                  <span className="text-6xl font-black text-slate-300 group-hover:text-amber-500 transition-colors">{v}</span>
+                  <span className="text-sm font-bold text-slate-500 group-hover:text-slate-900 uppercase tracking-widest">ВАРІАНТ</span>
                 </motion.button>
               ))}
             </div>
