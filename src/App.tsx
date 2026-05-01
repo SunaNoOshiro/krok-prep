@@ -15,7 +15,10 @@ import {
   Target,
   ExternalLink,
   Trash2,
-  ChevronRight
+  ChevronRight,
+  Sun,
+  Moon,
+  Palette
 } from 'lucide-react';
 import { api, Question, UserStats } from './services/api';
 
@@ -114,14 +117,42 @@ const Dashboard = ({
 
   return (
     <div id="dashboard" className="max-w-6xl mx-auto p-4 md:p-8 space-y-12">
-      <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-        <div>
+      <header className="flex flex-col gap-4">
+        <div className="w-full flex items-start justify-between gap-3">
           <h1 className="text-44xl md:text-5xl font-sans font-black tracking-tighter text-slate-900 flex items-center gap-4">
             <div className="w-14 h-14 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-600/20">
               <GraduationCap className="w-8 h-8 text-white" />
             </div>
             КРОК 2
           </h1>
+          <div className="flex items-center gap-3 bg-white/95 border border-slate-200 rounded-2xl px-3 py-2 shadow-sm">
+            <span className="text-[11px] font-black uppercase tracking-wider text-slate-500">Тема</span>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setTheme('light')}
+                title="Світла тема"
+                className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all ${theme === 'light' ? 'bg-amber-500 border-amber-500 text-white shadow-md shadow-amber-500/30' : 'bg-white text-slate-500 border-slate-200 hover:bg-amber-50 hover:text-amber-600 hover:border-amber-300'}`}
+              >
+                <Sun className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => setTheme('dark')}
+                title="Темна тема"
+                className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all ${theme === 'dark' ? 'bg-indigo-600 border-indigo-600 text-white shadow-md shadow-indigo-600/30' : 'bg-white text-slate-500 border-slate-200 hover:bg-indigo-50 hover:text-indigo-700 hover:border-indigo-300'}`}
+              >
+                <Moon className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => setTheme('colorful')}
+                title="Кольорова тема"
+                className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all ${theme === 'colorful' ? 'bg-gradient-to-br from-fuchsia-500 via-indigo-500 to-cyan-500 border-indigo-500 text-white shadow-md shadow-indigo-600/30' : 'bg-white text-slate-500 border-slate-200 hover:bg-violet-50 hover:text-violet-700 hover:border-violet-300'}`}
+              >
+                <Palette className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+        <div>
           <p className="text-slate-500 mt-2 text-lg font-medium leading-relaxed">
             <a 
               href="https://dspace.zsmu.edu.ua/bitstream/123456789/22800/1/%D0%9A%D0%A0%D0%9E%D0%9A%202_%D1%82%D0%B5%D1%81%D1%82%D0%BE%D0%B2%D1%96%20%D0%B7%D0%B0%D0%B2%D0%B4%D0%B0%D0%BD%D0%BD%D1%8F_2025.pdf" 
@@ -136,11 +167,6 @@ const Dashboard = ({
           <p className="text-slate-400 text-sm mt-1 font-medium italic">
             На основі офіційних тестових завдань 2025 року
           </p>
-        </div>
-        <div className="flex items-center gap-2 bg-white/90 border border-slate-200 rounded-2xl p-1 shadow-sm">
-          <button onClick={() => setTheme('light')} className={`px-3 py-1.5 text-xs font-bold rounded-xl transition-colors ${theme === 'light' ? 'bg-indigo-600 text-white' : 'text-slate-600 hover:bg-slate-100'}`}>Світла</button>
-          <button onClick={() => setTheme('dark')} className={`px-3 py-1.5 text-xs font-bold rounded-xl transition-colors ${theme === 'dark' ? 'bg-indigo-600 text-white' : 'text-slate-600 hover:bg-slate-100'}`}>Темна</button>
-          <button onClick={() => setTheme('colorful')} className={`px-3 py-1.5 text-xs font-bold rounded-xl transition-colors ${theme === 'colorful' ? 'bg-indigo-600 text-white' : 'text-slate-600 hover:bg-slate-100'}`}>Кольорова</button>
         </div>
         {stats && (
           <div className="flex items-center gap-4">
@@ -422,7 +448,7 @@ const QuizView = ({
             <div className="flex flex-col gap-1">
               <button 
                 onClick={() => setShowHint(!showHint)}
-                className={`flex items-center gap-1.5 text-[10px] font-bold transition-all ${showHint ? 'text-amber-600' : 'text-slate-400 hover:text-amber-500'}`}
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-extrabold tracking-wide border transition-all ${showHint ? 'text-amber-900 bg-amber-100 border-amber-400 shadow-sm shadow-amber-500/20' : 'text-indigo-700 bg-indigo-50 border-indigo-200 hover:bg-indigo-100 hover:text-indigo-800'} theme-dark:text-indigo-200 theme-dark:bg-indigo-500/15 theme-dark:border-indigo-400/40 theme-dark:hover:bg-indigo-500/25 theme-dark:hover:text-indigo-100`}
               >
                 <Lightbulb className={`w-3.5 h-3.5 ${showHint ? 'fill-amber-500' : ''}`} />
                 {showHint ? 'ПРИХОВАТИ ПІДКАЗКУ' : 'ПОКАЗАТИ ПІДКАЗКУ'}
