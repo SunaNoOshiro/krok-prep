@@ -20,42 +20,189 @@ import {
   Moon,
   Palette
 } from 'lucide-react';
-import { api, Question, UserStats } from './services/api';
+import { api, Question, QuestionSource, UserStats } from './services/api';
+
+type ExamFamily = 'krok' | 'edki';
+type Theme = 'light' | 'dark' | 'colorful';
+type QuizMode = 'training' | 'exam';
+type StartOptions = { limit?: number, variant?: number, source?: QuestionSource };
+
+const MIXED_TOPIC = 'Змішаний режим';
+const THEME_STORAGE_KEY = 'krok_theme_v1';
+const STATS_STORAGE_KEYS: Record<ExamFamily, string> = {
+  krok: 'krok_stats_v2',
+  edki: 'edki_stats_v1',
+};
+
+const EXAM_CONFIGS: Record<ExamFamily, {
+  title: string,
+  subtitle: string,
+  sourceText: string,
+  sourceNote: string,
+  sourceUrl?: string,
+  defaultSource: QuestionSource,
+  variantSource: QuestionSource,
+  variantTitle: string,
+  variantDescription: string,
+  variantName: string,
+  variantUnit: string,
+}> = {
+  krok: {
+    title: 'КРОК 2',
+    subtitle: 'Платформа підготовки до професійної сертифікації фізичних терапевтів',
+    sourceText: 'Платформа підготовки до професійної сертифікації фізичних терапевтів',
+    sourceNote: 'На основі офіційних тестових завдань 2025 року',
+    sourceUrl: 'https://dspace.zsmu.edu.ua/bitstream/123456789/22800/1/%D0%9A%D0%A0%D0%9E%D0%9A%202_%D1%82%D0%B5%D1%81%D1%82%D0%BE%D0%B2%D1%96%20%D0%B7%D0%B0%D0%B2%D0%B4%D0%B0%D0%BD%D0%BD%D1%8F_2025.pdf',
+    defaultSource: 'quiz',
+    variantSource: 'selfControl',
+    variantTitle: 'Завдання для самоконтролю',
+    variantDescription: 'Контрольні варіанти для перевірки готовності.',
+    variantName: 'Варіант',
+    variantUnit: 'ВАРІАНТ',
+  },
+  edki: {
+    title: 'ЄДКІ',
+    subtitle: 'Бакалаври "Фізична терапія, ерготерапія"',
+    sourceText: 'ЄДКІ Бакалаври "Фізична терапія, ерготерапія"',
+    sourceNote: 'Тестові завдання від 2026 року',
+    defaultSource: 'edki',
+    variantSource: 'edki',
+    variantTitle: 'ЄДКІ',
+    variantDescription: 'Тестові завдання 2026 року, питання 1-150.',
+    variantName: 'ЄДКІ',
+    variantUnit: 'ЄДКІ',
+  },
+};
+
+function shuffleList<T>(items: T[]): T[] {
+  const shuffled = [...items];
+  for (let i = shuffled.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
+function hasSameOrder<T>(left: T[], right: T[], getKey: (item: T) => unknown): boolean {
+  return left.every((item, index) => getKey(item) === getKey(right[index]));
+}
+
+function shuffleQuestionOptions(question: Question): Question {
+  const optionsWithOriginalIndex = question.options.map((option, originalIndex) => ({
+    option,
+    originalIndex,
+  }));
+  let shuffledOptions = shuffleList(optionsWithOriginalIndex);
+
+  for (let attempt = 0; attempt < 10; attempt += 1) {
+    const correctAnswerMoved = shuffledOptions.findIndex(({ originalIndex }) => originalIndex === question.correctAnswer) !== question.correctAnswer;
+    const orderChanged = !hasSameOrder(optionsWithOriginalIndex, shuffledOptions, ({ originalIndex }) => originalIndex);
+    if (correctAnswerMoved && orderChanged) break;
+
+    shuffledOptions = shuffleList(optionsWithOriginalIndex);
+  }
+
+  const correctAnswerMoved = shuffledOptions.findIndex(({ originalIndex }) => originalIndex === question.correctAnswer) !== question.correctAnswer;
+  if (!correctAnswerMoved && shuffledOptions.length > 1) {
+    shuffledOptions = [
+      ...optionsWithOriginalIndex.slice(1),
+      optionsWithOriginalIndex[0],
+    ];
+  }
+
+  return {
+    ...question,
+    options: shuffledOptions.map(({ option }) => option),
+    correctAnswer: shuffledOptions.findIndex(({ originalIndex }) => originalIndex === question.correctAnswer),
+  };
+}
 
 // --- Dashboard/Home Component ---
 const Dashboard = ({ 
+  examFamily,
   topics, 
   stats, 
   onSelectTopic,
+  onSelectExamFamily,
   onClearStats,
   theme,
   setTheme
 }: { 
+  examFamily: ExamFamily,
   topics: string[], 
   stats: UserStats | null, 
-  onSelectTopic: (topic: string, mode: 'training' | 'exam', options?: { limit?: number, variant?: number, source?: 'quiz' | 'selfControl' }) => void,
+  onSelectTopic: (topic: string, mode: QuizMode, options?: StartOptions) => void,
+  onSelectExamFamily: (examFamily: ExamFamily) => void,
   onClearStats: () => void,
-  theme: 'light' | 'dark' | 'colorful',
-  setTheme: (theme: 'light' | 'dark' | 'colorful') => void
+  theme: Theme,
+  setTheme: (theme: Theme) => void
 }) => {
   const [mainMode, setMainMode] = useState<'root' | 'topics' | 'variants'>('root');
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
   const [variants, setVariants] = useState<number[]>([]);
+  const config = EXAM_CONFIGS[examFamily];
 
   useEffect(() => {
     if (mainMode === 'variants') {
-      api.getVariants().then(setVariants);
+      api.getVariants(config.variantSource).then(setVariants);
     }
-  }, [mainMode]);
+  }, [config.variantSource, mainMode]);
 
-  const renderRootMenu = () => (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+  const renderRootMenu = () => {
+    if (examFamily === 'edki') {
+      return (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="group bg-gradient-to-br from-indigo-500 to-indigo-700 rounded-[2.5rem] p-10 shadow-xl cursor-pointer relative overflow-hidden min-h-80"
+            onClick={() => setSelectedTopic(MIXED_TOPIC)}
+          >
+            <div className="absolute -right-4 -top-4 opacity-10 group-hover:rotate-12 transition-transform">
+              <Layers className="w-40 h-40" />
+            </div>
+            <div className="relative z-10 flex flex-col h-full justify-between">
+              <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-3xl flex items-center justify-center text-white mb-6">
+                <RefreshCcw className="w-8 h-8" />
+              </div>
+              <div>
+                <h3 className="text-3xl font-black text-white mb-2 leading-tight uppercase">Змішані питання</h3>
+                <p className="text-indigo-100 font-medium">Випадкова вибірка з банку ЄДКІ.</p>
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="group bg-white rounded-[2.5rem] p-10 shadow-lg border border-slate-100 cursor-pointer relative overflow-hidden min-h-80 hover:shadow-xl hover:border-indigo-500 transition-all"
+            onClick={() => setSelectedTopic(config.variantName)}
+          >
+            <div className="absolute -right-4 -top-4 opacity-5 group-hover:rotate-12 transition-transform text-slate-900">
+              <ClipboardList className="w-40 h-40" />
+            </div>
+            <div className="relative z-10 flex flex-col h-full justify-between">
+              <div className="w-16 h-16 bg-amber-50 rounded-3xl flex items-center justify-center text-amber-600 mb-6 group-hover:bg-amber-600 group-hover:text-white transition-colors">
+                <Play className="w-8 h-8 ml-1" />
+              </div>
+              <div>
+                <h3 className="text-3xl font-black text-slate-900 mb-2 leading-tight uppercase">{config.variantName}</h3>
+                <p className="text-slate-500 font-medium">{config.variantDescription}</p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      );
+    }
+
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
       {/* Mixed Mode Card */}
       <motion.div
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         className="group bg-gradient-to-br from-indigo-500 to-indigo-700 rounded-[2.5rem] p-10 shadow-xl cursor-pointer relative overflow-hidden"
-        onClick={() => setSelectedTopic("Змішаний режим")}
+        onClick={() => setSelectedTopic(MIXED_TOPIC)}
       >
         <div className="absolute -right-4 -top-4 opacity-10 group-hover:rotate-12 transition-transform">
           <Layers className="w-40 h-40" />
@@ -66,7 +213,7 @@ const Dashboard = ({
           </div>
           <div>
             <h3 className="text-3xl font-black text-white mb-2 leading-tight uppercase">Змішані питання</h3>
-            <p className="text-indigo-100 font-medium">Випадкова вибірка з усього банку питань.</p>
+            <p className="text-indigo-100 font-medium">Випадкова вибірка з усього банку Крок.</p>
           </div>
         </div>
       </motion.div>
@@ -107,24 +254,44 @@ const Dashboard = ({
             <ClipboardList className="w-8 h-8" />
           </div>
           <div>
-            <h3 className="text-3xl font-black text-slate-900 mb-2 leading-tight uppercase">Завдання для самоконтролю</h3>
-            <p className="text-slate-500 font-medium">Контрольні варіанти для перевірки готовності.</p>
+            <h3 className="text-3xl font-black text-slate-900 mb-2 leading-tight uppercase">{config.variantTitle}</h3>
+            <p className="text-slate-500 font-medium">{config.variantDescription}</p>
           </div>
         </div>
       </motion.div>
     </div>
-  );
+    );
+  };
 
   return (
     <div id="dashboard" className="max-w-6xl mx-auto p-4 md:p-8 space-y-12">
-      <header className="flex flex-col gap-4">
-        <div className="w-full flex items-start justify-between gap-3">
-          <h1 className="text-44xl md:text-5xl font-sans font-black tracking-tighter text-slate-900 flex items-center gap-4">
+      <header className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_auto] gap-x-4 gap-y-4">
+        <div className="md:min-h-40">
+          <h1 className="text-4xl md:text-5xl font-sans font-black tracking-tighter text-slate-900 flex items-center gap-4">
             <div className="w-14 h-14 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-600/20">
               <GraduationCap className="w-8 h-8 text-white" />
             </div>
-            КРОК 2
+            <span className="flex min-w-0 flex-col leading-none">
+              {config.title}
+              <span className="text-sm md:text-base font-black leading-tight tracking-normal text-slate-400 mt-2">{config.subtitle}</span>
+            </span>
           </h1>
+        </div>
+        <div className="flex flex-wrap items-center gap-3 md:justify-self-end md:self-start">
+          <div className="exam-switcher flex items-center gap-2 bg-white/95 border border-slate-200 rounded-2xl px-3 py-2 shadow-sm">
+            <span className="theme-switcher-label text-[11px] font-black uppercase tracking-wider text-slate-500">Іспит</span>
+            <div className="flex items-center gap-1">
+              {(['krok', 'edki'] as ExamFamily[]).map((family) => (
+                <button
+                  key={family}
+                  onClick={() => onSelectExamFamily(family)}
+                  className={`px-3 py-2 rounded-xl text-xs font-black uppercase transition-all ${examFamily === family ? 'bg-slate-900 text-white shadow-md' : 'bg-white text-slate-500 hover:bg-slate-100'}`}
+                >
+                  {family === 'krok' ? 'Крок' : 'ЄДКІ'}
+                </button>
+              ))}
+            </div>
+          </div>
           <div className="theme-switcher flex items-center gap-3 bg-white/95 border border-slate-200 rounded-2xl px-3 py-2 shadow-sm">
             <span className="theme-switcher-label text-[11px] font-black uppercase tracking-wider text-slate-500">Тема</span>
             <div className="flex items-center gap-2">
@@ -152,24 +319,28 @@ const Dashboard = ({
             </div>
           </div>
         </div>
-        <div>
+        <div className="md:col-start-1">
           <p className="text-slate-500 mt-2 text-lg font-medium leading-relaxed">
-            <a 
-              href="https://dspace.zsmu.edu.ua/bitstream/123456789/22800/1/%D0%9A%D0%A0%D0%9E%D0%9A%202_%D1%82%D0%B5%D1%81%D1%82%D0%BE%D0%B2%D1%96%20%D0%B7%D0%B0%D0%B2%D0%B4%D0%B0%D0%BD%D0%BD%D1%8F_2025.pdf" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="hover:text-indigo-600 transition-colors inline-flex items-center gap-2 group decoration-indigo-200 underline-offset-4 hover:underline"
-            >
-              Платформа підготовки до професійної сертифікації фізичних терапевтів
-              <ExternalLink className="w-4 h-4 opacity-40 group-hover:opacity-100 transition-opacity" />
-            </a>
+            {config.sourceUrl ? (
+              <a 
+                href={config.sourceUrl}
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:text-indigo-600 transition-colors inline-flex items-center gap-2 group decoration-indigo-200 underline-offset-4 hover:underline"
+              >
+                {config.sourceText}
+                <ExternalLink className="w-4 h-4 opacity-40 group-hover:opacity-100 transition-opacity" />
+              </a>
+            ) : (
+              <span>{config.sourceText}</span>
+            )}
           </p>
           <p className="text-slate-400 text-sm mt-1 font-medium italic">
-            На основі офіційних тестових завдань 2025 року
+            {config.sourceNote}
           </p>
         </div>
         {stats && (
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 md:col-start-1">
             <div className="bg-white rounded-3xl p-5 shadow-sm border border-slate-100 flex items-center gap-8">
               <div className="flex flex-col items-center">
                 <span className="text-3xl font-black text-indigo-600 leading-none">{stats.streak}</span>
@@ -253,11 +424,11 @@ const Dashboard = ({
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: i * 0.05 }}
-                  onClick={() => onSelectTopic(`Варіант ${v}`, 'exam', { variant: v, source: 'selfControl' })}
+                  onClick={() => onSelectTopic(`${config.variantName} ${v}`, 'exam', { variant: v, source: config.variantSource })}
                   className="bg-white aspect-square rounded-[2rem] border border-slate-200 shadow-sm flex flex-col items-center justify-center gap-4 hover:border-amber-500 hover:bg-amber-50/30 hover:shadow-lg transition-all group"
                 >
                   <span className="text-6xl font-black text-slate-300 group-hover:text-amber-500 transition-colors">{v}</span>
-                  <span className="text-sm font-bold text-slate-500 group-hover:text-slate-900 uppercase tracking-widest">ВАРІАНТ</span>
+                  <span className="text-sm font-bold text-slate-500 group-hover:text-slate-900 uppercase tracking-widest">{config.variantUnit}</span>
                 </motion.button>
               ))}
             </div>
@@ -292,7 +463,7 @@ const Dashboard = ({
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
-                  {selectedTopic === "Змішаний режим" ? (
+                  {selectedTopic === MIXED_TOPIC ? (
                     <>
                       <button 
                         onClick={() => onSelectTopic(selectedTopic, 'exam', { limit: 25 })}
@@ -347,13 +518,17 @@ const Dashboard = ({
 const QuizView = ({ 
   topic, 
   mode, 
+  variantName,
+  showVariantTag,
   questions, 
   onComplete, 
   onQuit,
   onUpdateStats
 }: { 
   topic: string, 
-  mode: 'training' | 'exam', 
+  mode: QuizMode,
+  variantName: string,
+  showVariantTag: boolean,
   questions: Question[], 
   onComplete: (results: { correct: number, total: number }) => void, 
   onQuit: () => void,
@@ -412,7 +587,7 @@ const QuizView = ({
       {/* Progress Bar */}
       <div className="space-y-1.5">
         <div className="flex justify-between text-[10px] font-bold text-slate-400">
-          <span>ПИТАННЯ {currentIdx + 1} З {questions.length}</span>
+          <span>ПРОГРЕС {currentIdx + 1} З {questions.length}</span>
           <span>{Math.round(((currentIdx + 1) / questions.length) * 100)}% ЗАВЕРШЕНО</span>
         </div>
         <div className="w-full h-1 bg-slate-100 rounded-full overflow-hidden">
@@ -431,14 +606,19 @@ const QuizView = ({
         className="space-y-3"
       >
         <div className="space-y-1">
-          {topic === "Змішаний режим" && question?.topic && (
+          {mode !== 'exam' && question?.id && (
+            <div className="inline-flex mr-2 px-2 py-0.5 bg-slate-100 text-slate-500 rounded text-[9px] font-bold uppercase tracking-wider">
+              Питання №{question.id}
+            </div>
+          )}
+          {topic === MIXED_TOPIC && question?.topic && (
             <div className="inline-flex px-2 py-0.5 bg-indigo-50 text-indigo-600 rounded text-[9px] font-bold uppercase tracking-wider">
               {question.topic}
             </div>
           )}
-          {question?.variant && (
+          {showVariantTag && question?.variant && (
             <div className="inline-flex px-2 py-0.5 bg-amber-50 text-amber-600 rounded text-[9px] font-bold uppercase tracking-wider">
-              Варіант {question.variant}
+              {variantName} {question.variant}
             </div>
           )}
           <h2 className="text-lg md:text-xl font-bold text-slate-900 leading-tight">
@@ -582,23 +762,28 @@ const QuizView = ({
 // --- Main App Component ---
 export default function App() {
   const [view, setView] = useState<'dashboard' | 'quiz' | 'results'>('dashboard');
+  const [examFamily, setExamFamily] = useState<ExamFamily>(() => {
+    return localStorage.getItem('exam_family_v1') === 'edki' ? 'edki' : 'krok';
+  });
   const [topics, setTopics] = useState<string[]>([]);
   const [stats, setStats] = useState<UserStats | null>(null);
   const [currentQuiz, setCurrentQuiz] = useState<{ 
-    topic: string, 
-    mode: 'training' | 'exam', 
-    questions: Question[] 
+    examFamily: ExamFamily,
+    topic: string,
+    mode: QuizMode,
+    questions: Question[],
+    options: StartOptions,
   } | null>(null);
   const [lastResults, setLastResults] = useState<{ correct: number, total: number } | null>(null);
-  const [theme, setTheme] = useState<'light' | 'dark' | 'colorful'>(() => {
-    const saved = localStorage.getItem('krok_theme_v1');
+  const [theme, setTheme] = useState<Theme>(() => {
+    const saved = localStorage.getItem(THEME_STORAGE_KEY);
     if (saved === 'dark' || saved === 'colorful') return saved;
     return 'light';
   });
 
-  const loadStats = (): UserStats => {
+  const loadStats = (family: ExamFamily = examFamily): UserStats => {
     try {
-      const saved = localStorage.getItem('krok_stats_v2');
+      const saved = localStorage.getItem(STATS_STORAGE_KEYS[family]);
       if (saved) return JSON.parse(saved);
     } catch (e) {
       console.error('Failed to load stats', e);
@@ -612,8 +797,8 @@ export default function App() {
     };
   };
 
-  const saveStats = (newStats: UserStats) => {
-    localStorage.setItem('krok_stats_v2', JSON.stringify(newStats));
+  const saveStats = (newStats: UserStats, family: ExamFamily = examFamily) => {
+    localStorage.setItem(STATS_STORAGE_KEYS[family], JSON.stringify(newStats));
     setStats({ ...newStats });
   };
 
@@ -660,17 +845,26 @@ export default function App() {
   };
 
   useEffect(() => {
-    localStorage.setItem('krok_theme_v1', theme);
+    localStorage.setItem(THEME_STORAGE_KEY, theme);
   }, [theme]);
 
   useEffect(() => {
     const init = async () => {
-      const t = await api.getTopics();
+      const t = await api.getTopics(EXAM_CONFIGS[examFamily].defaultSource);
       setTopics(t);
-      setStats(loadStats());
+      setStats(loadStats(examFamily));
     };
     init();
-  }, []);
+  }, [examFamily]);
+
+  useEffect(() => {
+    localStorage.setItem('exam_family_v1', examFamily);
+  }, [examFamily]);
+
+  const handleSelectExamFamily = (family: ExamFamily) => {
+    setExamFamily(family);
+    setView('dashboard');
+  };
 
   const handleClearStats = () => {
     const emptyStats: UserStats = {
@@ -680,50 +874,68 @@ export default function App() {
       streak: 0,
       lastSession: null
     };
-    localStorage.removeItem('krok_stats_v2');
+    localStorage.removeItem(STATS_STORAGE_KEYS[examFamily]);
     setStats(emptyStats);
   };
 
-  const handleStartQuiz = async (topic: string, mode: 'training' | 'exam', options?: { limit?: number, variant?: number, source?: 'quiz' | 'selfControl' }) => {
+  const handleStartQuiz = async (
+    topic: string,
+    mode: QuizMode,
+    options: StartOptions = {},
+    targetExamFamily: ExamFamily = examFamily
+  ) => {
+    const source = options.source ?? EXAM_CONFIGS[targetExamFamily].defaultSource;
+    const normalizedOptions: StartOptions = { ...options, source };
+    const topicFilter = targetExamFamily === 'edki' || topic === MIXED_TOPIC || normalizedOptions.variant ? undefined : topic;
     let questions = await api.getQuestions(
-      topic === "Змішаний режим" ? undefined : (options?.source === 'selfControl' ? undefined : topic),
-      options?.variant,
-      options?.source
+      topicFilter,
+      normalizedOptions.variant,
+      source
     );
     
-    // Shuffle if it's not a specific variant or if it's a mixed mode
-    if (topic === "Змішаний режим" || !options?.variant) {
-      questions = [...questions].sort(() => Math.random() - 0.5);
+    const shouldShuffle = mode === 'exam' || topic === MIXED_TOPIC || (targetExamFamily === 'krok' && !normalizedOptions.variant);
+    if (shouldShuffle) {
+      questions = shuffleList(questions);
+    } else {
+      questions = [...questions].sort((a, b) => a.id - b.id);
     }
     
-    // Limit if needed
-    if (options?.limit) {
-      questions = questions.slice(0, options.limit);
+    if (normalizedOptions.limit) {
+      questions = questions.slice(0, normalizedOptions.limit);
     }
 
-    setCurrentQuiz({ topic, mode, questions });
+    if (mode === 'exam') {
+      questions = questions.map(shuffleQuestionOptions);
+    }
+
+    if (!questions.length) {
+      window.alert('Для цього розділу поки немає питань.');
+      return;
+    }
+
+    setCurrentQuiz({ examFamily: targetExamFamily, topic, mode, questions, options: normalizedOptions });
     setView('quiz');
   };
 
   const handleUpdateStats = (isCorrect: boolean) => {
     if (!currentQuiz) return;
-    let s = loadStats();
+    let s = loadStats(currentQuiz.examFamily);
     s = updateDetailedStats(s, currentQuiz.topic, isCorrect);
     s = updateStreak(s);
-    saveStats(s);
+    saveStats(s, currentQuiz.examFamily);
   };
 
   const handleCompleteQuiz = async (results: { correct: number, total: number }) => {
     // Note: For training mode, stats are updated per question via handleUpdateStats.
     // For exam mode, we update stats at the end.
     if (currentQuiz?.mode === 'exam') {
-      let s = loadStats();
+      let s = loadStats(currentQuiz.examFamily);
       // Increment overall stats
       s.totalAnswers += results.total;
       s.correctAnswers += results.correct;
       
       // Increment per topic if not mixed
-      if (currentQuiz.topic !== "Змішаний режим") {
+      if (currentQuiz.topic !== MIXED_TOPIC) {
         if (!s.topicStats) s.topicStats = {};
         if (!s.topicStats[currentQuiz.topic]) s.topicStats[currentQuiz.topic] = { count: 0, correct: 0 };
         s.topicStats[currentQuiz.topic].count += results.total;
@@ -731,7 +943,7 @@ export default function App() {
       }
       
       s = updateStreak(s);
-      saveStats(s);
+      saveStats(s, currentQuiz.examFamily);
     }
     
     setLastResults(results);
@@ -742,11 +954,13 @@ export default function App() {
     <div className={`min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-indigo-100 selection:text-indigo-900 theme-${theme}`}>
       <AnimatePresence mode="wait">
         {view === 'dashboard' && (
-          <motion.div key="dashboard" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+          <motion.div key={`dashboard-${examFamily}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <Dashboard 
+              examFamily={examFamily}
               topics={topics} 
               stats={stats} 
               onSelectTopic={handleStartQuiz} 
+              onSelectExamFamily={handleSelectExamFamily}
               onClearStats={handleClearStats}
               theme={theme}
               setTheme={setTheme}
@@ -758,7 +972,9 @@ export default function App() {
           <motion.div key="quiz" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <QuizView 
               topic={currentQuiz.topic} 
-              mode={currentQuiz.mode} 
+              mode={currentQuiz.mode}
+              variantName={EXAM_CONFIGS[currentQuiz.examFamily].variantName}
+              showVariantTag={currentQuiz.examFamily === 'krok'}
               questions={currentQuiz.questions} 
               onComplete={handleCompleteQuiz} 
               onQuit={() => setView('dashboard')}
@@ -802,7 +1018,7 @@ export default function App() {
 
               <div className="space-y-4 pt-4">
                 <button 
-                  onClick={() => handleStartQuiz(currentQuiz.topic, currentQuiz.mode)}
+                  onClick={() => handleStartQuiz(currentQuiz.topic, currentQuiz.mode, currentQuiz.options, currentQuiz.examFamily)}
                   className="w-full py-4 bg-indigo-600 text-white rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-indigo-700 transition-colors shadow-xl shadow-indigo-600/20"
                 >
                   <RefreshCcw className="w-5 h-5" /> Пройти знову

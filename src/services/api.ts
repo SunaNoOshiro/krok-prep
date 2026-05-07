@@ -1,5 +1,6 @@
 import quizData from '../data/quizData.json';
 import selfControlData from '../data/selfControlData.json';
+import edkiData from '../data/edkiData.json';
 
 export interface Question {
   id: number;
@@ -22,6 +23,8 @@ export interface UserStats {
   lastSession: string | null;
 }
 
+export type QuestionSource = 'quiz' | 'selfControl' | 'edki';
+
 const API_BASE = '';
 const defaultStats: UserStats = {
   totalAnswers: 0,
@@ -30,6 +33,16 @@ const defaultStats: UserStats = {
   streak: 0,
   lastSession: null,
 };
+
+const dataBySource: Record<QuestionSource, Question[]> = {
+  quiz: quizData as Question[],
+  selfControl: selfControlData as Question[],
+  edki: edkiData as Question[],
+};
+
+function getSourceData(source?: QuestionSource): Question[] {
+  return dataBySource[source ?? 'quiz'];
+}
 
 async function fetchJsonWithFallback<T>(path: string, fallback: () => T): Promise<T> {
   try {
@@ -44,18 +57,24 @@ async function fetchJsonWithFallback<T>(path: string, fallback: () => T): Promis
 }
 
 export const api = {
-  async getTopics(): Promise<string[]> {
-    return fetchJsonWithFallback('/api/getTopics', () => Array.from(new Set(quizData.map((q) => q.topic))));
+  async getTopics(source?: QuestionSource): Promise<string[]> {
+    const params = new URLSearchParams();
+    if (source) params.set('source', source);
+
+    return fetchJsonWithFallback(`/api/getTopics?${params.toString()}`, () => {
+      const sourceData = getSourceData(source);
+      return Array.from(new Set(sourceData.map((q) => q.topic).filter((topic): topic is string => Boolean(topic))));
+    });
   },
 
-  async getQuestions(topic?: string, variant?: number, source?: 'quiz' | 'selfControl'): Promise<Question[]> {
+  async getQuestions(topic?: string, variant?: number, source?: QuestionSource): Promise<Question[]> {
     const params = new URLSearchParams();
     if (topic) params.set('topic', topic);
     if (variant) params.set('variant', String(variant));
     if (source) params.set('source', source);
 
     return fetchJsonWithFallback(`/api/getQuestions?${params.toString()}`, () => {
-      const sourceData = source === 'selfControl' ? selfControlData : quizData;
+      const sourceData = getSourceData(source);
       return sourceData.filter((q) => {
         if (topic && q.topic !== topic) return false;
         if (variant && (!('variant' in q) || q.variant !== variant)) return false;
@@ -64,9 +83,13 @@ export const api = {
     });
   },
 
-  async getVariants(): Promise<number[]> {
-    return fetchJsonWithFallback('/api/getVariants', () => {
-      const variants = Array.from(new Set(selfControlData.map((q) => q.variant).filter((v): v is number => typeof v === 'number')));
+  async getVariants(source: QuestionSource = 'selfControl'): Promise<number[]> {
+    const params = new URLSearchParams();
+    params.set('source', source);
+
+    return fetchJsonWithFallback(`/api/getVariants?${params.toString()}`, () => {
+      const sourceData = getSourceData(source);
+      const variants = Array.from(new Set(sourceData.map((q) => q.variant).filter((v): v is number => typeof v === 'number')));
       return variants.sort((a, b) => a - b);
     });
   },

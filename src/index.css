@@ -95,6 +95,11 @@ button,
   border-color: #334155 !important;
 }
 
+.theme-dark .exam-switcher {
+  background: #0f172a !important;
+  border-color: #334155 !important;
+}
+
 .theme-dark .theme-switcher-label {
   color: #cbd5e1 !important;
 }

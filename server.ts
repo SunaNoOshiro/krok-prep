@@ -10,9 +10,19 @@ const __dirname = path.dirname(__filename);
 // Read quiz data from JSON files
 const quizDataPath = path.join(__dirname, 'src', 'data', 'quizData.json');
 const selfControlDataPath = path.join(__dirname, 'src', 'data', 'selfControlData.json');
+const edkiDataPath = path.join(__dirname, 'src', 'data', 'edkiData.json');
 
 const quizData = JSON.parse(fs.readFileSync(quizDataPath, 'utf-8'));
 const selfControlData = JSON.parse(fs.readFileSync(selfControlDataPath, 'utf-8'));
+const edkiData = JSON.parse(fs.readFileSync(edkiDataPath, 'utf-8'));
+
+type QuestionSource = 'quiz' | 'selfControl' | 'edki';
+
+function getQuestionData(source: unknown) {
+  if (source === 'selfControl') return selfControlData;
+  if (source === 'edki') return edkiData;
+  return quizData;
+}
 
 // In-memory stats storage
 let userStats = {
@@ -36,19 +46,22 @@ async function startServer() {
 
   // API Routes
   app.get('/api/getTopics', (req, res) => {
-    const topics = Array.from(new Set(quizData.map((q: any) => q.topic)));
+    const source = req.query.source as QuestionSource | undefined;
+    const topics = Array.from(new Set(getQuestionData(source).map((q: any) => q.topic).filter(Boolean)));
     res.json(topics);
   });
 
   app.get('/api/getVariants', (req, res) => {
-    const variants = Array.from(new Set(selfControlData.map((q: any) => q.variant)));
+    const source = req.query.source as QuestionSource | undefined;
+    const dataSource = getQuestionData(source || 'selfControl');
+    const variants = Array.from(new Set(dataSource.map((q: any) => q.variant).filter((variant: any) => typeof variant === 'number')));
     res.json(variants.sort((a: any, b: any) => a - b));
   });
 
   app.get('/api/getQuestions', (req, res) => {
     const topic = req.query.topic as string;
     const variant = req.query.variant ? parseInt(req.query.variant as string) : null;
-    const dataSource = req.query.source === 'selfControl' ? selfControlData : quizData;
+    const dataSource = getQuestionData(req.query.source);
 
     let filtered = dataSource;
     if (topic) {
