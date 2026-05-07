@@ -936,7 +936,7 @@ export default function App() {
       source
     );
     
-    const shouldShuffle = mode === 'exam' || topic === MIXED_TOPIC || (targetExamFamily === 'krok' && !normalizedOptions.variant);
+    const shouldShuffle = mode === 'exam' || mode === 'training' || topic === MIXED_TOPIC || (targetExamFamily === 'krok' && !normalizedOptions.variant);
     if (shouldShuffle) {
       questions = shuffleList(questions);
     } else {
@@ -947,7 +947,7 @@ export default function App() {
       questions = questions.slice(0, normalizedOptions.limit);
     }
 
-    if (mode === 'exam') {
+    if (mode === 'exam' || mode === 'training') {
       questions = questions.map(shuffleQuestionOptions);
     }
 
