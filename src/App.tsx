@@ -117,6 +117,36 @@ function shuffleQuestionOptions(question: Question): Question {
   };
 }
 
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function getLearningExplanation(question?: Question) {
+  if (!question) {
+    return { correctAnswerText: '', explanationText: '' };
+  }
+
+  const correctAnswerText = question.options[question.correctAnswer] ?? '';
+  const rawExplanation = question.explanation?.trim() ?? '';
+  const escapedAnswer = escapeRegExp(correctAnswerText);
+  const exactAnswerPrefix = new RegExp(
+    `^Правильна відповідь(?:\\s*-\\s*[A-E])?:\\s*«?${escapedAnswer}»?\\.?\\s*`,
+    'i'
+  );
+  let explanationText = rawExplanation.replace(exactAnswerPrefix, '').trim();
+
+  if (explanationText === rawExplanation) {
+    explanationText = rawExplanation
+      .replace(/^Правильна відповідь(?:\s*-\s*[A-E])?:\s*«[^»]+»\.?\s*/i, '')
+      .trim();
+  }
+
+  return {
+    correctAnswerText,
+    explanationText: explanationText || rawExplanation,
+  };
+}
+
 // --- Dashboard/Home Component ---
 const Dashboard = ({ 
   examFamily,
@@ -467,7 +497,7 @@ const Dashboard = ({
                     <>
                       <button 
                         onClick={() => onSelectTopic(selectedTopic, 'exam', { limit: 25 })}
-                        className="group flex flex-col items-center p-6 bg-slate-50 rounded-[2rem] border-2 border-transparent hover:border-indigo-500 hover:bg-white transition-all text-left"
+                        className="mode-choice group flex min-h-40 flex-col items-center justify-center p-6 bg-slate-50 rounded-[2rem] border-2 border-transparent hover:border-indigo-500 hover:bg-white transition-all text-left"
                       >
                         <span className="text-4xl font-black text-indigo-500 mb-2">25</span>
                         <span className="font-bold text-slate-900 text-lg">Випадкових питань</span>
@@ -476,7 +506,7 @@ const Dashboard = ({
 
                       <button 
                         onClick={() => onSelectTopic(selectedTopic, 'exam', { limit: 50 })}
-                        className="group flex flex-col items-center p-6 bg-slate-50 rounded-[2rem] border-2 border-transparent hover:border-violet-500 hover:bg-white transition-all text-left"
+                        className="mode-choice group flex min-h-40 flex-col items-center justify-center p-6 bg-slate-50 rounded-[2rem] border-2 border-transparent hover:border-violet-500 hover:bg-white transition-all text-left"
                       >
                         <span className="text-4xl font-black text-violet-500 mb-2">50</span>
                         <span className="font-bold text-slate-900 text-lg">Випадкових питань</span>
@@ -487,7 +517,7 @@ const Dashboard = ({
                     <>
                       <button 
                         onClick={() => onSelectTopic(selectedTopic, 'training')}
-                        className="group flex flex-col items-center p-6 bg-slate-50 rounded-[2rem] border-2 border-transparent hover:border-indigo-500 hover:bg-white transition-all text-left"
+                        className="mode-choice group flex min-h-40 flex-col items-center justify-center p-6 bg-slate-50 rounded-[2rem] border-2 border-transparent hover:border-indigo-500 hover:bg-white transition-all text-left"
                       >
                         <BookOpen className="w-8 h-8 text-indigo-500 mb-3 group-hover:scale-110 transition-transform" />
                         <span className="font-bold text-slate-900 text-lg">Навчання</span>
@@ -496,7 +526,7 @@ const Dashboard = ({
 
                       <button 
                         onClick={() => onSelectTopic(selectedTopic, 'exam')}
-                        className="group flex flex-col items-center p-6 bg-slate-50 rounded-[2rem] border-2 border-transparent hover:border-violet-500 hover:bg-white transition-all text-left"
+                        className="mode-choice group flex min-h-40 flex-col items-center justify-center p-6 bg-slate-50 rounded-[2rem] border-2 border-transparent hover:border-violet-500 hover:bg-white transition-all text-left"
                       >
                         <Award className="w-8 h-8 text-violet-500 mb-3 group-hover:scale-110 transition-transform" />
                         <span className="font-bold text-slate-900 text-lg">Екзамен</span>
@@ -545,6 +575,7 @@ const QuizView = ({
   }, [currentIdx]);
 
   const question = questions[currentIdx];
+  const learningExplanation = getLearningExplanation(question);
 
   const handleNext = () => {
     if (currentIdx < questions.length - 1) {
@@ -723,30 +754,42 @@ const QuizView = ({
               initial={{ opacity: 0, scale: 0.9, y: 30 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 30 }}
-              className="relative bg-white rounded-[2rem] p-8 w-full max-w-lg shadow-2xl overflow-hidden border border-slate-100"
+              className="relative bg-white rounded-[2rem] p-5 sm:p-7 w-full max-w-xl shadow-2xl overflow-hidden border border-slate-100"
             >
-              <div className="space-y-6">
-                <div className="flex items-center gap-3">
-                  <div className={`p-2 rounded-xl ${selectedIdx === question?.correctAnswer ? 'bg-emerald-100 text-emerald-600' : 'bg-rose-100 text-rose-600'}`}>
+              <div className="space-y-5">
+                <div className="flex items-center gap-4">
+                  <div className={`p-3 rounded-2xl ${selectedIdx === question?.correctAnswer ? 'bg-emerald-100 text-emerald-600' : 'bg-rose-100 text-rose-600'}`}>
                     {selectedIdx === question?.correctAnswer ? <CheckCircle2 className="w-6 h-6" /> : <XCircle className="w-6 h-6" />}
                   </div>
-                  <h3 className="text-xl font-bold text-slate-900">
-                    {selectedIdx === question?.correctAnswer ? 'Правильно!' : 'Неправильно'}
-                  </h3>
+                  <div>
+                    <p className="text-[10px] font-black uppercase tracking-[0.22em] text-slate-400">Результат</p>
+                    <h3 className="text-2xl sm:text-3xl font-black text-slate-900 leading-tight">
+                      {selectedIdx === question?.correctAnswer ? 'Правильно!' : 'Неправильно'}
+                    </h3>
+                  </div>
                 </div>
 
-                <div className="space-y-3">
-                  <div className="text-xs font-bold text-indigo-500 uppercase tracking-widest flex items-center gap-2">
-                    <BookOpen className="w-4 h-4" /> Пояснення
+                <div className="rounded-3xl border border-emerald-200 bg-emerald-50 p-4 sm:p-5">
+                  <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-emerald-700">
+                    <CheckCircle2 className="w-4 h-4" /> Правильна відповідь
                   </div>
-                  <p className="text-slate-600 leading-relaxed text-lg italic">
-                    «{question?.explanation}»
+                  <p className="mt-3 text-lg sm:text-xl font-black text-emerald-950 leading-snug">
+                    {learningExplanation.correctAnswerText}
+                  </p>
+                </div>
+
+                <div className="rounded-3xl border border-indigo-100 bg-indigo-50/70 p-4 sm:p-5">
+                  <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-indigo-600">
+                    <BookOpen className="w-4 h-4" /> Чому це правильно
+                  </div>
+                  <p className="mt-3 text-base sm:text-lg text-slate-800 leading-relaxed">
+                    {learningExplanation.explanationText}
                   </p>
                 </div>
 
                 <button 
                   onClick={handleNext}
-                  className="w-full py-4 bg-slate-900 text-white rounded-2xl font-bold hover:bg-slate-800 transition-colors shadow-lg"
+                  className="w-full py-4 bg-slate-900 text-white rounded-2xl font-bold hover:bg-slate-800 transition-colors shadow-lg shadow-slate-900/15"
                 >
                   {currentIdx === questions.length - 1 ? 'Переглянути результати' : 'Наступне питання'}
                 </button>
