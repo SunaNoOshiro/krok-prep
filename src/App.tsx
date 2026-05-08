@@ -21,6 +21,11 @@ import {
   Palette
 } from 'lucide-react';
 import { api, Question, QuestionSource, UserStats } from './services/api';
+import { VisualAidCard, type VisualAid } from './components/VisualAid';
+import { ScaleReferenceCard } from './components/ScaleReference';
+import { SpineLevelReferenceCard } from './components/SpineLevelReference';
+import { ConceptReferenceCard } from './components/ConceptReference';
+import { normalizeDisplayText } from './utils/text';
 
 type ExamFamily = 'krok' | 'edki';
 type Theme = 'light' | 'dark' | 'colorful';
@@ -126,8 +131,8 @@ function getLearningExplanation(question?: Question) {
     return { correctAnswerText: '', explanationText: '' };
   }
 
-  const correctAnswerText = question.options[question.correctAnswer] ?? '';
-  const rawExplanation = question.explanation?.trim() ?? '';
+  const correctAnswerText = normalizeDisplayText(question.options[question.correctAnswer] ?? '');
+  const rawExplanation = normalizeDisplayText(question.explanation?.trim() ?? '');
   const escapedAnswer = escapeRegExp(correctAnswerText);
   const exactAnswerPrefix = new RegExp(
     `^Правильна відповідь(?:\\s*-\\s*[A-E])?:\\s*«?${escapedAnswer}»?\\.?\\s*`,
@@ -145,6 +150,38 @@ function getLearningExplanation(question?: Question) {
     correctAnswerText,
     explanationText: explanationText || rawExplanation,
   };
+}
+
+function getQuestionReferenceText(question?: Question): string {
+  if (!question) return '';
+
+  return normalizeDisplayText([
+    question.question,
+    question.hint ?? '',
+    question.explanation,
+    ...question.options,
+  ].join(' '));
+}
+
+function hasScaleReference(question?: Question): boolean {
+  return /Ашфорт|Ashworth|ASIA|AIS|ISNCSCI|mMRC|Medical Research Council|медичн[а-яіїєґ\s]+дослідницьк|Борг|BORG|Берга|Berg|BBS|Бартел|Barthel|\bFIM\b|функціональн[а-яіїєґ\s]+незалеж/i.test(getQuestionReferenceText(question));
+}
+
+function hasSpineReference(question?: Question): boolean {
+  return /[CСTТLS]\s*\d{1,2}(?:\s*[-–]\s*[CСTТLS]\s*\d{1,2})?/i.test(getQuestionReferenceText(question));
+}
+
+function shouldShowVisualAid(question?: Question): boolean {
+  if (!question?.visual) return false;
+  if (question.visual.video) return true;
+
+  const visualType = question.visual.type;
+
+  if (visualType === 'median-hand') return false;
+  if ((visualType === 'ashworth-scale' || visualType === 'asia') && hasScaleReference(question)) return false;
+  if ((visualType === 's1-root' || visualType === 'sit-upright') && hasSpineReference(question)) return false;
+
+  return true;
 }
 
 // --- Dashboard/Home Component ---
@@ -568,20 +605,24 @@ const QuizView = ({
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
   const [showExplanation, setShowExplanation] = useState(false);
   const [showHint, setShowHint] = useState(false);
+  const [showQuestionReview, setShowQuestionReview] = useState(false);
   const [answers, setAnswers] = useState<(number | null)[]>(new Array(questions.length).fill(null));
 
   useEffect(() => {
     setShowHint(false);
+    setShowQuestionReview(false);
   }, [currentIdx]);
 
   const question = questions[currentIdx];
   const learningExplanation = getLearningExplanation(question);
+  const showVisualAid = shouldShowVisualAid(question);
 
   const handleNext = () => {
     if (currentIdx < questions.length - 1) {
       setCurrentIdx(currentIdx + 1);
       setSelectedIdx(null);
       setShowExplanation(false);
+      setShowQuestionReview(false);
     } else {
       const correctCount = answers.filter((ans, idx) => ans === questions[idx].correctAnswer).length;
       onComplete({ correct: correctCount, total: questions.length });
@@ -596,6 +637,7 @@ const QuizView = ({
     newAnswers[currentIdx] = idx;
     setAnswers(newAnswers);
     setSelectedIdx(idx);
+    setShowQuestionReview(false);
 
     if (mode === 'training') {
       setShowExplanation(true);
@@ -653,7 +695,7 @@ const QuizView = ({
             </div>
           )}
           <h2 className="text-lg md:text-xl font-bold text-slate-900 leading-tight">
-            {question?.question}
+            {question?.question ? normalizeDisplayText(question.question) : ''}
           </h2>
           {question?.hint && (
             <div className="flex flex-col gap-1">
@@ -673,7 +715,7 @@ const QuizView = ({
                     className="overflow-hidden"
                   >
                     <div className="hint-panel bg-amber-50 border-l-2 border-amber-400 p-2 rounded-r-lg text-xs italic text-amber-900 leading-relaxed">
-                      {question.hint}
+                      {normalizeDisplayText(question.hint)}
                     </div>
                   </motion.div>
                 )}
@@ -716,7 +758,7 @@ const QuizView = ({
                 <div className={`w-5 h-5 shrink-0 rounded-lg flex items-center justify-center font-bold text-[9px] transition-colors ${isSelected ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-500'}`}>
                   {String.fromCharCode(65 + i)}
                 </div>
-                <span className="flex-1 text-xs font-semibold leading-snug">{option}</span>
+                <span className="flex-1 text-xs font-semibold leading-snug">{normalizeDisplayText(option)}</span>
                 {showResult && isCorrect && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />}
                 {showResult && isSelected && !isCorrect && <XCircle className="w-3.5 h-3.5 text-rose-500 shrink-0 mt-0.5" />}
               </button>
@@ -743,58 +785,131 @@ const QuizView = ({
       {/* Explanation Popup */}
       <AnimatePresence>
         {showExplanation && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-50 overflow-y-auto p-3 sm:p-4">
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-slate-900/40 backdrop-blur-[2px]"
+              className="fixed inset-0 bg-slate-900/40 backdrop-blur-[2px]"
             />
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9, y: 30 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 30 }}
-              className="relative bg-white rounded-[2rem] p-5 sm:p-7 w-full max-w-xl shadow-2xl overflow-hidden border border-slate-100"
-            >
-              <div className="space-y-5">
-                <div className="flex items-center gap-4">
-                  <div className={`p-3 rounded-2xl ${selectedIdx === question?.correctAnswer ? 'bg-emerald-100 text-emerald-600' : 'bg-rose-100 text-rose-600'}`}>
-                    {selectedIdx === question?.correctAnswer ? <CheckCircle2 className="w-6 h-6" /> : <XCircle className="w-6 h-6" />}
+            <div className="relative z-10 flex min-h-full items-start justify-center py-3 sm:items-center sm:py-6">
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.9, y: 30 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9, y: 30 }}
+                className="learning-result-modal relative w-full max-w-xl overflow-y-auto rounded-[2rem] border border-slate-100 bg-white p-5 shadow-2xl sm:p-7"
+              >
+                <div className="space-y-5">
+                  <div className="flex items-center gap-4">
+                    <div className={`p-3 rounded-2xl ${selectedIdx === question?.correctAnswer ? 'bg-emerald-100 text-emerald-600' : 'bg-rose-100 text-rose-600'}`}>
+                      {selectedIdx === question?.correctAnswer ? <CheckCircle2 className="w-6 h-6" /> : <XCircle className="w-6 h-6" />}
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-black uppercase tracking-[0.22em] text-slate-400">Результат</p>
+                      <h3 className="text-2xl sm:text-3xl font-black text-slate-900 leading-tight">
+                        {selectedIdx === question?.correctAnswer ? 'Правильно!' : 'Неправильно'}
+                      </h3>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-[10px] font-black uppercase tracking-[0.22em] text-slate-400">Результат</p>
-                    <h3 className="text-2xl sm:text-3xl font-black text-slate-900 leading-tight">
-                      {selectedIdx === question?.correctAnswer ? 'Правильно!' : 'Неправильно'}
-                    </h3>
-                  </div>
-                </div>
 
-                <div className="rounded-3xl border border-emerald-200 bg-emerald-50 p-4 sm:p-5">
-                  <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-emerald-700">
-                    <CheckCircle2 className="w-4 h-4" /> Правильна відповідь
+                  <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3">
+                    <button
+                      type="button"
+                      onClick={() => setShowQuestionReview((current) => !current)}
+                      className="flex w-full items-center justify-between gap-3 text-left"
+                    >
+                      <span className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.18em] text-indigo-700">
+                        <ClipboardList className="h-4 w-4" />
+                        {showQuestionReview ? 'Сховати питання' : 'Показати питання'}
+                      </span>
+                      <ChevronRight className={`h-4 w-4 text-indigo-600 transition-transform ${showQuestionReview ? 'rotate-90' : ''}`} />
+                    </button>
+                    <AnimatePresence initial={false}>
+                      {showQuestionReview && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          className="overflow-hidden"
+                        >
+                          <div className="mt-3 space-y-3 border-t border-slate-200 pt-3">
+                            <p className="text-sm font-bold leading-relaxed text-slate-900">
+                              {question?.question ? normalizeDisplayText(question.question) : ''}
+                            </p>
+                            <div className="grid gap-2">
+                              {question?.options.map((option, index) => {
+                                const isCorrect = index === question.correctAnswer;
+                                const isSelected = index === selectedIdx;
+                                return (
+                                  <div
+                                    key={`${option}-${index}`}
+                                    className={`rounded-xl border px-3 py-2 text-xs font-semibold leading-snug ${
+                                      isCorrect
+                                        ? 'border-emerald-300 bg-emerald-50 text-emerald-950'
+                                        : isSelected
+                                          ? 'border-rose-300 bg-rose-50 text-rose-950'
+                                          : 'border-slate-200 bg-white text-slate-700'
+                                    }`}
+                                  >
+                                    <div className="flex items-start gap-2">
+                                      <span className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-lg text-[9px] font-black ${
+                                        isCorrect
+                                          ? 'bg-emerald-600 text-white'
+                                          : isSelected
+                                            ? 'bg-rose-600 text-white'
+                                            : 'bg-slate-100 text-slate-500'
+                                      }`}>
+                                        {String.fromCharCode(65 + index)}
+                                      </span>
+                                      <span className="min-w-0 flex-1">{normalizeDisplayText(option)}</span>
+                                      {isCorrect && <span className="shrink-0 text-[9px] font-black uppercase tracking-wide text-emerald-700">Правильна</span>}
+                                      {isSelected && !isCorrect && <span className="shrink-0 text-[9px] font-black uppercase tracking-wide text-rose-700">Твоя</span>}
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
-                  <p className="mt-3 text-lg sm:text-xl font-black text-emerald-950 leading-snug">
-                    {learningExplanation.correctAnswerText}
-                  </p>
-                </div>
 
-                <div className="rounded-3xl border border-indigo-100 bg-indigo-50/70 p-4 sm:p-5">
-                  <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-indigo-600">
-                    <BookOpen className="w-4 h-4" /> Чому це правильно
+                  <div className="rounded-3xl border border-emerald-200 bg-emerald-50 p-4 sm:p-5">
+                    <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-emerald-700">
+                      <CheckCircle2 className="w-4 h-4" /> Правильна відповідь
+                    </div>
+                    <p className="mt-3 text-lg sm:text-xl font-black text-emerald-950 leading-snug">
+                      {learningExplanation.correctAnswerText}
+                    </p>
                   </div>
-                  <p className="mt-3 text-base sm:text-lg text-slate-800 leading-relaxed">
-                    {learningExplanation.explanationText}
-                  </p>
-                </div>
 
-                <button 
-                  onClick={handleNext}
-                  className="w-full py-4 bg-slate-900 text-white rounded-2xl font-bold hover:bg-slate-800 transition-colors shadow-lg shadow-slate-900/15"
-                >
-                  {currentIdx === questions.length - 1 ? 'Переглянути результати' : 'Наступне питання'}
-                </button>
-              </div>
-            </motion.div>
+                  <div className="rounded-3xl border border-indigo-100 bg-indigo-50/70 p-4 sm:p-5">
+                    <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-indigo-600">
+                      <BookOpen className="w-4 h-4" /> Чому це правильно
+                    </div>
+                    <p className="mt-3 text-base sm:text-lg text-slate-800 leading-relaxed">
+                      {learningExplanation.explanationText}
+                    </p>
+                  </div>
+
+                  <SpineLevelReferenceCard question={question} />
+
+                  <ScaleReferenceCard question={question} />
+
+                  {showVisualAid && <VisualAidCard visual={question?.visual as VisualAid | undefined} />}
+
+                  <ConceptReferenceCard question={question} selectedAnswerIndex={selectedIdx} />
+
+                  <button 
+                    onClick={handleNext}
+                    className="w-full py-4 bg-slate-900 text-white rounded-2xl font-bold hover:bg-slate-800 transition-colors shadow-lg shadow-slate-900/15"
+                  >
+                    {currentIdx === questions.length - 1 ? 'Переглянути результати' : 'Наступне питання'}
+                  </button>
+                </div>
+              </motion.div>
+            </div>
           </div>
         )}
       </AnimatePresence>
