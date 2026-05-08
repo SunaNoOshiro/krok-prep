@@ -1,6 +1,7 @@
 import quizData from '../data/quizData.json';
 import selfControlData from '../data/selfControlData.json';
 import edkiData from '../data/edkiData.json';
+import { normalizeDisplayText } from '../utils/text';
 
 export interface Question {
   id: number;
@@ -11,6 +12,19 @@ export interface Question {
   options: string[];
   correctAnswer: number;
   explanation: string;
+  visual?: {
+    type: string;
+    title: string;
+    labels: string[];
+    note?: string;
+    video?: {
+      title: string;
+      embedUrl: string;
+      sourceUrl: string;
+      resourceUrl?: string;
+      resourceLabel?: string;
+    };
+  };
 }
 
 export interface UserStats {
@@ -39,6 +53,30 @@ const dataBySource: Record<QuestionSource, Question[]> = {
   selfControl: selfControlData as Question[],
   edki: edkiData as Question[],
 };
+
+function normalizeQuestion(question: Question): Question {
+  return {
+    ...question,
+    question: normalizeDisplayText(question.question),
+    hint: question.hint ? normalizeDisplayText(question.hint) : question.hint,
+    options: question.options.map(normalizeDisplayText),
+    explanation: normalizeDisplayText(question.explanation),
+    visual: question.visual
+      ? {
+        ...question.visual,
+        title: normalizeDisplayText(question.visual.title),
+        labels: question.visual.labels.map(normalizeDisplayText),
+        note: question.visual.note ? normalizeDisplayText(question.visual.note) : question.visual.note,
+        video: question.visual.video
+          ? {
+            ...question.visual.video,
+            title: normalizeDisplayText(question.visual.video.title),
+          }
+          : question.visual.video,
+      }
+      : question.visual,
+  };
+}
 
 function getSourceData(source?: QuestionSource): Question[] {
   return dataBySource[source ?? 'quiz'];
@@ -73,7 +111,7 @@ export const api = {
     if (variant) params.set('variant', String(variant));
     if (source) params.set('source', source);
 
-    return fetchJsonWithFallback(`/api/getQuestions?${params.toString()}`, () => {
+    const questions = await fetchJsonWithFallback(`/api/getQuestions?${params.toString()}`, () => {
       const sourceData = getSourceData(source);
       return sourceData.filter((q) => {
         if (topic && q.topic !== topic) return false;
@@ -81,6 +119,8 @@ export const api = {
         return true;
       });
     });
+
+    return questions.map(normalizeQuestion);
   },
 
   async getVariants(source: QuestionSource = 'selfControl'): Promise<number[]> {
