@@ -188,6 +188,7 @@ function shouldShowVisualAid(question?: Question): boolean {
 const Dashboard = ({ 
   examFamily,
   topics, 
+  topicCounts,
   stats, 
   onSelectTopic,
   onSelectExamFamily,
@@ -197,6 +198,7 @@ const Dashboard = ({
 }: { 
   examFamily: ExamFamily,
   topics: string[], 
+  topicCounts: Record<string, number>,
   stats: UserStats | null, 
   onSelectTopic: (topic: string, mode: QuizMode, options?: StartOptions) => void,
   onSelectExamFamily: (examFamily: ExamFamily) => void,
@@ -215,10 +217,37 @@ const Dashboard = ({
     }
   }, [config.variantSource, mainMode]);
 
+  const renderTopicCard = (topic: string, i: number) => {
+    const total = topicCounts[topic] ?? 0;
+    const answered = stats?.topicStats?.[topic]?.count ?? 0;
+    const correct = stats?.topicStats?.[topic]?.correct ?? 0;
+    const accuracy = answered > 0 ? Math.round((correct / answered) * 100) : 0;
+
+    return (
+      <motion.div
+        key={topic}
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: i * 0.05 }}
+        onClick={() => setSelectedTopic(topic)}
+        className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm hover:shadow-xl hover:border-indigo-500 transition-all cursor-pointer group"
+      >
+        <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 mb-4 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+          <BookOpen className="w-5 h-5" />
+        </div>
+        <h3 className="text-lg font-bold text-slate-900 leading-tight">{topic}</h3>
+        <div className="mt-4 flex flex-wrap items-center gap-2 text-[10px] font-black uppercase tracking-wider text-slate-400">
+          {total > 0 && <span>{total} питань</span>}
+          {answered > 0 && <span>{accuracy}% точність</span>}
+        </div>
+      </motion.div>
+    );
+  };
+
   const renderRootMenu = () => {
     if (examFamily === 'edki') {
       return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           <motion.div
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
@@ -234,7 +263,27 @@ const Dashboard = ({
               </div>
               <div>
                 <h3 className="text-3xl font-black text-white mb-2 leading-tight uppercase">Змішані питання</h3>
-                <p className="text-indigo-100 font-medium">Випадкова вибірка з банку ЄДКІ.</p>
+                <p className="text-indigo-100 font-medium">Випадкова вибірка з усього банку ЄДКІ.</p>
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="group bg-white rounded-[2.5rem] p-10 shadow-lg border border-slate-100 cursor-pointer relative overflow-hidden min-h-80 hover:shadow-xl hover:border-emerald-500 transition-all"
+            onClick={() => setMainMode('topics')}
+          >
+            <div className="absolute -right-4 -top-4 opacity-5 group-hover:rotate-12 transition-transform text-slate-900">
+              <Target className="w-40 h-40" />
+            </div>
+            <div className="relative z-10 flex flex-col h-full justify-between">
+              <div className="w-16 h-16 bg-emerald-50 rounded-3xl flex items-center justify-center text-emerald-600 mb-6 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                <Target className="w-8 h-8" />
+              </div>
+              <div>
+                <h3 className="text-3xl font-black text-slate-900 mb-2 leading-tight uppercase">По темах</h3>
+                <p className="text-slate-500 font-medium">ЄДКІ розкладено за розділами КРОК для коротших сесій.</p>
               </div>
             </div>
           </motion.div>
@@ -454,21 +503,7 @@ const Dashboard = ({
               <h2 className="text-3xl font-black text-slate-900 uppercase">Оберіть тему</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {topics.map((topic, i) => (
-                <motion.div
-                  key={topic}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: i * 0.05 }}
-                  onClick={() => setSelectedTopic(topic)}
-                  className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm hover:shadow-xl hover:border-indigo-500 transition-all cursor-pointer group"
-                >
-                  <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 mb-4 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
-                    <BookOpen className="w-5 h-5" />
-                  </div>
-                  <h3 className="text-lg font-bold text-slate-900 leading-tight">{topic}</h3>
-                </motion.div>
-              ))}
+              {topics.map(renderTopicCard)}
             </div>
           </motion.div>
         )}
@@ -924,6 +959,7 @@ export default function App() {
     return localStorage.getItem('exam_family_v1') === 'edki' ? 'edki' : 'krok';
   });
   const [topics, setTopics] = useState<string[]>([]);
+  const [topicCounts, setTopicCounts] = useState<Record<string, number>>({});
   const [stats, setStats] = useState<UserStats | null>(null);
   const [currentQuiz, setCurrentQuiz] = useState<{ 
     examFamily: ExamFamily,
@@ -1008,8 +1044,18 @@ export default function App() {
 
   useEffect(() => {
     const init = async () => {
-      const t = await api.getTopics(EXAM_CONFIGS[examFamily].defaultSource);
+      const source = EXAM_CONFIGS[examFamily].defaultSource;
+      const [t, questions] = await Promise.all([
+        api.getTopics(source),
+        api.getQuestions(undefined, undefined, source),
+      ]);
+      const counts = questions.reduce<Record<string, number>>((acc, question) => {
+        if (!question.topic) return acc;
+        acc[question.topic] = (acc[question.topic] ?? 0) + 1;
+        return acc;
+      }, {});
       setTopics(t);
+      setTopicCounts(counts);
       setStats(loadStats(examFamily));
     };
     init();
@@ -1044,7 +1090,8 @@ export default function App() {
   ) => {
     const source = options.source ?? EXAM_CONFIGS[targetExamFamily].defaultSource;
     const normalizedOptions: StartOptions = { ...options, source };
-    const topicFilter = targetExamFamily === 'edki' || topic === MIXED_TOPIC || normalizedOptions.variant ? undefined : topic;
+    const isFullEdkiSet = targetExamFamily === 'edki' && topic === EXAM_CONFIGS.edki.variantName;
+    const topicFilter = isFullEdkiSet || topic === MIXED_TOPIC || normalizedOptions.variant ? undefined : topic;
     let questions = await api.getQuestions(
       topicFilter,
       normalizedOptions.variant,
@@ -1116,6 +1163,7 @@ export default function App() {
             <Dashboard 
               examFamily={examFamily}
               topics={topics} 
+              topicCounts={topicCounts}
               stats={stats} 
               onSelectTopic={handleStartQuiz} 
               onSelectExamFamily={handleSelectExamFamily}

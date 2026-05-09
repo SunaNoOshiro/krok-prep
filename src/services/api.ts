@@ -1,6 +1,7 @@
 import quizData from '../data/quizData.json';
 import selfControlData from '../data/selfControlData.json';
 import edkiData from '../data/edkiData.json';
+import { applyEdkiTopic, sortKrokTopics } from '../data/edkiTopics';
 import { normalizeDisplayText } from '../utils/text';
 
 export interface Question {
@@ -51,7 +52,7 @@ const defaultStats: UserStats = {
 const dataBySource: Record<QuestionSource, Question[]> = {
   quiz: quizData as Question[],
   selfControl: selfControlData as Question[],
-  edki: edkiData as Question[],
+  edki: (edkiData as Question[]).map(applyEdkiTopic),
 };
 
 function normalizeQuestion(question: Question): Question {
@@ -88,7 +89,7 @@ async function fetchJsonWithFallback<T>(path: string, fallback: () => T): Promis
     if (!res.ok) {
       return fallback();
     }
-    return res.json() as Promise<T>;
+    return await res.json() as T;
   } catch {
     return fallback();
   }
@@ -99,10 +100,12 @@ export const api = {
     const params = new URLSearchParams();
     if (source) params.set('source', source);
 
-    return fetchJsonWithFallback(`/api/getTopics?${params.toString()}`, () => {
+    const topics = await fetchJsonWithFallback(`/api/getTopics?${params.toString()}`, () => {
       const sourceData = getSourceData(source);
-      return Array.from(new Set(sourceData.map((q) => q.topic).filter((topic): topic is string => Boolean(topic))));
+      return sortKrokTopics(Array.from(new Set(sourceData.map((q) => q.topic).filter((topic): topic is string => Boolean(topic)))));
     });
+
+    return sortKrokTopics(topics);
   },
 
   async getQuestions(topic?: string, variant?: number, source?: QuestionSource): Promise<Question[]> {
@@ -120,7 +123,9 @@ export const api = {
       });
     });
 
-    return questions.map(normalizeQuestion);
+    return questions
+      .map((question) => source === 'edki' ? applyEdkiTopic(question) : question)
+      .map(normalizeQuestion);
   },
 
   async getVariants(source: QuestionSource = 'selfControl'): Promise<number[]> {

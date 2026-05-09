@@ -3,6 +3,7 @@ import { createServer as createViteServer } from 'vite';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
+import { applyEdkiTopic, sortKrokTopics } from './src/data/edkiTopics';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -14,7 +15,7 @@ const edkiDataPath = path.join(__dirname, 'src', 'data', 'edkiData.json');
 
 const quizData = JSON.parse(fs.readFileSync(quizDataPath, 'utf-8'));
 const selfControlData = JSON.parse(fs.readFileSync(selfControlDataPath, 'utf-8'));
-const edkiData = JSON.parse(fs.readFileSync(edkiDataPath, 'utf-8'));
+const edkiData = JSON.parse(fs.readFileSync(edkiDataPath, 'utf-8')).map(applyEdkiTopic);
 
 type QuestionSource = 'quiz' | 'selfControl' | 'edki';
 
@@ -28,12 +29,7 @@ function getQuestionData(source: unknown) {
 let userStats = {
   totalAnswers: 0,
   correctAnswers: 0,
-  topicStats: {
-    "Обстеження": { count: 0, correct: 0 },
-    "Аналіз даних, планування та прогнозування": { count: 0, correct: 0 },
-    "Втручання": { count: 0, correct: 0 },
-    "Загальні питання": { count: 0, correct: 0 }
-  },
+  topicStats: {} as Record<string, { count: number, correct: number }>,
   streak: 0,
   lastSession: null as string | null,
 };
@@ -48,7 +44,7 @@ async function startServer() {
   app.get('/api/getTopics', (req, res) => {
     const source = req.query.source as QuestionSource | undefined;
     const topics = Array.from(new Set(getQuestionData(source).map((q: any) => q.topic).filter(Boolean)));
-    res.json(topics);
+    res.json(sortKrokTopics(topics as string[]));
   });
 
   app.get('/api/getVariants', (req, res) => {
@@ -79,9 +75,10 @@ async function startServer() {
     if (batch && totalCount) {
       userStats.totalAnswers += totalCount;
       userStats.correctAnswers += correctCount;
-      if (topic && userStats.topicStats[topic as keyof typeof userStats.topicStats]) {
-        userStats.topicStats[topic as keyof typeof userStats.topicStats].count += totalCount;
-        userStats.topicStats[topic as keyof typeof userStats.topicStats].correct += correctCount;
+      if (topic) {
+        if (!userStats.topicStats[topic]) userStats.topicStats[topic] = { count: 0, correct: 0 };
+        userStats.topicStats[topic].count += totalCount;
+        userStats.topicStats[topic].correct += correctCount;
       }
     } else {
       userStats.totalAnswers++;
@@ -92,10 +89,11 @@ async function startServer() {
         userStats.streak = 0;
       }
 
-      if (topic && userStats.topicStats[topic as keyof typeof userStats.topicStats]) {
-        userStats.topicStats[topic as keyof typeof userStats.topicStats].count++;
+      if (topic) {
+        if (!userStats.topicStats[topic]) userStats.topicStats[topic] = { count: 0, correct: 0 };
+        userStats.topicStats[topic].count++;
         if (isCorrect) {
-          userStats.topicStats[topic as keyof typeof userStats.topicStats].correct++;
+          userStats.topicStats[topic].correct++;
         }
       }
     }
