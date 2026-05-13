@@ -479,7 +479,7 @@ function SpineSideFigure({ reference }: { reference: SpineReference }) {
       </svg>
       <div className="mt-1 flex flex-wrap justify-center gap-1.5 text-[9px] font-black uppercase tracking-[0.08em]">
         {regionOrder.map((region) => (
-          <span key={region} className="rounded-full bg-slate-100 px-2 py-1" style={{ color: regionInfo[region].figureColor }}>
+          <span key={region} className="spine-region-pill rounded-full bg-slate-100 px-2 py-1" style={{ color: regionInfo[region].figureColor }}>
             {regionInfo[region].display} {regionInfo[region].name}
           </span>
         ))}

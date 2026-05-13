@@ -287,6 +287,148 @@ function FormattedExplanation({ text, compact = false }: { text: string, compact
   );
 }
 
+function hasBoilerplateIncorrectText(text: string): boolean {
+  const normalized = normalizeDisplayText(text);
+  const repeatedMarkers = [
+    /це не найкраща терапевтична дія/i,
+    /У КРОК обирають втручання/i,
+    /Правильний вибір роблять/i,
+    /Правильну відповідь визначає така логіка/i,
+    /цей варіант не відповідає ключовій ознаці питання/i,
+    /цей варіант не пояснює описаний руховий дефіцит/i,
+  ];
+
+  return repeatedMarkers.some((marker) => marker.test(normalized))
+    || (normalized.match(/Чому це неправильно/g) ?? []).length > 1;
+}
+
+const specificWrongReasonRules: Array<{ match: RegExp, reason: string }> = [
+  {
+    match: /особистісн[іи]\s+фактори/i,
+    reason: 'Це індивідуальні характеристики людини: вік, досвід, стиль життя, мотивація. Робота й навчання описують соціальні ролі, тому це не домен особистісних факторів.',
+  },
+  {
+    match: /^функці[їі]$/i,
+    reason: 'Функції в МКФ стосуються фізіологічних функцій організму. Професійна роль і навчання не є функцією тіла.',
+  },
+  {
+    match: /^активн[іi]сть$/i,
+    reason: 'Активність описує виконання конкретної дії. У формулюванні важливі життєві ролі людини, тобто її залучення в ситуації життя.',
+  },
+  {
+    match: /фактори\s+середовища/i,
+    reason: 'Фактори середовища - це зовнішні умови, бар’єри або підтримка. У задачі описана роль самої пацієнтки, а не вплив середовища.',
+  },
+  {
+    match: /функціональн[а-яіїєґ\s]+вправ/i,
+    reason: 'Функціональна вправа описує практичну мету руху, а не механічний тип кінематичного ланцюга.',
+  },
+  {
+    match: /закрит[а-яіїєґ\s]+кінематичн[а-яіїєґ\s]+ланцю/i,
+    reason: 'У закритому кінематичному ланцюзі дистальний сегмент зафіксований на опорі. Це протилежно вільному руху кисті або стопи в просторі.',
+  },
+  {
+    match: /зворотн[а-яіїєґ\s]+вправ/i,
+    reason: 'Це не стандартна назва для класифікації вправ за відкритим або закритим кінематичним ланцюгом.',
+  },
+  {
+    match: /поступальн[а-яіїєґ\s]+вправ/i,
+    reason: 'Поступальний рух описує характер переміщення, але не відповідає ознаці вільного дистального сегмента.',
+  },
+  {
+    match: /компрес[іi]йн[а-яіїєґ\s]+сил/i,
+    reason: 'Переважання компресійних сил більше характерне для закритого ланцюга, де є опора й вища стабільність.',
+  },
+  {
+    match: /багатосуглобов/i,
+    reason: 'Багатосуглобовість не визначає відкритий ланцюг: вправа може залучати кілька суглобів, але ключем є фіксація або свобода дистального сегмента.',
+  },
+  {
+    match: /агон[іi]ст|синерг[іi]ст|антагон[іi]ст/i,
+    reason: 'Участь агоністів, синергістів і антагоністів описує м’язову координацію, а не тип кінематичного ланцюга.',
+  },
+  {
+    match: /функц[іi]ональн[а-яіїєґ\s]+схем/i,
+    reason: 'Функціональна схема руху ближча до практичної задачі руху, але не є ознакою відкритого кінематичного ланцюга.',
+  },
+  {
+    match: /^-$/,
+    reason: 'Це службовий порожній варіант без клінічного змісту.',
+  },
+];
+
+function getQuestionFocus(question: Question, correctAnswerText: string): string {
+  const text = normalizeDisplayText(`${question.question} ${correctAnswerText}`);
+
+  if (/МКФ|домен/i.test(text)) {
+    return 'визначити правильний домен МКФ за тим, що саме описано в умові';
+  }
+  if (/кінематичн[а-яіїєґ\s]+ланцюг/i.test(text)) {
+    return 'розпізнати тип кінематичного ланцюга за положенням дистального сегмента';
+  }
+  if (/Карвонен|резервн[а-яіїєґ\s]+ЧСС|ЧСС/i.test(text)) {
+    return 'отримати правильне числове значення за формулою або нормою';
+  }
+  if (/шкал|тест|оцін|опитувальник/i.test(text)) {
+    return 'обрати інструмент, який оцінює саме описаний показник';
+  }
+  if (/м[’'ʼ]?яз|м'яз|м’яз/i.test(text)) {
+    return 'назвати структуру або м’яз, який безпосередньо відповідає описаній ознаці';
+  }
+  if (/втручан|терап|вправ|реабілітац/i.test(text)) {
+    return 'обрати втручання, яке прямо відповідає провідній проблемі пацієнта';
+  }
+
+  return 'зіставити варіант із головною ознакою, яку питає умова';
+}
+
+function getWrongOptionReason(question: Question, option: string, optionIndex: number): string {
+  const optionText = normalizeDisplayText(option).trim();
+  const correctAnswerText = normalizeDisplayText(question.options[question.correctAnswer] ?? '');
+  const focus = getQuestionFocus(question, correctAnswerText);
+  const specificReason = specificWrongReasonRules.find((rule) => rule.match.test(optionText));
+
+  if (specificReason) return specificReason.reason;
+
+  if (/%|\d+\s*[-–]\s*\d+|\d+[.,]?\d*/.test(optionText) && /%|\d+\s*[-–]\s*\d+|\d+[.,]?\d*/.test(correctAnswerText)) {
+    return `Це інше значення. Для цієї умови потрібне саме «${correctAnswerText}», тому «${optionText}» дає неправильний рівень або діапазон.`;
+  }
+
+  const templates = [
+    `Це суміжне поняття, але воно не допомагає ${focus}.`,
+    `Варіант зміщує акцент з ключової ознаки задачі; тут потрібно ${focus}.`,
+    `Ця відповідь може бути доречною в іншій ситуації, але в цій умові немає ознаки, яка робить її провідною.`,
+    `Варіант не збігається з логікою питання: треба ${focus}.`,
+    `Це відволікаючий варіант: він описує іншу категорію, ніж та, яку прямо питають.`,
+  ];
+
+  return templates[optionIndex % templates.length];
+}
+
+function IncorrectAnswerExplanations({ question }: { question: Question }) {
+  const wrongOptions = question.options
+    .map((option, index) => ({ option, index }))
+    .filter(({ index }) => index !== question.correctAnswer);
+
+  return (
+    <div>
+      <ul className="space-y-2.5">
+        {wrongOptions.map(({ option, index }) => (
+          <li key={`${option}-${index}`} className="flex gap-2">
+            <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-[10px] font-black text-slate-600">
+              {String.fromCharCode(65 + index)}
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="font-semibold text-slate-900">«{normalizeDisplayText(option)}»</span>
+              <span> - {getWrongOptionReason(question, option, index)}</span>
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 function getQuestionReferenceText(question?: Question): string {
   if (!question) return '';
 
@@ -320,27 +462,69 @@ function shouldShowVisualAid(question?: Question): boolean {
   return true;
 }
 
-function ExplanationSections({ text, hideSource = false }: { text: string, hideSource?: boolean }) {
+function CorrectAnswerExplanationSection({
+  question,
+  answerText,
+  explanationText,
+}: {
+  question?: Question,
+  answerText: string,
+  explanationText: string,
+}) {
+  const sections = splitExplanationSections(explanationText);
+  const correctExplanation = sections.correct || explanationText;
+  const answerLetter = question ? String.fromCharCode(65 + question.correctAnswer) : '';
+
+  return (
+    <div className="rounded-3xl border border-emerald-200 bg-emerald-50 p-4 sm:p-5">
+      <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-emerald-700">
+        <CheckCircle2 className="w-4 h-4" /> Правильна відповідь
+      </div>
+      <div className="mt-3 flex items-start gap-2.5">
+        {answerLetter && (
+          <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-xl bg-emerald-600 text-[11px] font-black text-white">
+            {answerLetter}
+          </span>
+        )}
+        <p className="min-w-0 flex-1 text-base font-black leading-snug text-emerald-950 sm:text-lg">
+          {answerText}
+        </p>
+      </div>
+      {correctExplanation && (
+        <div className="mt-4 border-t border-emerald-200 pt-4">
+          <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.18em] text-emerald-700">
+            <BookOpen className="w-4 h-4" /> Чому це правильно
+          </div>
+          <div className="mt-2 text-base leading-relaxed text-slate-800 sm:text-lg">
+            <FormattedExplanation text={correctExplanation} />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ExplanationSections({ text, question, hideSource = false }: { text: string, question?: Question, hideSource?: boolean }) {
   const sections = splitExplanationSections(text);
+  const useGeneratedIncorrect = Boolean(question && sections.incorrect && hasBoilerplateIncorrectText(sections.incorrect));
+
+  if (!sections.incorrect && (hideSource || !sections.source)) {
+    return null;
+  }
 
   return (
     <div className="space-y-3">
-      <div className="explanation-correct-panel rounded-3xl border border-indigo-100 bg-indigo-50/70 p-4 sm:p-5">
-        <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-indigo-600">
-          <BookOpen className="w-4 h-4" /> Чому це правильно
-        </div>
-        <div className="mt-3 text-base sm:text-lg text-slate-800 leading-relaxed">
-          <FormattedExplanation text={sections.correct || text} />
-        </div>
-      </div>
-
       {sections.incorrect && (
         <div className="explanation-incorrect-panel rounded-3xl border border-slate-200 bg-white p-4 sm:p-5">
-          <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">
+          <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-rose-700">
             <XCircle className="w-4 h-4" /> Чому інші відповіді неправильні
           </div>
           <div className="mt-3 text-base sm:text-lg text-slate-800 leading-relaxed">
-            <FormattedExplanation text={sections.incorrect} />
+            {useGeneratedIncorrect && question ? (
+              <IncorrectAnswerExplanations question={question} />
+            ) : (
+              <FormattedExplanation text={sections.incorrect} />
+            )}
           </div>
         </div>
       )}
@@ -1061,7 +1245,7 @@ const QuizView = ({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-slate-900/40 backdrop-blur-[2px]"
+              className="fixed inset-0 bg-slate-900/60 backdrop-blur-[3px]"
             />
             <div className="relative z-10 flex min-h-full items-center justify-center">
               <motion.div 
@@ -1146,14 +1330,11 @@ const QuizView = ({
                       </AnimatePresence>
                     </div>
 
-                    <div className="rounded-3xl border border-emerald-200 bg-emerald-50 p-4 sm:p-5">
-                      <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-emerald-700">
-                        <CheckCircle2 className="w-4 h-4" /> Правильна відповідь
-                      </div>
-                      <p className="mt-3 text-base sm:text-lg font-black text-emerald-950 leading-snug">
-                        {learningExplanation.correctAnswerText}
-                      </p>
-                    </div>
+                    <CorrectAnswerExplanationSection
+                      question={question}
+                      answerText={learningExplanation.correctAnswerText}
+                      explanationText={learningExplanation.explanationText}
+                    />
 
                     {question?.source && (
                       <p className="px-1 text-sm font-bold text-slate-500">
@@ -1161,7 +1342,7 @@ const QuizView = ({
                       </p>
                     )}
 
-                    <ExplanationSections text={learningExplanation.explanationText} hideSource={showVisualAid} />
+                    <ExplanationSections text={learningExplanation.explanationText} question={question} hideSource={showVisualAid} />
 
                     <SpineLevelReferenceCard question={question} />
 
