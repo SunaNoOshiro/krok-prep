@@ -13,16 +13,16 @@ const quizDataPath = path.join(__dirname, 'src', 'data', 'quizData.json');
 const selfControlDataPath = path.join(__dirname, 'src', 'data', 'selfControlData.json');
 const edkiDataPath = path.join(__dirname, 'src', 'data', 'edkiData.json');
 
-const quizData = JSON.parse(fs.readFileSync(quizDataPath, 'utf-8'));
-const selfControlData = JSON.parse(fs.readFileSync(selfControlDataPath, 'utf-8'));
-const edkiData = JSON.parse(fs.readFileSync(edkiDataPath, 'utf-8')).map(applyEdkiTopic);
-
 type QuestionSource = 'quiz' | 'selfControl' | 'edki';
 
+function readQuestionFile(filePath: string) {
+  return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+}
+
 function getQuestionData(source: unknown) {
-  if (source === 'selfControl') return selfControlData;
-  if (source === 'edki') return edkiData;
-  return quizData;
+  if (source === 'selfControl') return readQuestionFile(selfControlDataPath);
+  if (source === 'edki') return readQuestionFile(edkiDataPath).map(applyEdkiTopic);
+  return readQuestionFile(quizDataPath);
 }
 
 // In-memory stats storage

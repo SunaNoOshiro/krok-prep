@@ -3,6 +3,7 @@ export const KROK_TOPIC_ORDER = [
   'Аналіз отриманих даних, планування та прогнозування',
   'Втручання та контроль',
   'Загальні питання діяльності фізичного терапевта',
+  'Педіатрія',
 ] as const;
 
 export type KrokTopic = typeof KROK_TOPIC_ORDER[number];

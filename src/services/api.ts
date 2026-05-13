@@ -8,6 +8,7 @@ export interface Question {
   id: number;
   topic?: string;
   variant?: number;
+  source?: string;
   question: string;
   hint?: string;
   options: string[];
@@ -18,6 +19,10 @@ export interface Question {
     title: string;
     labels: string[];
     note?: string;
+    images?: Array<{
+      url: string;
+      alt: string;
+    }>;
     video?: {
       title: string;
       embedUrl: string;
@@ -40,7 +45,6 @@ export interface UserStats {
 
 export type QuestionSource = 'quiz' | 'selfControl' | 'edki';
 
-const API_BASE = '';
 const defaultStats: UserStats = {
   totalAnswers: 0,
   correctAnswers: 0,
@@ -59,6 +63,7 @@ function normalizeQuestion(question: Question): Question {
   return {
     ...question,
     question: normalizeDisplayText(question.question),
+    source: question.source ? normalizeDisplayText(question.source) : question.source,
     hint: question.hint ? normalizeDisplayText(question.hint) : question.hint,
     options: question.options.map(normalizeDisplayText),
     explanation: normalizeDisplayText(question.explanation),
@@ -68,6 +73,10 @@ function normalizeQuestion(question: Question): Question {
         title: normalizeDisplayText(question.visual.title),
         labels: question.visual.labels.map(normalizeDisplayText),
         note: question.visual.note ? normalizeDisplayText(question.visual.note) : question.visual.note,
+        images: question.visual.images?.map((image) => ({
+          ...image,
+          alt: normalizeDisplayText(image.alt),
+        })),
         video: question.visual.video
           ? {
             ...question.visual.video,
@@ -85,7 +94,7 @@ function getSourceData(source?: QuestionSource): Question[] {
 
 async function fetchJsonWithFallback<T>(path: string, fallback: () => T): Promise<T> {
   try {
-    const res = await fetch(`${API_BASE}${path}`);
+    const res = await fetch(path);
     if (!res.ok) {
       return fallback();
     }
@@ -97,30 +106,16 @@ async function fetchJsonWithFallback<T>(path: string, fallback: () => T): Promis
 
 export const api = {
   async getTopics(source?: QuestionSource): Promise<string[]> {
-    const params = new URLSearchParams();
-    if (source) params.set('source', source);
-
-    const topics = await fetchJsonWithFallback(`/api/getTopics?${params.toString()}`, () => {
-      const sourceData = getSourceData(source);
-      return sortKrokTopics(Array.from(new Set(sourceData.map((q) => q.topic).filter((topic): topic is string => Boolean(topic)))));
-    });
-
-    return sortKrokTopics(topics);
+    const sourceData = getSourceData(source);
+    return sortKrokTopics(Array.from(new Set(sourceData.map((q) => q.topic).filter((topic): topic is string => Boolean(topic)))));
   },
 
   async getQuestions(topic?: string, variant?: number, source?: QuestionSource): Promise<Question[]> {
-    const params = new URLSearchParams();
-    if (topic) params.set('topic', topic);
-    if (variant) params.set('variant', String(variant));
-    if (source) params.set('source', source);
-
-    const questions = await fetchJsonWithFallback(`/api/getQuestions?${params.toString()}`, () => {
-      const sourceData = getSourceData(source);
-      return sourceData.filter((q) => {
-        if (topic && q.topic !== topic) return false;
-        if (variant && (!('variant' in q) || q.variant !== variant)) return false;
-        return true;
-      });
+    const sourceData = getSourceData(source);
+    const questions = sourceData.filter((q) => {
+      if (topic && q.topic !== topic) return false;
+      if (variant && (!('variant' in q) || q.variant !== variant)) return false;
+      return true;
     });
 
     return questions
@@ -129,19 +124,14 @@ export const api = {
   },
 
   async getVariants(source: QuestionSource = 'selfControl'): Promise<number[]> {
-    const params = new URLSearchParams();
-    params.set('source', source);
-
-    return fetchJsonWithFallback(`/api/getVariants?${params.toString()}`, () => {
-      const sourceData = getSourceData(source);
-      const variants = Array.from(new Set(sourceData.map((q) => q.variant).filter((v): v is number => typeof v === 'number')));
-      return variants.sort((a, b) => a - b);
-    });
+    const sourceData = getSourceData(source);
+    const variants = Array.from(new Set(sourceData.map((q) => q.variant).filter((v): v is number => typeof v === 'number')));
+    return variants.sort((a, b) => a - b);
   },
 
   async submitAnswer(topic: string, isCorrect: boolean): Promise<UserStats> {
     try {
-      const res = await fetch(`${API_BASE}/api/submitAnswer`, {
+      const res = await fetch('/api/submitAnswer', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ topic, isCorrect })

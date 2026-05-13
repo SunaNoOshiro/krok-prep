@@ -260,11 +260,15 @@ function SpineSideFigure({ reference }: { reference: SpineReference }) {
 
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-2">
-      <svg viewBox="0 0 200 310" role="img" aria-label={`Бокова схема хребта: ${label}`} className="h-60 w-full sm:h-64">
+      <svg viewBox="0 0 220 330" role="img" aria-label={`Бокова схема хребта: ${label}`} className="h-72 w-full sm:h-80">
         <defs>
           <linearGradient id="bodySideFill" x1="0" x2="0" y1="0" y2="1">
             <stop offset="0%" stopColor="#f8fafc" />
-            <stop offset="100%" stopColor="#eef2f7" />
+            <stop offset="100%" stopColor="#e0f2fe" />
+          </linearGradient>
+          <linearGradient id="torsoFill" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stopColor="#f0f9ff" />
+            <stop offset="100%" stopColor="#f8fafc" />
           </linearGradient>
           <linearGradient id="discFill" x1="0" x2="0" y1="0" y2="1">
             <stop offset="0%" stopColor="#ffffff" />
@@ -278,29 +282,80 @@ function SpineSideFigure({ reference }: { reference: SpineReference }) {
           </filter>
         </defs>
 
-        {/* Soft body silhouette: head + torso + hip outline */}
-        <g opacity="0.55">
-          <ellipse cx="110" cy="40" rx="22" ry="24" fill="url(#bodySideFill)" stroke="#cbd5e1" strokeWidth="1.4" />
+        {/* Body landmarks around the side-view spine */}
+        <g>
+          <ellipse cx="110" cy="40" rx="21" ry="23" fill="#f8fafc" stroke="#cbd5e1" strokeWidth="1.6" />
           <path
-            d="M88 64 Q82 90 84 130 Q86 170 90 200 Q88 226 96 252 Q102 274 106 290"
-            fill="none"
-            stroke="#cbd5e1"
+            d="M97 63 Q110 70 123 63 L120 80 Q110 86 100 80 Z"
+            fill="#e0f2fe"
+            stroke="#7dd3fc"
+            strokeWidth="1.6"
+          />
+          <ellipse
+            cx="106"
+            cy="126"
+            rx="34"
+            ry="56"
+            fill="#eef2ff"
+            opacity="0.62"
+            stroke="#818cf8"
             strokeWidth="1.4"
+            strokeDasharray="4 5"
+          />
+          <path
+            d="M85 80 Q78 120 83 168 Q86 206 94 235 Q100 254 104 292"
+            fill="none"
+            stroke="#94a3b8"
+            strokeWidth="1.8"
             strokeLinecap="round"
           />
           <path
-            d="M132 64 Q140 92 138 132 Q136 174 134 204 Q138 230 132 254 Q126 274 122 290"
+            d="M129 80 Q142 124 136 169 Q130 211 132 234 Q142 249 142 266 Q141 287 126 297"
             fill="none"
-            stroke="#cbd5e1"
-            strokeWidth="1.4"
+            stroke="#94a3b8"
+            strokeWidth="1.8"
             strokeLinecap="round"
           />
           <path
-            d="M88 64 Q110 56 132 64"
-            fill="url(#bodySideFill)"
+            d="M90 219 Q111 210 132 221 Q145 229 145 244 Q143 257 128 264 Q111 271 96 262 Q86 253 86 239 Q86 228 90 219 Z"
+            fill="#f8fafc"
+            opacity="0.86"
             stroke="#cbd5e1"
             strokeWidth="1.4"
           />
+          <path
+            d="M108 224 Q119 238 113 263"
+            fill="none"
+            stroke="#fb7185"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+          />
+          <path
+            d="M88 80 Q108 72 130 80 Q139 128 132 174 Q125 204 128 232 Q111 240 94 232 Q84 195 82 158 Q78 116 88 80 Z"
+            fill="url(#torsoFill)"
+            opacity="0.36"
+            stroke="#cbd5e1"
+            strokeWidth="1.2"
+          />
+          <path
+            d="M83 176 Q109 188 135 176"
+            fill="none"
+            stroke="#cbd5e1"
+            strokeWidth="1"
+            strokeDasharray="4 5"
+          />
+        </g>
+
+        {/* Landmark callouts */}
+        <g fontSize="8.5" fontWeight="900" letterSpacing="0.7">
+          <line x1="124" y1="72" x2="176" y2="62" stroke="#0ea5e9" strokeWidth="1.2" />
+          <text x="180" y="65" fill="#0284c7">ШИЯ</text>
+          <line x1="132" y1="122" x2="176" y2="104" stroke="#4f46e5" strokeWidth="1.2" />
+          <text x="180" y="107" fill="#4f46e5">ГРУДНА</text>
+          <line x1="132" y1="187" x2="176" y2="182" stroke="#64748b" strokeWidth="1.2" />
+          <text x="180" y="185" fill="#475569">ТУЛУБ</text>
+          <line x1="120" y1="245" x2="176" y2="252" stroke="#f43f5e" strokeWidth="1.2" />
+          <text x="180" y="255" fill="#e11d48">КРИЖІ/ТАЗ</text>
         </g>
 
         {/* Region color guides on the left rail */}

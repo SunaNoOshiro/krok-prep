@@ -32,13 +32,18 @@ export type VisualAidType =
   | 'chest-form'
   | 'chest-vibration'
   | 'hydrothorax'
-  | 'massage-sequence';
+  | 'massage-sequence'
+  | 'pediatrics-pdf';
 
 export interface VisualAid {
   type: VisualAidType;
   title: string;
   labels: string[];
   note?: string;
+  images?: Array<{
+    url: string;
+    alt: string;
+  }>;
   video?: {
     title: string;
     embedUrl: string;
@@ -146,7 +151,7 @@ const abbreviationExplanations: Array<{ pattern: RegExp, term: string, explanati
   { pattern: /\bISNCSCI\b/i, term: 'ISNCSCI', explanation: 'International Standards for Neurological Classification of Spinal Cord Injury' },
   { pattern: /ОФВ1/i, term: 'ОФВ1', explanation: "об'єм форсованого видиху за першу секунду" },
   { pattern: /\bSpO2\b/i, term: 'SpO2', explanation: 'сатурація кисню в крові за пульсоксиметром' },
-  { pattern: /АТ/i, term: 'АТ', explanation: 'артеріальний тиск' },
+  { pattern: /(?:^|[\s,.;:()])АТ(?:$|[\s,.;:()])/i, term: 'АТ', explanation: 'артеріальний тиск' },
   { pattern: /Т5/i, term: 'Т5', explanation: "п'ятий грудний рівень/сегмент спинного мозку" },
   { pattern: /Т6/i, term: 'Т6', explanation: "шостий грудний рівень/сегмент спинного мозку" },
   { pattern: /\bC5-C6\b/i, term: 'C5-C6', explanation: "п'ятий-шостий шийні сегменти" },
@@ -234,41 +239,63 @@ function getVisualIllustration(visual: VisualAid) {
 export function VisualAidCard({ visual }: VisualAidCardProps) {
   if (!visual) return null;
 
+  const isPdfVisual = visual.type === 'pediatrics-pdf';
+  if (isPdfVisual && (!visual.images || visual.images.length === 0) && !visual.video) return null;
+
   const category = getCategory(visual.type);
   const styles = categoryStyles[category];
   const labels = visual.labels.slice(0, 4);
-  const abbreviationNotes = getAbbreviationNotes(visual);
+  const abbreviationNotes = isPdfVisual ? [] : getAbbreviationNotes(visual);
   const illustration = getVisualIllustration(visual);
 
   return (
     <section className="visual-aid-card rounded-2xl border border-slate-200 bg-white p-3.5 shadow-sm sm:p-4">
       <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <p className="text-[9px] font-black uppercase tracking-[0.18em] text-indigo-600">Візуально запам'ятати</p>
+          <p className="text-[9px] font-black uppercase tracking-[0.18em] text-indigo-600">
+            {isPdfVisual ? 'Зображення з презентації' : "Візуально запам'ятати"}
+          </p>
           <h4 className="mt-0.5 text-lg font-black text-slate-900 leading-tight">{visual.title}</h4>
         </div>
         <span className={`w-fit rounded-full px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.12em] ${styles.badge}`}>
-          {styles.label}
+          {isPdfVisual ? 'PDF' : styles.label}
         </span>
       </div>
 
       <div className={`visual-aid-scene mt-3 rounded-2xl border p-2.5 sm:p-3 ${styles.panel}`}>
         {illustration && <div className="mb-3">{illustration}</div>}
-        <div className="visual-aid-sequence grid gap-2">
-          {labels.map((label, index) => (
-            <div key={`${label}-${index}`} className={`visual-aid-node min-w-0 rounded-xl border p-2.5 sm:p-3 ${styles.node}`}>
-              <div className={`mb-2 flex h-7 w-7 items-center justify-center rounded-lg text-xs font-black ${styles.number}`}>
-                {index + 1}
+        {visual.images && visual.images.length > 0 && (
+          <div className="mb-3 grid gap-2">
+            {visual.images.map((image) => (
+              <img
+                key={image.url}
+                src={image.url}
+                alt={image.alt}
+                loading="lazy"
+                className="max-h-72 w-full rounded-xl border border-white/70 bg-white object-contain shadow-sm"
+              />
+            ))}
+          </div>
+        )}
+        {!isPdfVisual && (
+          <div className="visual-aid-sequence grid gap-2">
+            {labels.map((label, index) => (
+              <div key={`${label}-${index}`} className={`visual-aid-node min-w-0 rounded-xl border p-2.5 sm:p-3 ${styles.node}`}>
+                <div className={`mb-2 flex h-7 w-7 items-center justify-center rounded-lg text-xs font-black ${styles.number}`}>
+                  {index + 1}
+                </div>
+                <p className="visual-aid-step-label text-sm font-black leading-snug text-slate-900">{label}</p>
               </div>
-              <p className="visual-aid-step-label text-sm font-black leading-snug text-slate-900">{label}</p>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
 
-      <p className="mt-2 text-xs font-semibold leading-relaxed text-slate-500">
-        Запам'ятай як послідовність: {labels.join(' -> ')}.
-      </p>
+      {!isPdfVisual && (
+        <p className="mt-2 text-xs font-semibold leading-relaxed text-slate-500">
+          Запам'ятай як послідовність: {labels.join(' -> ')}.
+        </p>
+      )}
       {abbreviationNotes.length > 0 && (
         <div className="visual-aid-abbrev mt-2 rounded-xl border border-slate-200 bg-slate-50 p-2.5">
           <p className="text-[9px] font-black uppercase tracking-[0.16em] text-slate-500">Скорочення</p>

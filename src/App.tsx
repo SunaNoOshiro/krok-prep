@@ -56,7 +56,7 @@ const EXAM_CONFIGS: Record<ExamFamily, {
     title: 'КРОК 2',
     subtitle: 'Платформа підготовки до професійної сертифікації фізичних терапевтів',
     sourceText: 'Платформа підготовки до професійної сертифікації фізичних терапевтів',
-    sourceNote: 'На основі офіційних тестових завдань 2025 року',
+    sourceNote: 'На основі офіційних тестових завдань Крок 2 2025 року',
     sourceUrl: 'https://dspace.zsmu.edu.ua/bitstream/123456789/22800/1/%D0%9A%D0%A0%D0%9E%D0%9A%202_%D1%82%D0%B5%D1%81%D1%82%D0%BE%D0%B2%D1%96%20%D0%B7%D0%B0%D0%B2%D0%B4%D0%B0%D0%BD%D0%BD%D1%8F_2025.pdf',
     defaultSource: 'quiz',
     variantSource: 'selfControl',
@@ -69,11 +69,11 @@ const EXAM_CONFIGS: Record<ExamFamily, {
     title: 'ЄДКІ',
     subtitle: 'Бакалаври "Фізична терапія, ерготерапія"',
     sourceText: 'ЄДКІ Бакалаври "Фізична терапія, ерготерапія"',
-    sourceNote: 'Тестові завдання від 2026 року',
+    sourceNote: 'Тестові завдання ЄДКІ від 2026 року; тема «Педіатрія» з файлу «крок 4 курс.pdf»',
     defaultSource: 'edki',
     variantSource: 'edki',
     variantTitle: 'ЄДКІ',
-    variantDescription: 'Тестові завдання 2026 року, питання 1-150.',
+    variantDescription: 'Тестові завдання ЄДКІ 2026 року та педіатрія з «крок 4 курс.pdf».',
     variantName: 'ЄДКІ',
     variantUnit: 'ЄДКІ',
   },
@@ -152,6 +152,141 @@ function getLearningExplanation(question?: Question) {
   };
 }
 
+type ExplanationBlock =
+  | { type: 'paragraph', text: string }
+  | { type: 'heading', text: string }
+  | { type: 'list', items: string[] };
+
+function cleanupExplanationText(text: string): string {
+  return normalizeDisplayText(text)
+    .replace(/\s*⠀\s*/g, ' ')
+    .replace(/\s+(Чому це правильно\??)/gi, '\n$1\n')
+    .replace(/\s+(Чому\s+(?:не\s+інші\s+варіанти|інші\s+(?:не\s+правильні|варіанти(?:\s+не\s+є)?[^:.?]*|відповіді\s+неправильні))\??:?)/gi, '\n$1\n')
+    .replace(/\s*([●•►])\s*/g, '\n$1 ')
+    .replace(/\s+([1-9]\.)\s+/g, '\n$1 ')
+    .trim();
+}
+
+function formatExplanationParts(text: string): { blocks: ExplanationBlock[], source: string } {
+  const normalized = normalizeDisplayText(text);
+  const sourceMatch = normalized.match(/Тести на основі файлу «крок 4 курс\.pdf», слайди? [^.]+\.?$/);
+  const source = sourceMatch?.[0] ?? '';
+  const body = cleanupExplanationText(source ? normalized.slice(0, sourceMatch?.index).trim() : normalized);
+  const blocks: ExplanationBlock[] = [];
+  let pendingList: string[] = [];
+
+  const flushList = () => {
+    if (pendingList.length === 0) return;
+    blocks.push({ type: 'list', items: pendingList });
+    pendingList = [];
+  };
+
+  body.split('\n').map((part) => part.trim()).filter(Boolean).forEach((part) => {
+    if (/^(?:[●•►]|\d+\.)\s*/.test(part)) {
+      pendingList.push(part.replace(/^(?:[●•►]|\d+\.)\s*/, '').trim());
+      return;
+    }
+
+    flushList();
+
+    if (
+      /^Чому це правильно\??$/i.test(part)
+      || /^Чому\s+(?:не\s+інші\s+варіанти|інші\s+(?:не\s+правильні|варіанти(?:\s+не\s+є)?[^:.?]*|відповіді\s+неправильні))\??:?$/i.test(part)
+      || (part.length < 90 && /[:?]$/.test(part))
+    ) {
+      blocks.push({ type: 'heading', text: part.replace(/\?$/, '?') });
+      return;
+    }
+
+    blocks.push({ type: 'paragraph', text: part });
+  });
+
+  flushList();
+
+  return {
+    blocks: blocks.length > 0 ? blocks : [{ type: 'paragraph', text: body }],
+    source,
+  };
+}
+
+function splitExplanationSections(text: string): { correct: string, incorrect: string, source: string } {
+  const normalized = normalizeDisplayText(text);
+  const sourceMatch = normalized.match(/Тести на основі файлу «крок 4 курс\.pdf», слайди? [^.]+\.?$/);
+  const source = sourceMatch?.[0] ?? '';
+  const body = source ? normalized.slice(0, sourceMatch?.index).trim() : normalized;
+  const splitMatch = body.match(/Чому\s+(?:не\s+інші\s+варіанти|інші\s+(?:не\s+правильні|варіанти(?:\s+не\s+є)?[^:.?]*|відповіді\s+неправильні))\??:?/i);
+
+  if (!splitMatch || splitMatch.index == null) {
+    const fallbackListIndex = body.search(/[●•►]\s*(?:[A-EА-Еa-eа-е][.:]\s*)?[«"]?[^:•]{2,120}:/);
+    if (fallbackListIndex >= 0) {
+      return {
+        correct: body
+          .slice(0, fallbackListIndex)
+          .replace(/^Чому це правильно\??:?\s*/i, '')
+          .trim(),
+        incorrect: body.slice(fallbackListIndex).trim(),
+        source,
+      };
+    }
+
+    return {
+      correct: body.replace(/^Чому це правильно\??:?\s*/i, '').trim(),
+      incorrect: '',
+      source,
+    };
+  }
+
+  return {
+    correct: body
+      .slice(0, splitMatch.index)
+      .replace(/^Чому це правильно\??:?\s*/i, '')
+      .trim(),
+    incorrect: body
+      .slice(splitMatch.index + splitMatch[0].length)
+      .replace(/^[:\s-]+/, '')
+      .trim(),
+    source,
+  };
+}
+
+function FormattedExplanation({ text, compact = false }: { text: string, compact?: boolean }) {
+  const { blocks, source } = formatExplanationParts(text);
+
+  return (
+    <div className={compact ? 'space-y-2' : 'space-y-3'}>
+      {blocks.map((block, index) => {
+        if (block.type === 'heading') {
+          return (
+            <p key={`${block.text}-${index}`} className={compact ? 'font-black not-italic text-amber-950' : 'font-black text-slate-900'}>
+              {block.text}
+            </p>
+          );
+        }
+
+        if (block.type === 'list') {
+          return (
+            <ul key={`list-${index}`} className={compact ? 'space-y-1.5' : 'space-y-2'}>
+              {block.items.map((bullet, bulletIndex) => (
+                <li key={`${bullet}-${bulletIndex}`} className="flex gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-current opacity-60" />
+                  <span>{bullet}</span>
+                </li>
+              ))}
+            </ul>
+          );
+        }
+
+        return <p key={`${block.text}-${index}`}>{block.text}</p>;
+      })}
+      {source && (
+        <p className={compact ? 'font-bold not-italic text-amber-950' : 'font-bold text-slate-700'}>
+          {source}
+        </p>
+      )}
+    </div>
+  );
+}
+
 function getQuestionReferenceText(question?: Question): string {
   if (!question) return '';
 
@@ -164,7 +299,7 @@ function getQuestionReferenceText(question?: Question): string {
 }
 
 function hasScaleReference(question?: Question): boolean {
-  return /Ашфорт|Ashworth|ASIA|AIS|ISNCSCI|mMRC|Medical Research Council|медичн[а-яіїєґ\s]+дослідницьк|Борг|BORG|Берга|Berg|BBS|Бартел|Barthel|\bFIM\b|функціональн[а-яіїєґ\s]+незалеж/i.test(getQuestionReferenceText(question));
+  return /Ашфорт|Ashworth|ASIA|AIS|ISNCSCI|mMRC|Medical Research Council|медичн[а-яіїєґ\s]+дослідницьк|Борг|BORG|Берга|Berg|BBS|Бартел|Barthel|\bFIM\b|функціональн[а-яіїєґ\s]+незалеж|\bNIPS\b|N[-\s]?PASS|\bNBAS\b|ВАШ|\bVAS\b|\bGMFCS\b|\bFMS\b|\bCFCS\b|\bMACS\b/i.test(getQuestionReferenceText(question));
 }
 
 function hasSpineReference(question?: Question): boolean {
@@ -177,6 +312,7 @@ function shouldShowVisualAid(question?: Question): boolean {
 
   const visualType = question.visual.type;
 
+  if (visualType === 'pediatrics-pdf' && (!question.visual.images || question.visual.images.length === 0)) return false;
   if (visualType === 'median-hand') return false;
   if ((visualType === 'ashworth-scale' || visualType === 'asia') && hasScaleReference(question)) return false;
   if ((visualType === 's1-root' || visualType === 'sit-upright') && hasSpineReference(question)) return false;
@@ -184,11 +320,85 @@ function shouldShowVisualAid(question?: Question): boolean {
   return true;
 }
 
+function ExplanationSections({ text, hideSource = false }: { text: string, hideSource?: boolean }) {
+  const sections = splitExplanationSections(text);
+
+  return (
+    <div className="space-y-3">
+      <div className="explanation-correct-panel rounded-3xl border border-indigo-100 bg-indigo-50/70 p-4 sm:p-5">
+        <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-indigo-600">
+          <BookOpen className="w-4 h-4" /> Чому це правильно
+        </div>
+        <div className="mt-3 text-base sm:text-lg text-slate-800 leading-relaxed">
+          <FormattedExplanation text={sections.correct || text} />
+        </div>
+      </div>
+
+      {sections.incorrect && (
+        <div className="explanation-incorrect-panel rounded-3xl border border-slate-200 bg-white p-4 sm:p-5">
+          <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">
+            <XCircle className="w-4 h-4" /> Чому інші відповіді неправильні
+          </div>
+          <div className="mt-3 text-base sm:text-lg text-slate-800 leading-relaxed">
+            <FormattedExplanation text={sections.incorrect} />
+          </div>
+        </div>
+      )}
+
+      {sections.source && !hideSource && (
+        <p className="px-1 text-sm font-bold text-slate-500">
+          {sections.source}
+        </p>
+      )}
+    </div>
+  );
+}
+
+function ThemeControls({ theme, setTheme, compact = false }: { theme: Theme, setTheme: (theme: Theme) => void, compact?: boolean }) {
+  const buttonSize = compact ? 'h-8 w-8' : 'h-9 w-9';
+
+  return (
+    <div className={`theme-switcher flex items-center border border-slate-200 bg-white/95 shadow-sm ${compact ? 'gap-2 rounded-xl px-2 py-1.5' : 'gap-3 rounded-2xl px-3 py-2'}`}>
+      <span className="theme-switcher-label text-[11px] font-black uppercase tracking-wider text-slate-500">Тема</span>
+      <div className="flex items-center gap-2">
+        <button
+          type="button"
+          onClick={() => setTheme('light')}
+          title="Світла тема"
+          aria-label="Світла тема"
+          className={`${buttonSize} rounded-full border flex items-center justify-center transition-all ${theme === 'light' ? 'bg-amber-500 border-amber-500 text-white shadow-md shadow-amber-500/30' : 'bg-white text-slate-500 border-slate-200 hover:bg-amber-50 hover:text-amber-600 hover:border-amber-300'}`}
+        >
+          <Sun className="w-4 h-4" />
+        </button>
+        <button
+          type="button"
+          onClick={() => setTheme('dark')}
+          title="Темна тема"
+          aria-label="Темна тема"
+          className={`${buttonSize} rounded-full border flex items-center justify-center transition-all ${theme === 'dark' ? 'bg-indigo-600 border-indigo-600 text-white shadow-md shadow-indigo-600/30' : 'bg-white text-slate-500 border-slate-200 hover:bg-indigo-50 hover:text-indigo-700 hover:border-indigo-300'}`}
+        >
+          <Moon className="w-4 h-4" />
+        </button>
+        <button
+          type="button"
+          onClick={() => setTheme('colorful')}
+          title="Кольорова тема"
+          aria-label="Кольорова тема"
+          className={`${buttonSize} rounded-full border flex items-center justify-center transition-all ${theme === 'colorful' ? 'bg-gradient-to-br from-fuchsia-500 via-indigo-500 to-cyan-500 border-indigo-500 text-white shadow-md shadow-indigo-600/30' : 'bg-white text-slate-500 border-slate-200 hover:bg-violet-50 hover:text-violet-700 hover:border-violet-300'}`}
+        >
+          <Palette className="w-4 h-4" />
+        </button>
+      </div>
+    </div>
+  );
+}
+
 // --- Dashboard/Home Component ---
 const Dashboard = ({ 
   examFamily,
   topics, 
   topicCounts,
+  topicSources,
   stats, 
   onSelectTopic,
   onSelectExamFamily,
@@ -199,6 +409,7 @@ const Dashboard = ({
   examFamily: ExamFamily,
   topics: string[], 
   topicCounts: Record<string, number>,
+  topicSources: Record<string, string[]>,
   stats: UserStats | null, 
   onSelectTopic: (topic: string, mode: QuizMode, options?: StartOptions) => void,
   onSelectExamFamily: (examFamily: ExamFamily) => void,
@@ -210,6 +421,22 @@ const Dashboard = ({
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
   const [variants, setVariants] = useState<number[]>([]);
   const config = EXAM_CONFIGS[examFamily];
+  const totalQuestionCount = Object.values(topicCounts).reduce((sum, count) => sum + count, 0);
+  const pediatricsQuestionCount = examFamily === 'edki' ? topicCounts['Педіатрія'] ?? 0 : 0;
+  const edkiCoreQuestionCount = examFamily === 'edki'
+    ? Math.max(totalQuestionCount - pediatricsQuestionCount, 0)
+    : 0;
+  const edkiQuestionBankDescription = totalQuestionCount > 0
+    ? `${totalQuestionCount} питань: ${edkiCoreQuestionCount} з тестових завдань ЄДКІ 2026 року та ${pediatricsQuestionCount} з «крок 4 курс.pdf» (Педіатрія).`
+    : config.variantDescription;
+  const sourceNote = examFamily === 'edki' ? edkiQuestionBankDescription : config.sourceNote;
+  const variantDescription = examFamily === 'edki' ? edkiQuestionBankDescription : config.variantDescription;
+  const mixedDescription = examFamily === 'edki'
+    ? `Випадкова вибірка з усіх ${totalQuestionCount || 188} питань ЄДКІ, включно з педіатрією.`
+    : 'Випадкова вибірка з усього банку Крок.';
+  const topicsDescription = examFamily === 'edki'
+    ? 'Теми включають базові питання ЄДКІ 2026 року і педіатрію з «крок 4 курс.pdf».'
+    : 'Виберіть конкретний розділ для глибокого вивчення.';
 
   useEffect(() => {
     if (mainMode === 'variants') {
@@ -219,6 +446,7 @@ const Dashboard = ({
 
   const renderTopicCard = (topic: string, i: number) => {
     const total = topicCounts[topic] ?? 0;
+    const sources = topicSources[topic] ?? [];
     const answered = stats?.topicStats?.[topic]?.count ?? 0;
     const correct = stats?.topicStats?.[topic]?.correct ?? 0;
     const accuracy = answered > 0 ? Math.round((correct / answered) * 100) : 0;
@@ -240,6 +468,14 @@ const Dashboard = ({
           {total > 0 && <span>{total} питань</span>}
           {answered > 0 && <span>{accuracy}% точність</span>}
         </div>
+        {sources.length > 0 && (
+          <div className="mt-3 rounded-2xl bg-slate-50 px-3 py-2">
+            <p className="text-[9px] font-black uppercase tracking-[0.18em] text-indigo-500">Джерело</p>
+            <p className="mt-1 text-xs font-bold leading-snug text-slate-500">
+              {sources.join(' · ')}
+            </p>
+          </div>
+        )}
       </motion.div>
     );
   };
@@ -263,7 +499,7 @@ const Dashboard = ({
               </div>
               <div>
                 <h3 className="text-3xl font-black text-white mb-2 leading-tight uppercase">Змішані питання</h3>
-                <p className="text-indigo-100 font-medium">Випадкова вибірка з усього банку ЄДКІ.</p>
+                <p className="text-indigo-100 font-medium">{mixedDescription}</p>
               </div>
             </div>
           </motion.div>
@@ -283,7 +519,7 @@ const Dashboard = ({
               </div>
               <div>
                 <h3 className="text-3xl font-black text-slate-900 mb-2 leading-tight uppercase">По темах</h3>
-                <p className="text-slate-500 font-medium">ЄДКІ розкладено за розділами КРОК для коротших сесій.</p>
+                <p className="text-slate-500 font-medium">{topicsDescription}</p>
               </div>
             </div>
           </motion.div>
@@ -303,7 +539,7 @@ const Dashboard = ({
               </div>
               <div>
                 <h3 className="text-3xl font-black text-slate-900 mb-2 leading-tight uppercase">{config.variantName}</h3>
-                <p className="text-slate-500 font-medium">{config.variantDescription}</p>
+                <p className="text-slate-500 font-medium">{variantDescription}</p>
               </div>
             </div>
           </motion.div>
@@ -329,7 +565,7 @@ const Dashboard = ({
           </div>
           <div>
             <h3 className="text-3xl font-black text-white mb-2 leading-tight uppercase">Змішані питання</h3>
-            <p className="text-indigo-100 font-medium">Випадкова вибірка з усього банку Крок.</p>
+            <p className="text-indigo-100 font-medium">{mixedDescription}</p>
           </div>
         </div>
       </motion.div>
@@ -350,7 +586,7 @@ const Dashboard = ({
           </div>
           <div>
             <h3 className="text-3xl font-black text-slate-900 mb-2 leading-tight uppercase">По темам</h3>
-            <p className="text-slate-500 font-medium">Виберіть конкретний розділ для глибокого вивчення.</p>
+            <p className="text-slate-500 font-medium">{topicsDescription}</p>
           </div>
         </div>
       </motion.div>
@@ -371,7 +607,7 @@ const Dashboard = ({
           </div>
           <div>
             <h3 className="text-3xl font-black text-slate-900 mb-2 leading-tight uppercase">{config.variantTitle}</h3>
-            <p className="text-slate-500 font-medium">{config.variantDescription}</p>
+            <p className="text-slate-500 font-medium">{variantDescription}</p>
           </div>
         </div>
       </motion.div>
@@ -403,37 +639,12 @@ const Dashboard = ({
                   onClick={() => onSelectExamFamily(family)}
                   className={`px-3 py-2 rounded-xl text-xs font-black uppercase transition-all ${examFamily === family ? 'bg-slate-900 text-white shadow-md' : 'bg-white text-slate-500 hover:bg-slate-100'}`}
                 >
-                  {family === 'krok' ? 'Крок' : 'ЄДКІ'}
+                  {family === 'krok' ? 'Крок 2' : 'ЄДКІ'}
                 </button>
               ))}
             </div>
           </div>
-          <div className="theme-switcher flex items-center gap-3 bg-white/95 border border-slate-200 rounded-2xl px-3 py-2 shadow-sm">
-            <span className="theme-switcher-label text-[11px] font-black uppercase tracking-wider text-slate-500">Тема</span>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => setTheme('light')}
-                title="Світла тема"
-                className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all ${theme === 'light' ? 'bg-amber-500 border-amber-500 text-white shadow-md shadow-amber-500/30' : 'bg-white text-slate-500 border-slate-200 hover:bg-amber-50 hover:text-amber-600 hover:border-amber-300'}`}
-              >
-                <Sun className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => setTheme('dark')}
-                title="Темна тема"
-                className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all ${theme === 'dark' ? 'bg-indigo-600 border-indigo-600 text-white shadow-md shadow-indigo-600/30' : 'bg-white text-slate-500 border-slate-200 hover:bg-indigo-50 hover:text-indigo-700 hover:border-indigo-300'}`}
-              >
-                <Moon className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => setTheme('colorful')}
-                title="Кольорова тема"
-                className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all ${theme === 'colorful' ? 'bg-gradient-to-br from-fuchsia-500 via-indigo-500 to-cyan-500 border-indigo-500 text-white shadow-md shadow-indigo-600/30' : 'bg-white text-slate-500 border-slate-200 hover:bg-violet-50 hover:text-violet-700 hover:border-violet-300'}`}
-              >
-                <Palette className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
+          <ThemeControls theme={theme} setTheme={setTheme} />
         </div>
         <div className="md:col-start-1">
           <p className="text-slate-500 mt-2 text-lg font-medium leading-relaxed">
@@ -452,7 +663,7 @@ const Dashboard = ({
             )}
           </p>
           <p className="text-slate-400 text-sm mt-1 font-medium italic">
-            {config.sourceNote}
+            {sourceNote}
           </p>
         </div>
         {stats && (
@@ -625,7 +836,9 @@ const QuizView = ({
   questions, 
   onComplete, 
   onQuit,
-  onUpdateStats
+  onUpdateStats,
+  theme,
+  setTheme
 }: { 
   topic: string, 
   mode: QuizMode,
@@ -634,7 +847,9 @@ const QuizView = ({
   questions: Question[], 
   onComplete: (results: { correct: number, total: number }) => void, 
   onQuit: () => void,
-  onUpdateStats: (isCorrect: boolean) => void
+  onUpdateStats: (isCorrect: boolean) => void,
+  theme: Theme,
+  setTheme: (theme: Theme) => void
 }) => {
   const [currentIdx, setCurrentIdx] = useState(0);
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
@@ -682,13 +897,16 @@ const QuizView = ({
 
   return (
     <div id="quiz-view" className="max-w-4xl mx-auto p-4 md:p-6 space-y-4">
-      <nav className="flex justify-between items-center mb-4">
+      <nav className="flex flex-wrap justify-between items-center gap-3 mb-4">
         <button onClick={onQuit} className="text-slate-400 hover:text-slate-900 flex items-center gap-2 text-sm font-semibold">
           <RotateCcw className="w-4 h-4" />
           Вийти
         </button>
-        <div className="px-3 py-1 bg-slate-100 rounded-full text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-          {topic} • {mode === 'training' ? 'Навчання' : 'Екзамен'}
+        <div className="flex flex-wrap items-center justify-end gap-2">
+          <div className="px-3 py-1 bg-slate-100 rounded-full text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+            {topic} • {mode === 'training' ? 'Навчання' : 'Екзамен'}
+          </div>
+          <ThemeControls theme={theme} setTheme={setTheme} compact />
         </div>
       </nav>
 
@@ -717,6 +935,11 @@ const QuizView = ({
           {mode !== 'exam' && question?.id && (
             <div className="inline-flex mr-2 px-2 py-0.5 bg-slate-100 text-slate-500 rounded text-[9px] font-bold uppercase tracking-wider">
               Питання №{question.id}
+            </div>
+          )}
+          {question?.source && (
+            <div className="inline-flex mr-2 px-2 py-0.5 bg-indigo-50 text-indigo-600 rounded text-[9px] font-bold uppercase tracking-wider">
+              Джерело: {normalizeDisplayText(question.source)}
             </div>
           )}
           {topic === MIXED_TOPIC && question?.topic && (
@@ -750,7 +973,20 @@ const QuizView = ({
                     className="overflow-hidden"
                   >
                     <div className="hint-panel bg-amber-50 border-l-2 border-amber-400 p-2 rounded-r-lg text-xs italic text-amber-900 leading-relaxed">
-                      {normalizeDisplayText(question.hint)}
+                      <FormattedExplanation text={question.hint} compact />
+                      {question.visual?.images && question.visual.images.length > 0 && (
+                        <div className="mt-2 grid gap-2">
+                          {question.visual.images.map((image) => (
+                            <img
+                              key={image.url}
+                              src={image.url}
+                              alt={image.alt}
+                              loading="lazy"
+                              className="max-h-56 w-full rounded-lg border border-amber-200 bg-white object-contain"
+                            />
+                          ))}
+                        </div>
+                      )}
                     </div>
                   </motion.div>
                 )}
@@ -820,128 +1056,128 @@ const QuizView = ({
       {/* Explanation Popup */}
       <AnimatePresence>
         {showExplanation && (
-          <div className="fixed inset-0 z-50 overflow-y-auto p-3 sm:p-4">
+          <div className="fixed inset-0 z-50 overflow-y-auto p-2">
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="fixed inset-0 bg-slate-900/40 backdrop-blur-[2px]"
             />
-            <div className="relative z-10 flex min-h-full items-start justify-center py-3 sm:items-center sm:py-6">
+            <div className="relative z-10 flex min-h-full items-center justify-center">
               <motion.div 
                 initial={{ opacity: 0, scale: 0.9, y: 30 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.9, y: 30 }}
-                className="learning-result-modal relative w-full max-w-xl overflow-y-auto rounded-[2rem] border border-slate-100 bg-white p-5 shadow-2xl sm:p-7"
+                className="learning-result-modal relative w-full max-w-xl overflow-y-auto rounded-[2rem] border border-slate-100 bg-white p-4 shadow-2xl sm:p-5"
               >
-                <div className="space-y-5">
-                  <div className="flex items-center gap-4">
-                    <div className={`p-3 rounded-2xl ${selectedIdx === question?.correctAnswer ? 'bg-emerald-100 text-emerald-600' : 'bg-rose-100 text-rose-600'}`}>
-                      {selectedIdx === question?.correctAnswer ? <CheckCircle2 className="w-6 h-6" /> : <XCircle className="w-6 h-6" />}
+                <div className="learning-result-content">
+                  <div className="space-y-5">
+                    <div className="flex items-center gap-4">
+                      <div className={`p-3 rounded-2xl ${selectedIdx === question?.correctAnswer ? 'bg-emerald-100 text-emerald-600' : 'bg-rose-100 text-rose-600'}`}>
+                        {selectedIdx === question?.correctAnswer ? <CheckCircle2 className="w-6 h-6" /> : <XCircle className="w-6 h-6" />}
+                      </div>
+                      <div>
+                        <p className="text-[10px] font-black uppercase tracking-[0.22em] text-slate-400">Результат</p>
+                        <h3 className="text-2xl sm:text-3xl font-black text-slate-900 leading-tight">
+                          {selectedIdx === question?.correctAnswer ? 'Правильно!' : 'Неправильно'}
+                        </h3>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-[10px] font-black uppercase tracking-[0.22em] text-slate-400">Результат</p>
-                      <h3 className="text-2xl sm:text-3xl font-black text-slate-900 leading-tight">
-                        {selectedIdx === question?.correctAnswer ? 'Правильно!' : 'Неправильно'}
-                      </h3>
-                    </div>
-                  </div>
 
-                  <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3">
-                    <button
-                      type="button"
-                      onClick={() => setShowQuestionReview((current) => !current)}
-                      className="flex w-full items-center justify-between gap-3 text-left"
-                    >
-                      <span className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.18em] text-indigo-700">
-                        <ClipboardList className="h-4 w-4" />
-                        {showQuestionReview ? 'Сховати питання' : 'Показати питання'}
-                      </span>
-                      <ChevronRight className={`h-4 w-4 text-indigo-600 transition-transform ${showQuestionReview ? 'rotate-90' : ''}`} />
-                    </button>
-                    <AnimatePresence initial={false}>
-                      {showQuestionReview && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          className="overflow-hidden"
-                        >
-                          <div className="mt-3 space-y-3 border-t border-slate-200 pt-3">
-                            <p className="text-sm font-bold leading-relaxed text-slate-900">
-                              {question?.question ? normalizeDisplayText(question.question) : ''}
-                            </p>
-                            <div className="grid gap-2">
-                              {question?.options.map((option, index) => {
-                                const isCorrect = index === question.correctAnswer;
-                                const isSelected = index === selectedIdx;
-                                return (
-                                  <div
-                                    key={`${option}-${index}`}
-                                    className={`rounded-xl border px-3 py-2 text-xs font-semibold leading-snug ${
-                                      isCorrect
-                                        ? 'border-emerald-300 bg-emerald-50 text-emerald-950'
-                                        : isSelected
-                                          ? 'border-rose-300 bg-rose-50 text-rose-950'
-                                          : 'border-slate-200 bg-white text-slate-700'
-                                    }`}
-                                  >
-                                    <div className="flex items-start gap-2">
-                                      <span className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-lg text-[9px] font-black ${
+                    <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3">
+                      <button
+                        type="button"
+                        onClick={() => setShowQuestionReview((current) => !current)}
+                        className="flex w-full items-center justify-between gap-3 text-left"
+                      >
+                        <span className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.18em] text-indigo-700">
+                          <ClipboardList className="h-4 w-4" />
+                          {showQuestionReview ? 'Сховати питання' : 'Показати питання'}
+                        </span>
+                        <ChevronRight className={`h-4 w-4 text-indigo-600 transition-transform ${showQuestionReview ? 'rotate-90' : ''}`} />
+                      </button>
+                      <AnimatePresence initial={false}>
+                        {showQuestionReview && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            className="overflow-hidden"
+                          >
+                            <div className="mt-3 space-y-3 border-t border-slate-200 pt-3">
+                              <p className="text-sm font-bold leading-relaxed text-slate-900">
+                                {question?.question ? normalizeDisplayText(question.question) : ''}
+                              </p>
+                              <div className="grid gap-2">
+                                {question?.options.map((option, index) => {
+                                  const isCorrect = index === question.correctAnswer;
+                                  const isSelected = index === selectedIdx;
+                                  return (
+                                    <div
+                                      key={`${option}-${index}`}
+                                      className={`rounded-xl border px-3 py-2 text-xs font-semibold leading-snug ${
                                         isCorrect
-                                          ? 'bg-emerald-600 text-white'
+                                          ? 'border-emerald-300 bg-emerald-50 text-emerald-950'
                                           : isSelected
-                                            ? 'bg-rose-600 text-white'
-                                            : 'bg-slate-100 text-slate-500'
+                                            ? 'border-rose-300 bg-rose-50 text-rose-950'
+                                            : 'border-slate-200 bg-white text-slate-700'
                                       }`}>
-                                        {String.fromCharCode(65 + index)}
-                                      </span>
-                                      <span className="min-w-0 flex-1">{normalizeDisplayText(option)}</span>
-                                      {isCorrect && <span className="shrink-0 text-[9px] font-black uppercase tracking-wide text-emerald-700">Правильна</span>}
-                                      {isSelected && !isCorrect && <span className="shrink-0 text-[9px] font-black uppercase tracking-wide text-rose-700">Твоя</span>}
+                                      <div className="flex items-start gap-2">
+                                        <span className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-lg text-[9px] font-black ${
+                                          isCorrect
+                                            ? 'bg-emerald-600 text-white'
+                                            : isSelected
+                                              ? 'bg-rose-600 text-white'
+                                              : 'bg-slate-100 text-slate-500'
+                                        }`}>
+                                          {String.fromCharCode(65 + index)}
+                                        </span>
+                                        <span className="min-w-0 flex-1">{normalizeDisplayText(option)}</span>
+                                        {isCorrect && <span className="shrink-0 text-[9px] font-black uppercase tracking-wide text-emerald-700">Правильна</span>}
+                                        {isSelected && !isCorrect && <span className="shrink-0 text-[9px] font-black uppercase tracking-wide text-rose-700">Твоя</span>}
+                                      </div>
                                     </div>
-                                  </div>
-                                );
-                              })}
+                                  );
+                                })}
+                              </div>
                             </div>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-
-                  <div className="rounded-3xl border border-emerald-200 bg-emerald-50 p-4 sm:p-5">
-                    <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-emerald-700">
-                      <CheckCircle2 className="w-4 h-4" /> Правильна відповідь
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
                     </div>
-                    <p className="mt-3 text-lg sm:text-xl font-black text-emerald-950 leading-snug">
-                      {learningExplanation.correctAnswerText}
-                    </p>
-                  </div>
 
-                  <div className="rounded-3xl border border-indigo-100 bg-indigo-50/70 p-4 sm:p-5">
-                    <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-indigo-600">
-                      <BookOpen className="w-4 h-4" /> Чому це правильно
+                    <div className="rounded-3xl border border-emerald-200 bg-emerald-50 p-4 sm:p-5">
+                      <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-emerald-700">
+                        <CheckCircle2 className="w-4 h-4" /> Правильна відповідь
+                      </div>
+                      <p className="mt-3 text-base sm:text-lg font-black text-emerald-950 leading-snug">
+                        {learningExplanation.correctAnswerText}
+                      </p>
                     </div>
-                    <p className="mt-3 text-base sm:text-lg text-slate-800 leading-relaxed">
-                      {learningExplanation.explanationText}
-                    </p>
+
+                    {question?.source && (
+                      <p className="px-1 text-sm font-bold text-slate-500">
+                        Джерело: {normalizeDisplayText(question.source)}
+                      </p>
+                    )}
+
+                    <ExplanationSections text={learningExplanation.explanationText} hideSource={showVisualAid} />
+
+                    <SpineLevelReferenceCard question={question} />
+
+                    <ScaleReferenceCard question={question} />
+
+                    {showVisualAid && <VisualAidCard visual={question?.visual as VisualAid | undefined} />}
+
+                    <ConceptReferenceCard question={question} selectedAnswerIndex={selectedIdx} />
+
+                    <button
+                      onClick={handleNext}
+                      className="w-full rounded-2xl bg-slate-900 py-4 text-base font-bold text-white shadow-lg shadow-slate-900/15 transition-colors hover:bg-slate-800"
+                    >
+                      {currentIdx === questions.length - 1 ? 'Переглянути результати' : 'Наступне питання'}
+                    </button>
                   </div>
-
-                  <SpineLevelReferenceCard question={question} />
-
-                  <ScaleReferenceCard question={question} />
-
-                  {showVisualAid && <VisualAidCard visual={question?.visual as VisualAid | undefined} />}
-
-                  <ConceptReferenceCard question={question} selectedAnswerIndex={selectedIdx} />
-
-                  <button 
-                    onClick={handleNext}
-                    className="w-full py-4 bg-slate-900 text-white rounded-2xl font-bold hover:bg-slate-800 transition-colors shadow-lg shadow-slate-900/15"
-                  >
-                    {currentIdx === questions.length - 1 ? 'Переглянути результати' : 'Наступне питання'}
-                  </button>
                 </div>
               </motion.div>
             </div>
@@ -960,6 +1196,7 @@ export default function App() {
   });
   const [topics, setTopics] = useState<string[]>([]);
   const [topicCounts, setTopicCounts] = useState<Record<string, number>>({});
+  const [topicSources, setTopicSources] = useState<Record<string, string[]>>({});
   const [stats, setStats] = useState<UserStats | null>(null);
   const [currentQuiz, setCurrentQuiz] = useState<{ 
     examFamily: ExamFamily,
@@ -1054,8 +1291,18 @@ export default function App() {
         acc[question.topic] = (acc[question.topic] ?? 0) + 1;
         return acc;
       }, {});
+      const sourceSets = questions.reduce<Record<string, Set<string>>>((acc, question) => {
+        if (!question.topic || !question.source) return acc;
+        if (!acc[question.topic]) acc[question.topic] = new Set<string>();
+        acc[question.topic].add(question.source);
+        return acc;
+      }, {});
+      const sources = Object.fromEntries(
+        Object.entries(sourceSets).map(([topic, sourceSet]) => [topic, Array.from(sourceSet)])
+      );
       setTopics(t);
       setTopicCounts(counts);
+      setTopicSources(sources);
       setStats(loadStats(examFamily));
     };
     init();
@@ -1164,6 +1411,7 @@ export default function App() {
               examFamily={examFamily}
               topics={topics} 
               topicCounts={topicCounts}
+              topicSources={topicSources}
               stats={stats} 
               onSelectTopic={handleStartQuiz} 
               onSelectExamFamily={handleSelectExamFamily}
@@ -1182,9 +1430,11 @@ export default function App() {
               variantName={EXAM_CONFIGS[currentQuiz.examFamily].variantName}
               showVariantTag={currentQuiz.examFamily === 'krok'}
               questions={currentQuiz.questions} 
-              onComplete={handleCompleteQuiz} 
+              onComplete={handleCompleteQuiz}
               onQuit={() => setView('dashboard')}
               onUpdateStats={handleUpdateStats}
+              theme={theme}
+              setTheme={setTheme}
             />
           </motion.div>
         )}
