@@ -73,10 +73,16 @@ function normalizeQuestion(question: Question): Question {
         title: normalizeDisplayText(question.visual.title),
         labels: question.visual.labels.map(normalizeDisplayText),
         note: question.visual.note ? normalizeDisplayText(question.visual.note) : question.visual.note,
-        images: question.visual.images?.map((image) => ({
-          ...image,
-          alt: normalizeDisplayText(image.alt),
-        })),
+        images: question.visual.images?.map((image) => {
+          const url = image.url.startsWith('/')
+            ? `${import.meta.env.BASE_URL.replace(/\/$/, '')}${image.url}`
+            : image.url;
+          return {
+            ...image,
+            url,
+            alt: normalizeDisplayText(image.alt),
+          };
+        }),
         video: question.visual.video
           ? {
             ...question.visual.video,
