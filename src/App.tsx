@@ -30,7 +30,14 @@ import { normalizeDisplayText } from './utils/text';
 type ExamFamily = 'krok' | 'edki';
 type Theme = 'light' | 'dark' | 'colorful';
 type QuizMode = 'training' | 'exam';
-type StartOptions = { limit?: number, variant?: number, source?: QuestionSource };
+type StartOptions = {
+  limit?: number,
+  variant?: number,
+  source?: QuestionSource,
+  allQuestions?: boolean,
+  preserveOptionOrder?: boolean,
+  preserveQuestionOrder?: boolean,
+};
 
 const MIXED_TOPIC = 'Змішаний режим';
 const THEME_STORAGE_KEY = 'krok_theme_v1';
@@ -78,6 +85,22 @@ const EXAM_CONFIGS: Record<ExamFamily, {
     variantUnit: 'ЄДКІ',
   },
 };
+
+const IMPORTED_EDKI_BLOCKS: Array<{
+  id: string,
+  title: string,
+  description: string,
+  source: QuestionSource,
+  questionCount: number,
+}> = [
+  {
+    id: 'krok-file-8',
+    title: 'Крок файл 8',
+    description: '150 питань з PDF, збережені як окремий імпортований блок.',
+    source: 'krokFile8',
+    questionCount: 150,
+  },
+];
 
 function shuffleList<T>(items: T[]): T[] {
   const shuffled = [...items];
@@ -405,6 +428,18 @@ function getWrongOptionReason(question: Question, option: string, optionIndex: n
   return templates[optionIndex % templates.length];
 }
 
+function getStructuredWrongOptionReason(question: Question, option: string, optionIndex: number): string | null {
+  const optionText = normalizeDisplayText(option).trim();
+  const answerLetter = String.fromCharCode(65 + optionIndex).toLowerCase();
+  const answerDetail = question.answers?.find((answer) => {
+    if (answer.isCorrect) return false;
+    const detailText = normalizeDisplayText(answer.text).trim();
+    return detailText === optionText || answer.key.toLowerCase() === answerLetter;
+  });
+
+  return answerDetail?.why ? normalizeDisplayText(answerDetail.why) : null;
+}
+
 function IncorrectAnswerExplanations({ question }: { question: Question }) {
   const wrongOptions = question.options
     .map((option, index) => ({ option, index }))
@@ -420,7 +455,7 @@ function IncorrectAnswerExplanations({ question }: { question: Question }) {
             </span>
             <span className="min-w-0 flex-1">
               <span className="font-semibold text-slate-900">«{normalizeDisplayText(option)}»</span>
-              <span> - {getWrongOptionReason(question, option, index)}</span>
+              <span> - {getStructuredWrongOptionReason(question, option, index) ?? getWrongOptionReason(question, option, index)}</span>
             </span>
           </li>
         ))}
@@ -506,21 +541,22 @@ function CorrectAnswerExplanationSection({
 
 function ExplanationSections({ text, question, hideSource = false }: { text: string, question?: Question, hideSource?: boolean }) {
   const sections = splitExplanationSections(text);
-  const useGeneratedIncorrect = Boolean(question && sections.incorrect && hasBoilerplateIncorrectText(sections.incorrect));
+  const hasStructuredIncorrect = Boolean(question?.answers?.some((answer) => !answer.isCorrect && answer.why));
+  const useStructuredIncorrect = Boolean(question && (hasStructuredIncorrect || (sections.incorrect && hasBoilerplateIncorrectText(sections.incorrect))));
 
-  if (!sections.incorrect && (hideSource || !sections.source)) {
+  if (!sections.incorrect && !hasStructuredIncorrect && (hideSource || !sections.source)) {
     return null;
   }
 
   return (
     <div className="space-y-3">
-      {sections.incorrect && (
+      {(sections.incorrect || hasStructuredIncorrect) && (
         <div className="explanation-incorrect-panel rounded-3xl border border-slate-200 bg-white p-4 sm:p-5">
           <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-rose-700">
             <XCircle className="w-4 h-4" /> Чому інші відповіді неправильні
           </div>
           <div className="mt-3 text-base sm:text-lg text-slate-800 leading-relaxed">
-            {useGeneratedIncorrect && question ? (
+            {useStructuredIncorrect && question ? (
               <IncorrectAnswerExplanations question={question} />
             ) : (
               <FormattedExplanation text={sections.incorrect} />
@@ -603,6 +639,7 @@ const Dashboard = ({
 }) => {
   const [mainMode, setMainMode] = useState<'root' | 'topics' | 'variants'>('root');
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
+  const [selectedTopicOptions, setSelectedTopicOptions] = useState<StartOptions | undefined>();
   const [variants, setVariants] = useState<number[]>([]);
   const config = EXAM_CONFIGS[examFamily];
   const totalQuestionCount = Object.values(topicCounts).reduce((sum, count) => sum + count, 0);
@@ -628,6 +665,16 @@ const Dashboard = ({
     }
   }, [config.variantSource, mainMode]);
 
+  const openTopicSelection = (topic: string, options?: StartOptions) => {
+    setSelectedTopic(topic);
+    setSelectedTopicOptions(options);
+  };
+
+  const closeTopicSelection = () => {
+    setSelectedTopic(null);
+    setSelectedTopicOptions(undefined);
+  };
+
   const renderTopicCard = (topic: string, i: number) => {
     const total = topicCounts[topic] ?? 0;
     const sources = topicSources[topic] ?? [];
@@ -641,7 +688,7 @@ const Dashboard = ({
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: i * 0.05 }}
-        onClick={() => setSelectedTopic(topic)}
+        onClick={() => openTopicSelection(topic)}
         className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm hover:shadow-xl hover:border-indigo-500 transition-all cursor-pointer group"
       >
         <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 mb-4 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
@@ -667,12 +714,116 @@ const Dashboard = ({
   const renderRootMenu = () => {
     if (examFamily === 'edki') {
       return (
+        <div className="space-y-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="group bg-gradient-to-br from-indigo-500 to-indigo-700 rounded-[2.5rem] p-10 shadow-xl cursor-pointer relative overflow-hidden min-h-80"
+              onClick={() => openTopicSelection(MIXED_TOPIC)}
+            >
+              <div className="absolute -right-4 -top-4 opacity-10 group-hover:rotate-12 transition-transform">
+                <Layers className="w-40 h-40" />
+              </div>
+              <div className="relative z-10 flex flex-col h-full justify-between">
+                <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-3xl flex items-center justify-center text-white mb-6">
+                  <RefreshCcw className="w-8 h-8" />
+                </div>
+                <div>
+                  <h3 className="text-3xl font-black text-white mb-2 leading-tight uppercase">Змішані питання</h3>
+                  <p className="text-indigo-100 font-medium">{mixedDescription}</p>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="group bg-white rounded-[2.5rem] p-10 shadow-lg border border-slate-100 cursor-pointer relative overflow-hidden min-h-80 hover:shadow-xl hover:border-emerald-500 transition-all"
+              onClick={() => setMainMode('topics')}
+            >
+              <div className="absolute -right-4 -top-4 opacity-5 group-hover:rotate-12 transition-transform text-slate-900">
+                <Target className="w-40 h-40" />
+              </div>
+              <div className="relative z-10 flex flex-col h-full justify-between">
+                <div className="w-16 h-16 bg-emerald-50 rounded-3xl flex items-center justify-center text-emerald-600 mb-6 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                  <Target className="w-8 h-8" />
+                </div>
+                <div>
+                  <h3 className="text-3xl font-black text-slate-900 mb-2 leading-tight uppercase">По темах</h3>
+                  <p className="text-slate-500 font-medium">{topicsDescription}</p>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="group bg-white rounded-[2.5rem] p-10 shadow-lg border border-slate-100 cursor-pointer relative overflow-hidden min-h-80 hover:shadow-xl hover:border-indigo-500 transition-all"
+              onClick={() => openTopicSelection(config.variantName)}
+            >
+              <div className="absolute -right-4 -top-4 opacity-5 group-hover:rotate-12 transition-transform text-slate-900">
+                <ClipboardList className="w-40 h-40" />
+              </div>
+              <div className="relative z-10 flex flex-col h-full justify-between">
+                <div className="w-16 h-16 bg-amber-50 rounded-3xl flex items-center justify-center text-amber-600 mb-6 group-hover:bg-amber-600 group-hover:text-white transition-colors">
+                  <Play className="w-8 h-8 ml-1" />
+                </div>
+                <div>
+                  <h3 className="text-3xl font-black text-slate-900 mb-2 leading-tight uppercase">{config.variantName}</h3>
+                  <p className="text-slate-500 font-medium">{variantDescription}</p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          {IMPORTED_EDKI_BLOCKS.length > 0 && (
+            <div className="max-w-5xl mx-auto space-y-4">
+              <div>
+                <h2 className="text-sm font-black uppercase tracking-[0.2em] text-slate-400">Імпортовані файли</h2>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                {IMPORTED_EDKI_BLOCKS.map((block) => (
+                  <motion.button
+                    key={block.id}
+                    type="button"
+                    whileHover={{ scale: 1.01 }}
+                    whileTap={{ scale: 0.99 }}
+                    onClick={() => openTopicSelection(block.title, {
+                      source: block.source,
+                      allQuestions: true,
+                      preserveOptionOrder: true,
+                      preserveQuestionOrder: true,
+                    })}
+                    className="group flex min-h-36 items-center gap-5 rounded-[2rem] border border-slate-100 bg-white p-6 text-left shadow-sm transition-all hover:border-indigo-500 hover:shadow-xl"
+                  >
+                    <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600 transition-colors group-hover:bg-indigo-600 group-hover:text-white">
+                      <BookOpen className="h-7 w-7" />
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-2xl font-black leading-tight text-slate-900">{block.title}</span>
+                      <span className="mt-1 block text-sm font-semibold leading-relaxed text-slate-500">{block.description}</span>
+                      <span className="mt-3 inline-flex rounded-full bg-slate-100 px-3 py-1 text-[10px] font-black uppercase tracking-wider text-slate-500">
+                        {block.questionCount} питань
+                      </span>
+                    </span>
+                  </motion.button>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    return (
+      <div className="space-y-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           <motion.div
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="group bg-gradient-to-br from-indigo-500 to-indigo-700 rounded-[2.5rem] p-10 shadow-xl cursor-pointer relative overflow-hidden min-h-80"
-            onClick={() => setSelectedTopic(MIXED_TOPIC)}
+            className="group bg-gradient-to-br from-indigo-500 to-indigo-700 rounded-[2.5rem] p-10 shadow-xl cursor-pointer relative overflow-hidden"
+            onClick={() => openTopicSelection(MIXED_TOPIC)}
           >
             <div className="absolute -right-4 -top-4 opacity-10 group-hover:rotate-12 transition-transform">
               <Layers className="w-40 h-40" />
@@ -691,7 +842,7 @@ const Dashboard = ({
           <motion.div
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="group bg-white rounded-[2.5rem] p-10 shadow-lg border border-slate-100 cursor-pointer relative overflow-hidden min-h-80 hover:shadow-xl hover:border-emerald-500 transition-all"
+            className="group bg-white rounded-[2.5rem] p-10 shadow-lg border border-slate-100 cursor-pointer relative overflow-hidden"
             onClick={() => setMainMode('topics')}
           >
             <div className="absolute -right-4 -top-4 opacity-5 group-hover:rotate-12 transition-transform text-slate-900">
@@ -702,7 +853,7 @@ const Dashboard = ({
                 <Target className="w-8 h-8" />
               </div>
               <div>
-                <h3 className="text-3xl font-black text-slate-900 mb-2 leading-tight uppercase">По темах</h3>
+                <h3 className="text-3xl font-black text-slate-900 mb-2 leading-tight uppercase">По темам</h3>
                 <p className="text-slate-500 font-medium">{topicsDescription}</p>
               </div>
             </div>
@@ -711,91 +862,24 @@ const Dashboard = ({
           <motion.div
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="group bg-white rounded-[2.5rem] p-10 shadow-lg border border-slate-100 cursor-pointer relative overflow-hidden min-h-80 hover:shadow-xl hover:border-indigo-500 transition-all"
-            onClick={() => setSelectedTopic(config.variantName)}
+            className="group bg-white rounded-[2.5rem] p-10 shadow-lg border border-slate-100 cursor-pointer relative overflow-hidden"
+            onClick={() => setMainMode('variants')}
           >
             <div className="absolute -right-4 -top-4 opacity-5 group-hover:rotate-12 transition-transform text-slate-900">
               <ClipboardList className="w-40 h-40" />
             </div>
             <div className="relative z-10 flex flex-col h-full justify-between">
               <div className="w-16 h-16 bg-amber-50 rounded-3xl flex items-center justify-center text-amber-600 mb-6 group-hover:bg-amber-600 group-hover:text-white transition-colors">
-                <Play className="w-8 h-8 ml-1" />
+                <ClipboardList className="w-8 h-8" />
               </div>
               <div>
-                <h3 className="text-3xl font-black text-slate-900 mb-2 leading-tight uppercase">{config.variantName}</h3>
+                <h3 className="text-3xl font-black text-slate-900 mb-2 leading-tight uppercase">{config.variantTitle}</h3>
                 <p className="text-slate-500 font-medium">{variantDescription}</p>
               </div>
             </div>
           </motion.div>
         </div>
-      );
-    }
-
-    return (
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-      {/* Mixed Mode Card */}
-      <motion.div
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-        className="group bg-gradient-to-br from-indigo-500 to-indigo-700 rounded-[2.5rem] p-10 shadow-xl cursor-pointer relative overflow-hidden"
-        onClick={() => setSelectedTopic(MIXED_TOPIC)}
-      >
-        <div className="absolute -right-4 -top-4 opacity-10 group-hover:rotate-12 transition-transform">
-          <Layers className="w-40 h-40" />
-        </div>
-        <div className="relative z-10 flex flex-col h-full justify-between">
-          <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-3xl flex items-center justify-center text-white mb-6">
-            <RefreshCcw className="w-8 h-8" />
-          </div>
-          <div>
-            <h3 className="text-3xl font-black text-white mb-2 leading-tight uppercase">Змішані питання</h3>
-            <p className="text-indigo-100 font-medium">{mixedDescription}</p>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Topic Mode Card */}
-      <motion.div
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-        className="group bg-white rounded-[2.5rem] p-10 shadow-lg border border-slate-100 cursor-pointer relative overflow-hidden"
-        onClick={() => setMainMode('topics')}
-      >
-        <div className="absolute -right-4 -top-4 opacity-5 group-hover:rotate-12 transition-transform text-slate-900">
-          <Target className="w-40 h-40" />
-        </div>
-        <div className="relative z-10 flex flex-col h-full justify-between">
-          <div className="w-16 h-16 bg-emerald-50 rounded-3xl flex items-center justify-center text-emerald-600 mb-6 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
-            <Target className="w-8 h-8" />
-          </div>
-          <div>
-            <h3 className="text-3xl font-black text-slate-900 mb-2 leading-tight uppercase">По темам</h3>
-            <p className="text-slate-500 font-medium">{topicsDescription}</p>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Self-Control Mode Card */}
-      <motion.div
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-        className="group bg-white rounded-[2.5rem] p-10 shadow-lg border border-slate-100 cursor-pointer relative overflow-hidden"
-        onClick={() => setMainMode('variants')}
-      >
-        <div className="absolute -right-4 -top-4 opacity-5 group-hover:rotate-12 transition-transform text-slate-900">
-          <ClipboardList className="w-40 h-40" />
-        </div>
-        <div className="relative z-10 flex flex-col h-full justify-between">
-          <div className="w-16 h-16 bg-amber-50 rounded-3xl flex items-center justify-center text-amber-600 mb-6 group-hover:bg-amber-600 group-hover:text-white transition-colors">
-            <ClipboardList className="w-8 h-8" />
-          </div>
-          <div>
-            <h3 className="text-3xl font-black text-slate-900 mb-2 leading-tight uppercase">{config.variantTitle}</h3>
-            <p className="text-slate-500 font-medium">{variantDescription}</p>
-          </div>
-        </div>
-      </motion.div>
-    </div>
+      </div>
     );
   };
 
@@ -942,7 +1026,7 @@ const Dashboard = ({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
-              onClick={() => setSelectedTopic(null)}
+              onClick={closeTopicSelection}
             />
             <motion.div 
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -963,7 +1047,7 @@ const Dashboard = ({
                   {selectedTopic === MIXED_TOPIC ? (
                     <>
                       <button 
-                        onClick={() => onSelectTopic(selectedTopic, 'exam', { limit: 25 })}
+                        onClick={() => onSelectTopic(selectedTopic, 'exam', { ...selectedTopicOptions, limit: 25 })}
                         className="mode-choice group flex min-h-40 flex-col items-center justify-center p-6 bg-slate-50 rounded-[2rem] border-2 border-transparent hover:border-indigo-500 hover:bg-white transition-all text-left"
                       >
                         <span className="text-4xl font-black text-indigo-500 mb-2">25</span>
@@ -972,7 +1056,7 @@ const Dashboard = ({
                       </button>
 
                       <button 
-                        onClick={() => onSelectTopic(selectedTopic, 'exam', { limit: 50 })}
+                        onClick={() => onSelectTopic(selectedTopic, 'exam', { ...selectedTopicOptions, limit: 50 })}
                         className="mode-choice group flex min-h-40 flex-col items-center justify-center p-6 bg-slate-50 rounded-[2rem] border-2 border-transparent hover:border-violet-500 hover:bg-white transition-all text-left"
                       >
                         <span className="text-4xl font-black text-violet-500 mb-2">50</span>
@@ -983,7 +1067,7 @@ const Dashboard = ({
                   ) : (
                     <>
                       <button 
-                        onClick={() => onSelectTopic(selectedTopic, 'training')}
+                        onClick={() => onSelectTopic(selectedTopic, 'training', selectedTopicOptions)}
                         className="mode-choice group flex min-h-40 flex-col items-center justify-center p-6 bg-slate-50 rounded-[2rem] border-2 border-transparent hover:border-indigo-500 hover:bg-white transition-all text-left"
                       >
                         <BookOpen className="w-8 h-8 text-indigo-500 mb-3 group-hover:scale-110 transition-transform" />
@@ -992,7 +1076,7 @@ const Dashboard = ({
                       </button>
 
                       <button 
-                        onClick={() => onSelectTopic(selectedTopic, 'exam')}
+                        onClick={() => onSelectTopic(selectedTopic, 'exam', selectedTopicOptions)}
                         className="mode-choice group flex min-h-40 flex-col items-center justify-center p-6 bg-slate-50 rounded-[2rem] border-2 border-transparent hover:border-violet-500 hover:bg-white transition-all text-left"
                       >
                         <Award className="w-8 h-8 text-violet-500 mb-3 group-hover:scale-110 transition-transform" />
@@ -1519,14 +1603,16 @@ export default function App() {
     const source = options.source ?? EXAM_CONFIGS[targetExamFamily].defaultSource;
     const normalizedOptions: StartOptions = { ...options, source };
     const isFullEdkiSet = targetExamFamily === 'edki' && topic === EXAM_CONFIGS.edki.variantName;
-    const topicFilter = isFullEdkiSet || topic === MIXED_TOPIC || normalizedOptions.variant ? undefined : topic;
+    const useAllQuestions = normalizedOptions.allQuestions || isFullEdkiSet || topic === MIXED_TOPIC || normalizedOptions.variant;
+    const topicFilter = useAllQuestions ? undefined : topic;
     let questions = await api.getQuestions(
       topicFilter,
       normalizedOptions.variant,
       source
     );
     
-    const shouldShuffle = mode === 'exam' || mode === 'training' || topic === MIXED_TOPIC || (targetExamFamily === 'krok' && !normalizedOptions.variant);
+    const shouldShuffle = !normalizedOptions.preserveQuestionOrder
+      && (mode === 'exam' || mode === 'training' || topic === MIXED_TOPIC || (targetExamFamily === 'krok' && !normalizedOptions.variant));
     if (shouldShuffle) {
       questions = shuffleList(questions);
     } else {
@@ -1537,7 +1623,7 @@ export default function App() {
       questions = questions.slice(0, normalizedOptions.limit);
     }
 
-    if (mode === 'exam' || mode === 'training') {
+    if (!normalizedOptions.preserveOptionOrder && (mode === 'exam' || mode === 'training')) {
       questions = questions.map(shuffleQuestionOptions);
     }
 

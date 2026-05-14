@@ -12,16 +12,26 @@ const __dirname = path.dirname(__filename);
 const quizDataPath = path.join(__dirname, 'src', 'data', 'quizData.json');
 const selfControlDataPath = path.join(__dirname, 'src', 'data', 'selfControlData.json');
 const edkiDataPath = path.join(__dirname, 'src', 'data', 'edkiData.json');
+const krokFile8DataPath = path.join(__dirname, 'src', 'data', 'imports', 'krok-file-8.json');
 
-type QuestionSource = 'quiz' | 'selfControl' | 'edki';
+type QuestionSource = 'quiz' | 'selfControl' | 'edki' | 'krokFile8';
 
 function readQuestionFile(filePath: string) {
   return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
 }
 
+function readKrokFile8Questions() {
+  const data = readQuestionFile(krokFile8DataPath);
+  return data.blocks.flatMap((block: any) => block.questions.map((question: any) => ({
+    ...question,
+    id: question.number,
+  })));
+}
+
 function getQuestionData(source: unknown) {
   if (source === 'selfControl') return readQuestionFile(selfControlDataPath);
   if (source === 'edki') return readQuestionFile(edkiDataPath).map(applyEdkiTopic);
+  if (source === 'krokFile8') return readKrokFile8Questions();
   return readQuestionFile(quizDataPath);
 }
 
