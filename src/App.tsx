@@ -504,7 +504,7 @@ function CorrectAnswerExplanationSection({
             {answerLetter}
           </span>
         )}
-        <p className="min-w-0 flex-1 text-base font-black leading-snug text-emerald-950 sm:text-lg">
+        <p className="min-w-0 flex-1 text-base font-black leading-snug text-emerald-950 sm:text-lg md:text-xl lg:text-2xl">
           {answerText}
         </p>
       </div>
@@ -513,7 +513,7 @@ function CorrectAnswerExplanationSection({
           <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.18em] text-emerald-700">
             <BookOpen className="w-4 h-4" /> Чому це правильно
           </div>
-          <div className="mt-2 text-base leading-relaxed text-slate-800 sm:text-lg">
+          <div className="mt-2 text-base leading-relaxed text-slate-800 sm:text-lg md:text-xl lg:text-2xl">
             <FormattedExplanation text={correctExplanation} />
           </div>
         </div>
@@ -538,7 +538,7 @@ function ExplanationSections({ text, question, hideSource = false }: { text: str
           <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-rose-700">
             <XCircle className="w-4 h-4" /> Чому інші відповіді неправильні
           </div>
-          <div className="mt-3 text-base sm:text-lg text-slate-800 leading-relaxed">
+          <div className="mt-3 text-base sm:text-lg md:text-xl lg:text-2xl text-slate-800 leading-relaxed">
             {useStructuredIncorrect && question ? (
               <IncorrectAnswerExplanations question={question} />
             ) : (
@@ -743,7 +743,7 @@ const Dashboard = ({
     if (examFamily === 'edki') {
       return (
         <div className="space-y-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
             <motion.div
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -758,7 +758,7 @@ const Dashboard = ({
                   <RefreshCcw className="w-8 h-8" />
                 </div>
                 <div>
-                  <h3 className="text-3xl font-black text-white mb-2 leading-tight uppercase">Змішані питання</h3>
+                  <h3 className="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-2 leading-tight uppercase">Змішані питання</h3>
                   <p className="text-indigo-100 font-medium">{mixedDescription}</p>
                 </div>
               </div>
@@ -778,7 +778,7 @@ const Dashboard = ({
                   <Target className="w-8 h-8" />
                 </div>
                 <div>
-                  <h3 className="text-3xl font-black text-slate-900 mb-2 leading-tight uppercase">По темах</h3>
+                  <h3 className="text-3xl md:text-4xl lg:text-5xl font-black text-slate-900 mb-2 leading-tight uppercase">По темах</h3>
                   <p className="text-slate-500 font-medium">{topicsDescription}</p>
                 </div>
               </div>
@@ -798,7 +798,7 @@ const Dashboard = ({
                   <BookOpen className="w-8 h-8" />
                 </div>
                 <div>
-                  <h3 className="text-3xl font-black text-slate-900 mb-2 leading-tight uppercase">По джерелах</h3>
+                  <h3 className="text-3xl md:text-4xl lg:text-5xl font-black text-slate-900 mb-2 leading-tight uppercase">По джерелах</h3>
                   <p className="text-slate-500 font-medium">Питання, згруповані за вихідним файлом ({sources.length} джерел).</p>
                 </div>
               </div>
@@ -810,7 +810,7 @@ const Dashboard = ({
 
     return (
       <div className="space-y-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
           <motion.div
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
@@ -825,7 +825,7 @@ const Dashboard = ({
                 <RefreshCcw className="w-8 h-8" />
               </div>
               <div>
-                <h3 className="text-3xl font-black text-white mb-2 leading-tight uppercase">Змішані питання</h3>
+                <h3 className="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-2 leading-tight uppercase">Змішані питання</h3>
                 <p className="text-indigo-100 font-medium">{mixedDescription}</p>
               </div>
             </div>
@@ -845,7 +845,7 @@ const Dashboard = ({
                 <Target className="w-8 h-8" />
               </div>
               <div>
-                <h3 className="text-3xl font-black text-slate-900 mb-2 leading-tight uppercase">По темам</h3>
+                <h3 className="text-3xl md:text-4xl lg:text-5xl font-black text-slate-900 mb-2 leading-tight uppercase">По темам</h3>
                 <p className="text-slate-500 font-medium">{topicsDescription}</p>
               </div>
             </div>
@@ -1231,7 +1231,7 @@ const QuizView = ({
   };
 
   return (
-    <div id="quiz-view" className="max-w-4xl mx-auto p-4 md:p-6 space-y-4">
+    <div id="quiz-view" className="max-w-6xl mx-auto p-4 md:p-6 space-y-4">
       <nav className="flex flex-wrap justify-between items-center gap-2 mb-4">
         <button onClick={onQuit} className="text-slate-400 hover:text-slate-900 flex items-center gap-2 text-sm font-semibold">
           <RotateCcw className="w-4 h-4" />
@@ -1287,7 +1287,7 @@ const QuizView = ({
               {variantName} {question.variant}
             </div>
           )}
-          <h2 className="text-lg md:text-xl font-bold text-slate-900 leading-tight">
+          <h2 className="text-lg md:text-2xl lg:text-3xl font-bold text-slate-900 leading-tight">
             {question?.question ? normalizeDisplayText(question.question) : ''}
           </h2>
           {question?.hint && (
@@ -1364,7 +1364,7 @@ const QuizView = ({
                 <div className={`w-5 h-5 shrink-0 rounded-lg flex items-center justify-center font-bold text-[9px] transition-colors ${isSelected ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-500'}`}>
                   {String.fromCharCode(65 + i)}
                 </div>
-                <span className="flex-1 text-xs font-semibold leading-snug">{normalizeDisplayText(option)}</span>
+                <span className="flex-1 text-xs md:text-lg lg:text-xl font-semibold leading-snug">{normalizeDisplayText(option)}</span>
                 {showResult && isCorrect && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />}
                 {showResult && isSelected && !isCorrect && <XCircle className="w-3.5 h-3.5 text-rose-500 shrink-0 mt-0.5" />}
               </button>
@@ -1403,7 +1403,7 @@ const QuizView = ({
                 initial={{ opacity: 0, scale: 0.9, y: 30 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.9, y: 30 }}
-                className="learning-result-modal relative w-full max-w-xl overflow-y-auto rounded-[2rem] border border-slate-100 bg-white p-4 shadow-2xl sm:p-5"
+                className="learning-result-modal relative w-full max-w-3xl overflow-y-auto rounded-[2rem] border border-slate-100 bg-white p-4 shadow-2xl sm:p-5"
               >
                 <div className="learning-result-content">
                   <div className="space-y-5">
@@ -1413,7 +1413,7 @@ const QuizView = ({
                       </div>
                       <div>
                         <p className="text-[10px] font-black uppercase tracking-[0.22em] text-slate-400">Результат</p>
-                        <h3 className="text-2xl sm:text-3xl font-black text-slate-900 leading-tight">
+                        <h3 className="text-2xl md:text-4xl lg:text-5xl font-black text-slate-900 leading-tight">
                           {selectedIdx === question?.correctAnswer ? 'Правильно!' : 'Неправильно'}
                         </h3>
                       </div>
@@ -1784,7 +1784,7 @@ export default function App() {
             initial={{ opacity: 0, scale: 0.95 }} 
             animate={{ opacity: 1, scale: 1 }} 
             exit={{ opacity: 0 }}
-            className="max-w-xl mx-auto min-h-screen flex items-center justify-center p-6"
+            className="max-w-4xl mx-auto min-h-screen flex items-center justify-center p-6"
           >
             <div className="bg-white rounded-[3rem] p-10 w-full shadow-2xl border border-slate-100 text-center space-y-8">
               <div className="flex justify-center">
@@ -1794,7 +1794,7 @@ export default function App() {
               </div>
               
               <div className="space-y-2">
-                <h2 className="text-4xl font-bold text-slate-900">Тест завершено!</h2>
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900">Тест завершено!</h2>
                 <p className="text-slate-500">Ви пройшли модуль <span className="font-bold text-slate-900">{currentQuiz.topic}</span>.</p>
               </div>
 
