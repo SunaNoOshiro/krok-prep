@@ -56,7 +56,7 @@ export interface UserStats {
   lastSession: string | null;
 }
 
-export type QuestionSource = 'quiz' | 'selfControl' | 'edki' | 'krokFile8';
+export type QuestionSource = 'quiz' | 'selfControl' | 'edki' | 'krokFile8' | 'combined';
 
 const defaultStats: UserStats = {
   totalAnswers: 0,
@@ -74,12 +74,14 @@ function mapImportedQuestion(question: typeof krokFile8Import.blocks[number]['qu
 }
 
 const krokFile8Questions = krokFile8Import.blocks.flatMap((block) => block.questions.map(mapImportedQuestion));
+const edkiQuestions = (edkiData as Question[]).map(applyEdkiTopic);
 
 const dataBySource: Record<QuestionSource, Question[]> = {
   quiz: quizData as Question[],
   selfControl: selfControlData as Question[],
-  edki: (edkiData as Question[]).map(applyEdkiTopic),
+  edki: edkiQuestions,
   krokFile8: krokFile8Questions,
+  combined: [...edkiQuestions, ...krokFile8Questions],
 };
 
 function normalizeQuestion(question: Question): Question {
@@ -139,11 +141,12 @@ export const api = {
     return sortKrokTopics(Array.from(new Set(sourceData.map((q) => q.topic).filter((topic): topic is string => Boolean(topic)))));
   },
 
-  async getQuestions(topic?: string, variant?: number, source?: QuestionSource): Promise<Question[]> {
+  async getQuestions(topic?: string, variant?: number, source?: QuestionSource, sourceLabel?: string): Promise<Question[]> {
     const sourceData = getSourceData(source);
     const questions = sourceData.filter((q) => {
       if (topic && q.topic !== topic) return false;
       if (variant && (!('variant' in q) || q.variant !== variant)) return false;
+      if (sourceLabel && normalizeDisplayText(q.source ?? '') !== sourceLabel) return false;
       return true;
     });
 
@@ -156,6 +159,19 @@ export const api = {
     const sourceData = getSourceData(source);
     const variants = Array.from(new Set(sourceData.map((q) => q.variant).filter((v): v is number => typeof v === 'number')));
     return variants.sort((a, b) => a - b);
+  },
+
+  async getSources(source?: QuestionSource): Promise<Array<{ label: string, count: number }>> {
+    const sourceData = getSourceData(source);
+    const counts = new Map<string, number>();
+    for (const q of sourceData) {
+      if (!q.source) continue;
+      const label = normalizeDisplayText(q.source);
+      counts.set(label, (counts.get(label) ?? 0) + 1);
+    }
+    return Array.from(counts.entries())
+      .map(([label, count]) => ({ label, count }))
+      .sort((a, b) => b.count - a.count);
   },
 
   async submitAnswer(topic: string, isCorrect: boolean): Promise<UserStats> {

@@ -34,6 +34,7 @@ type StartOptions = {
   limit?: number,
   variant?: number,
   source?: QuestionSource,
+  sourceLabel?: string,
   allQuestions?: boolean,
   preserveOptionOrder?: boolean,
   preserveQuestionOrder?: boolean,
@@ -76,31 +77,15 @@ const EXAM_CONFIGS: Record<ExamFamily, {
     title: 'ЄДКІ',
     subtitle: 'Бакалаври "Фізична терапія, ерготерапія"',
     sourceText: 'ЄДКІ Бакалаври "Фізична терапія, ерготерапія"',
-    sourceNote: 'Тестові завдання ЄДКІ від 2026 року; тема «Педіатрія» з файлу «крок 4 курс.pdf»',
-    defaultSource: 'edki',
-    variantSource: 'edki',
+    sourceNote: 'Тестові завдання ЄДКІ від 2026 року, «крок 4 курс.pdf» (Педіатрія) та «крок файл 8.pdf».',
+    defaultSource: 'combined',
+    variantSource: 'combined',
     variantTitle: 'ЄДКІ',
-    variantDescription: 'Тестові завдання ЄДКІ 2026 року та педіатрія з «крок 4 курс.pdf».',
+    variantDescription: 'Об\'єднаний банк ЄДКІ + Крок файл 8.',
     variantName: 'ЄДКІ',
     variantUnit: 'ЄДКІ',
   },
 };
-
-const IMPORTED_EDKI_BLOCKS: Array<{
-  id: string,
-  title: string,
-  description: string,
-  source: QuestionSource,
-  questionCount: number,
-}> = [
-  {
-    id: 'krok-file-8',
-    title: 'Крок файл 8',
-    description: '150 питань з PDF, збережені як окремий імпортований блок.',
-    source: 'krokFile8',
-    questionCount: 150,
-  },
-];
 
 function shuffleList<T>(items: T[]): T[] {
   const shuffled = [...items];
@@ -428,13 +413,11 @@ function getWrongOptionReason(question: Question, option: string, optionIndex: n
   return templates[optionIndex % templates.length];
 }
 
-function getStructuredWrongOptionReason(question: Question, option: string, optionIndex: number): string | null {
+function getStructuredWrongOptionReason(question: Question, option: string, _optionIndex: number): string | null {
   const optionText = normalizeDisplayText(option).trim();
-  const answerLetter = String.fromCharCode(65 + optionIndex).toLowerCase();
   const answerDetail = question.answers?.find((answer) => {
     if (answer.isCorrect) return false;
-    const detailText = normalizeDisplayText(answer.text).trim();
-    return detailText === optionText || answer.key.toLowerCase() === answerLetter;
+    return normalizeDisplayText(answer.text).trim() === optionText;
   });
 
   return answerDetail?.why ? normalizeDisplayText(answerDetail.why) : null;
@@ -649,30 +632,32 @@ function ThemeControls({ theme, setTheme, compact = false, minimal = false }: { 
 }
 
 // --- Dashboard/Home Component ---
-const Dashboard = ({ 
+const Dashboard = ({
   examFamily,
-  topics, 
+  topics,
   topicCounts,
   topicSources,
-  stats, 
+  sources,
+  stats,
   onSelectTopic,
   onSelectExamFamily,
   onClearStats,
   theme,
   setTheme
-}: { 
+}: {
   examFamily: ExamFamily,
-  topics: string[], 
+  topics: string[],
   topicCounts: Record<string, number>,
   topicSources: Record<string, string[]>,
-  stats: UserStats | null, 
+  sources: Array<{ label: string, count: number }>,
+  stats: UserStats | null,
   onSelectTopic: (topic: string, mode: QuizMode, options?: StartOptions) => void,
   onSelectExamFamily: (examFamily: ExamFamily) => void,
   onClearStats: () => void,
   theme: Theme,
   setTheme: (theme: Theme) => void
 }) => {
-  const [mainMode, setMainMode] = useState<'root' | 'topics' | 'variants'>('root');
+  const [mainMode, setMainMode] = useState<'root' | 'topics' | 'variants' | 'sources'>('root');
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
   const [selectedTopicOptions, setSelectedTopicOptions] = useState<StartOptions | undefined>();
   const [variants, setVariants] = useState<number[]>([]);
@@ -688,10 +673,10 @@ const Dashboard = ({
   const sourceNote = examFamily === 'edki' ? edkiQuestionBankDescription : config.sourceNote;
   const variantDescription = examFamily === 'edki' ? edkiQuestionBankDescription : config.variantDescription;
   const mixedDescription = examFamily === 'edki'
-    ? `Випадкова вибірка з усіх ${totalQuestionCount || 188} питань ЄДКІ, включно з педіатрією.`
+    ? `Випадкова вибірка з усіх ${totalQuestionCount || 0} питань ЄДКІ + Крок файл 8.`
     : 'Випадкова вибірка з усього банку Крок.';
   const topicsDescription = examFamily === 'edki'
-    ? 'Теми включають базові питання ЄДКІ 2026 року і педіатрію з «крок 4 курс.pdf».'
+    ? 'Теми KROK з усіх джерел (ЄДКІ + Крок файл 8 + Педіатрія).'
     : 'Виберіть конкретний розділ для глибокого вивчення.';
 
   useEffect(() => {
@@ -712,10 +697,18 @@ const Dashboard = ({
 
   const renderTopicCard = (topic: string, i: number) => {
     const total = topicCounts[topic] ?? 0;
-    const sources = topicSources[topic] ?? [];
+    const topicSourceLabels = topicSources[topic] ?? [];
     const answered = stats?.topicStats?.[topic]?.count ?? 0;
     const correct = stats?.topicStats?.[topic]?.correct ?? 0;
     const accuracy = answered > 0 ? Math.round((correct / answered) * 100) : 0;
+
+    const handleTopicClick = () => {
+      if (examFamily === 'edki') {
+        onSelectTopic(topic, 'training', { source: config.defaultSource });
+      } else {
+        openTopicSelection(topic);
+      }
+    };
 
     return (
       <motion.div
@@ -723,7 +716,7 @@ const Dashboard = ({
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: i * 0.05 }}
-        onClick={() => openTopicSelection(topic)}
+        onClick={handleTopicClick}
         className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm hover:shadow-xl hover:border-indigo-500 transition-all cursor-pointer group"
       >
         <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 mb-4 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
@@ -734,11 +727,11 @@ const Dashboard = ({
           {total > 0 && <span>{total} питань</span>}
           {answered > 0 && <span>{accuracy}% точність</span>}
         </div>
-        {sources.length > 0 && (
+        {topicSourceLabels.length > 0 && (
           <div className="mt-3 rounded-2xl bg-slate-50 px-3 py-2">
             <p className="text-[9px] font-black uppercase tracking-[0.18em] text-indigo-500">Джерело</p>
             <p className="mt-1 text-xs font-bold leading-snug text-slate-500">
-              {sources.join(' · ')}
+              {topicSourceLabels.join(' · ')}
             </p>
           </div>
         )}
@@ -794,59 +787,23 @@ const Dashboard = ({
             <motion.div
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="group bg-white rounded-[2.5rem] p-10 shadow-lg border border-slate-100 cursor-pointer relative overflow-hidden min-h-80 hover:shadow-xl hover:border-indigo-500 transition-all"
-              onClick={() => openTopicSelection(config.variantName)}
+              className="group bg-white rounded-[2.5rem] p-10 shadow-lg border border-slate-100 cursor-pointer relative overflow-hidden min-h-80 hover:shadow-xl hover:border-amber-500 transition-all"
+              onClick={() => setMainMode('sources')}
             >
               <div className="absolute -right-4 -top-4 opacity-5 group-hover:rotate-12 transition-transform text-slate-900">
-                <ClipboardList className="w-40 h-40" />
+                <BookOpen className="w-40 h-40" />
               </div>
               <div className="relative z-10 flex flex-col h-full justify-between">
                 <div className="w-16 h-16 bg-amber-50 rounded-3xl flex items-center justify-center text-amber-600 mb-6 group-hover:bg-amber-600 group-hover:text-white transition-colors">
-                  <Play className="w-8 h-8 ml-1" />
+                  <BookOpen className="w-8 h-8" />
                 </div>
                 <div>
-                  <h3 className="text-3xl font-black text-slate-900 mb-2 leading-tight uppercase">{config.variantName}</h3>
-                  <p className="text-slate-500 font-medium">{variantDescription}</p>
+                  <h3 className="text-3xl font-black text-slate-900 mb-2 leading-tight uppercase">По джерелах</h3>
+                  <p className="text-slate-500 font-medium">Питання, згруповані за вихідним файлом ({sources.length} джерел).</p>
                 </div>
               </div>
             </motion.div>
           </div>
-
-          {IMPORTED_EDKI_BLOCKS.length > 0 && (
-            <div className="max-w-5xl mx-auto space-y-4">
-              <div>
-                <h2 className="text-sm font-black uppercase tracking-[0.2em] text-slate-400">Імпортовані файли</h2>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                {IMPORTED_EDKI_BLOCKS.map((block) => (
-                  <motion.button
-                    key={block.id}
-                    type="button"
-                    whileHover={{ scale: 1.01 }}
-                    whileTap={{ scale: 0.99 }}
-                    onClick={() => openTopicSelection(block.title, {
-                      source: block.source,
-                      allQuestions: true,
-                      preserveOptionOrder: true,
-                      preserveQuestionOrder: true,
-                    })}
-                    className="group flex min-h-36 items-center gap-5 rounded-[2rem] border border-slate-100 bg-white p-6 text-left shadow-sm transition-all hover:border-indigo-500 hover:shadow-xl"
-                  >
-                    <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600 transition-colors group-hover:bg-indigo-600 group-hover:text-white">
-                      <BookOpen className="h-7 w-7" />
-                    </span>
-                    <span className="min-w-0 flex-1">
-                      <span className="block text-2xl font-black leading-tight text-slate-900">{block.title}</span>
-                      <span className="mt-1 block text-sm font-semibold leading-relaxed text-slate-500">{block.description}</span>
-                      <span className="mt-3 inline-flex rounded-full bg-slate-100 px-3 py-1 text-[10px] font-black uppercase tracking-wider text-slate-500">
-                        {block.questionCount} питань
-                      </span>
-                    </span>
-                  </motion.button>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
       );
     }
@@ -1022,10 +979,45 @@ const Dashboard = ({
           </motion.div>
         )}
 
+        {mainMode === 'sources' && (
+          <motion.div key="sources" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-8">
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => setMainMode('root')}
+                className="p-3 bg-white border border-slate-200 rounded-2xl hover:bg-slate-50 transition-colors"
+                title="Назад"
+              >
+                <RotateCcw className="w-5 h-5" />
+              </button>
+              <h2 className="text-3xl font-black text-slate-900 uppercase">Оберіть джерело</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {sources.map((src, i) => (
+                <motion.div
+                  key={src.label}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: i * 0.05 }}
+                  onClick={() => openTopicSelection(src.label, { source: config.defaultSource, sourceLabel: src.label })}
+                  className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm hover:shadow-xl hover:border-amber-500 transition-all cursor-pointer group"
+                >
+                  <div className="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center text-amber-600 mb-4 group-hover:bg-amber-600 group-hover:text-white transition-colors">
+                    <BookOpen className="w-5 h-5" />
+                  </div>
+                  <h3 className="text-lg font-bold text-slate-900 leading-tight">{src.label}</h3>
+                  <div className="mt-4 flex flex-wrap items-center gap-2 text-[10px] font-black uppercase tracking-wider text-slate-400">
+                    <span>{src.count} питань</span>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+
         {mainMode === 'variants' && (
           <motion.div key="variants" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-8">
             <div className="flex items-center gap-4">
-              <button 
+              <button
                 onClick={() => setMainMode('root')}
                 className="p-3 bg-white border border-slate-200 rounded-2xl hover:bg-slate-50 transition-colors"
               >
@@ -1078,49 +1070,89 @@ const Dashboard = ({
                   <p className="text-slate-500 mt-2 text-lg">Оберіть режим навчання, щоб розпочати сесію.</p>
                 </div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
-                  {selectedTopic === MIXED_TOPIC ? (
-                    <>
-                      <button 
-                        onClick={() => onSelectTopic(selectedTopic, 'exam', { ...selectedTopicOptions, limit: 25 })}
-                        className="mode-choice group flex min-h-40 flex-col items-center justify-center p-6 bg-slate-50 rounded-[2rem] border-2 border-transparent hover:border-indigo-500 hover:bg-white transition-all text-left"
+                {selectedTopic === MIXED_TOPIC && examFamily === 'edki' ? (
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4">
+                    {([
+                      { limit: 50, number: 'text-indigo-500', border: 'hover:border-indigo-500' },
+                      { limit: 100, number: 'text-violet-500', border: 'hover:border-violet-500' },
+                      { limit: 150, number: 'text-amber-500', border: 'hover:border-amber-500' },
+                    ] as const).map(({ limit, number, border }) => (
+                      <button
+                        key={limit}
+                        onClick={() => onSelectTopic(selectedTopic, 'training', { ...selectedTopicOptions, limit })}
+                        className={`mode-choice group flex min-h-40 flex-col items-center justify-center p-6 bg-slate-50 rounded-[2rem] border-2 border-transparent ${border} hover:bg-white transition-all`}
                       >
-                        <span className="text-4xl font-black text-indigo-500 mb-2">25</span>
+                        <span className={`text-4xl font-black ${number} mb-2`}>{limit}</span>
                         <span className="font-bold text-slate-900 text-lg">Випадкових питань</span>
-                        <span className="text-sm text-slate-500 mt-1 text-center">Швидка перевірка знань.</span>
+                        <span className="text-sm text-slate-500 mt-1 text-center">Режим навчання.</span>
                       </button>
+                    ))}
+                  </div>
+                ) : selectedTopicOptions?.sourceLabel ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
+                    <button
+                      onClick={() => onSelectTopic(selectedTopic, 'training', { ...selectedTopicOptions, limit: 50 })}
+                      className="mode-choice group flex min-h-40 flex-col items-center justify-center p-6 bg-slate-50 rounded-[2rem] border-2 border-transparent hover:border-indigo-500 hover:bg-white transition-all"
+                    >
+                      <span className="text-4xl font-black text-indigo-500 mb-2">50</span>
+                      <span className="font-bold text-slate-900 text-lg">Випадкових питань</span>
+                      <span className="text-sm text-slate-500 mt-1 text-center">Режим навчання.</span>
+                    </button>
 
-                      <button 
-                        onClick={() => onSelectTopic(selectedTopic, 'exam', { ...selectedTopicOptions, limit: 50 })}
-                        className="mode-choice group flex min-h-40 flex-col items-center justify-center p-6 bg-slate-50 rounded-[2rem] border-2 border-transparent hover:border-violet-500 hover:bg-white transition-all text-left"
-                      >
-                        <span className="text-4xl font-black text-violet-500 mb-2">50</span>
-                        <span className="font-bold text-slate-900 text-lg">Випадкових питань</span>
-                        <span className="text-sm text-slate-500 mt-1 text-center">Глибокий тест на витривалість.</span>
-                      </button>
-                    </>
-                  ) : (
-                    <>
-                      <button 
-                        onClick={() => onSelectTopic(selectedTopic, 'training', selectedTopicOptions)}
-                        className="mode-choice group flex min-h-40 flex-col items-center justify-center p-6 bg-slate-50 rounded-[2rem] border-2 border-transparent hover:border-indigo-500 hover:bg-white transition-all text-left"
-                      >
-                        <BookOpen className="w-8 h-8 text-indigo-500 mb-3 group-hover:scale-110 transition-transform" />
-                        <span className="font-bold text-slate-900 text-lg">Навчання</span>
-                        <span className="text-sm text-slate-500 mt-1 text-center">Миттєвий зворотний зв'язок та детальні пояснення після кожного питання.</span>
-                      </button>
+                    <button
+                      onClick={() => onSelectTopic(selectedTopic, 'training', selectedTopicOptions)}
+                      className="mode-choice group flex min-h-40 flex-col items-center justify-center p-6 bg-slate-50 rounded-[2rem] border-2 border-transparent hover:border-violet-500 hover:bg-white transition-all"
+                    >
+                      <BookOpen className="w-8 h-8 text-violet-500 mb-3 group-hover:scale-110 transition-transform" />
+                      <span className="font-bold text-slate-900 text-lg">Всі питання</span>
+                      <span className="text-sm text-slate-500 mt-1 text-center">Усе джерело в режимі навчання.</span>
+                    </button>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
+                    {selectedTopic === MIXED_TOPIC ? (
+                      <>
+                        <button
+                          onClick={() => onSelectTopic(selectedTopic, 'exam', { ...selectedTopicOptions, limit: 25 })}
+                          className="mode-choice group flex min-h-40 flex-col items-center justify-center p-6 bg-slate-50 rounded-[2rem] border-2 border-transparent hover:border-indigo-500 hover:bg-white transition-all text-left"
+                        >
+                          <span className="text-4xl font-black text-indigo-500 mb-2">25</span>
+                          <span className="font-bold text-slate-900 text-lg">Випадкових питань</span>
+                          <span className="text-sm text-slate-500 mt-1 text-center">Швидка перевірка знань.</span>
+                        </button>
 
-                      <button 
-                        onClick={() => onSelectTopic(selectedTopic, 'exam', selectedTopicOptions)}
-                        className="mode-choice group flex min-h-40 flex-col items-center justify-center p-6 bg-slate-50 rounded-[2rem] border-2 border-transparent hover:border-violet-500 hover:bg-white transition-all text-left"
-                      >
-                        <Award className="w-8 h-8 text-violet-500 mb-3 group-hover:scale-110 transition-transform" />
-                        <span className="font-bold text-slate-900 text-lg">Екзамен</span>
-                        <span className="text-sm text-slate-500 mt-1 text-center">Симуляція тесту. Жодних відповідей до самого кінця.</span>
-                      </button>
-                    </>
-                  )}
-                </div>
+                        <button
+                          onClick={() => onSelectTopic(selectedTopic, 'exam', { ...selectedTopicOptions, limit: 50 })}
+                          className="mode-choice group flex min-h-40 flex-col items-center justify-center p-6 bg-slate-50 rounded-[2rem] border-2 border-transparent hover:border-violet-500 hover:bg-white transition-all text-left"
+                        >
+                          <span className="text-4xl font-black text-violet-500 mb-2">50</span>
+                          <span className="font-bold text-slate-900 text-lg">Випадкових питань</span>
+                          <span className="text-sm text-slate-500 mt-1 text-center">Глибокий тест на витривалість.</span>
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <button
+                          onClick={() => onSelectTopic(selectedTopic, 'training', selectedTopicOptions)}
+                          className="mode-choice group flex min-h-40 flex-col items-center justify-center p-6 bg-slate-50 rounded-[2rem] border-2 border-transparent hover:border-indigo-500 hover:bg-white transition-all text-left"
+                        >
+                          <BookOpen className="w-8 h-8 text-indigo-500 mb-3 group-hover:scale-110 transition-transform" />
+                          <span className="font-bold text-slate-900 text-lg">Навчання</span>
+                          <span className="text-sm text-slate-500 mt-1 text-center">Миттєвий зворотний зв'язок та детальні пояснення після кожного питання.</span>
+                        </button>
+
+                        <button
+                          onClick={() => onSelectTopic(selectedTopic, 'exam', selectedTopicOptions)}
+                          className="mode-choice group flex min-h-40 flex-col items-center justify-center p-6 bg-slate-50 rounded-[2rem] border-2 border-transparent hover:border-violet-500 hover:bg-white transition-all text-left"
+                        >
+                          <Award className="w-8 h-8 text-violet-500 mb-3 group-hover:scale-110 transition-transform" />
+                          <span className="font-bold text-slate-900 text-lg">Екзамен</span>
+                          <span className="text-sm text-slate-500 mt-1 text-center">Симуляція тесту. Жодних відповідей до самого кінця.</span>
+                        </button>
+                      </>
+                    )}
+                  </div>
+                )}
               </div>
             </motion.div>
           </div>
@@ -1497,6 +1529,7 @@ export default function App() {
   const [topics, setTopics] = useState<string[]>([]);
   const [topicCounts, setTopicCounts] = useState<Record<string, number>>({});
   const [topicSources, setTopicSources] = useState<Record<string, string[]>>({});
+  const [sources, setSources] = useState<Array<{ label: string, count: number }>>([]);
   const [stats, setStats] = useState<UserStats | null>(null);
   const [currentQuiz, setCurrentQuiz] = useState<{ 
     examFamily: ExamFamily,
@@ -1582,9 +1615,10 @@ export default function App() {
   useEffect(() => {
     const init = async () => {
       const source = EXAM_CONFIGS[examFamily].defaultSource;
-      const [t, questions] = await Promise.all([
+      const [t, questions, sourceList] = await Promise.all([
         api.getTopics(source),
         api.getQuestions(undefined, undefined, source),
+        api.getSources(source),
       ]);
       const counts = questions.reduce<Record<string, number>>((acc, question) => {
         if (!question.topic) return acc;
@@ -1597,12 +1631,13 @@ export default function App() {
         acc[question.topic].add(question.source);
         return acc;
       }, {});
-      const sources = Object.fromEntries(
+      const topicSourceMap = Object.fromEntries(
         Object.entries(sourceSets).map(([topic, sourceSet]) => [topic, Array.from(sourceSet)])
       );
       setTopics(t);
       setTopicCounts(counts);
-      setTopicSources(sources);
+      setTopicSources(topicSourceMap);
+      setSources(sourceList);
       setStats(loadStats(examFamily));
     };
     init();
@@ -1638,12 +1673,13 @@ export default function App() {
     const source = options.source ?? EXAM_CONFIGS[targetExamFamily].defaultSource;
     const normalizedOptions: StartOptions = { ...options, source };
     const isFullEdkiSet = targetExamFamily === 'edki' && topic === EXAM_CONFIGS.edki.variantName;
-    const useAllQuestions = normalizedOptions.allQuestions || isFullEdkiSet || topic === MIXED_TOPIC || normalizedOptions.variant;
+    const useAllQuestions = normalizedOptions.allQuestions || isFullEdkiSet || topic === MIXED_TOPIC || normalizedOptions.variant || Boolean(normalizedOptions.sourceLabel);
     const topicFilter = useAllQuestions ? undefined : topic;
     let questions = await api.getQuestions(
       topicFilter,
       normalizedOptions.variant,
-      source
+      source,
+      normalizedOptions.sourceLabel
     );
     
     const shouldShuffle = !normalizedOptions.preserveQuestionOrder
@@ -1709,13 +1745,14 @@ export default function App() {
       <AnimatePresence mode="wait">
         {view === 'dashboard' && (
           <motion.div key={`dashboard-${examFamily}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <Dashboard 
+            <Dashboard
               examFamily={examFamily}
-              topics={topics} 
+              topics={topics}
               topicCounts={topicCounts}
               topicSources={topicSources}
-              stats={stats} 
-              onSelectTopic={handleStartQuiz} 
+              sources={sources}
+              stats={stats}
+              onSelectTopic={handleStartQuiz}
               onSelectExamFamily={handleSelectExamFamily}
               onClearStats={handleClearStats}
               theme={theme}
