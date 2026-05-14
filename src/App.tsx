@@ -574,8 +574,43 @@ function ExplanationSections({ text, question, hideSource = false }: { text: str
   );
 }
 
-function ThemeControls({ theme, setTheme, compact = false }: { theme: Theme, setTheme: (theme: Theme) => void, compact?: boolean }) {
-  const buttonSize = compact ? 'h-8 w-8' : 'h-9 w-9';
+function ThemeControls({ theme, setTheme, compact = false, minimal = false }: { theme: Theme, setTheme: (theme: Theme) => void, compact?: boolean, minimal?: boolean }) {
+  const buttonSize = minimal ? 'h-7 w-7' : compact ? 'h-8 w-8' : 'h-9 w-9';
+  const iconSize = minimal ? 'w-3.5 h-3.5' : 'w-4 h-4';
+
+  if (minimal) {
+    return (
+      <div className="theme-switcher flex items-center gap-1">
+        <button
+          type="button"
+          onClick={() => setTheme('light')}
+          title="Світла тема"
+          aria-label="Світла тема"
+          className={`${buttonSize} rounded-full border flex items-center justify-center transition-all ${theme === 'light' ? 'bg-amber-500 border-amber-500 text-white shadow-sm shadow-amber-500/30' : 'bg-white text-slate-500 border-slate-200 hover:bg-amber-50 hover:text-amber-600 hover:border-amber-300'}`}
+        >
+          <Sun className={iconSize} />
+        </button>
+        <button
+          type="button"
+          onClick={() => setTheme('dark')}
+          title="Темна тема"
+          aria-label="Темна тема"
+          className={`${buttonSize} rounded-full border flex items-center justify-center transition-all ${theme === 'dark' ? 'bg-indigo-600 border-indigo-600 text-white shadow-sm shadow-indigo-600/30' : 'bg-white text-slate-500 border-slate-200 hover:bg-indigo-50 hover:text-indigo-700 hover:border-indigo-300'}`}
+        >
+          <Moon className={iconSize} />
+        </button>
+        <button
+          type="button"
+          onClick={() => setTheme('colorful')}
+          title="Кольорова тема"
+          aria-label="Кольорова тема"
+          className={`${buttonSize} rounded-full border flex items-center justify-center transition-all ${theme === 'colorful' ? 'bg-gradient-to-br from-fuchsia-500 via-indigo-500 to-cyan-500 border-indigo-500 text-white shadow-sm shadow-indigo-600/30' : 'bg-white text-slate-500 border-slate-200 hover:bg-violet-50 hover:text-violet-700 hover:border-violet-300'}`}
+        >
+          <Palette className={iconSize} />
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className={`theme-switcher flex items-center border border-slate-200 bg-white/95 shadow-sm ${compact ? 'gap-2 rounded-xl px-2 py-1.5' : 'gap-3 rounded-2xl px-3 py-2'}`}>
@@ -588,7 +623,7 @@ function ThemeControls({ theme, setTheme, compact = false }: { theme: Theme, set
           aria-label="Світла тема"
           className={`${buttonSize} rounded-full border flex items-center justify-center transition-all ${theme === 'light' ? 'bg-amber-500 border-amber-500 text-white shadow-md shadow-amber-500/30' : 'bg-white text-slate-500 border-slate-200 hover:bg-amber-50 hover:text-amber-600 hover:border-amber-300'}`}
         >
-          <Sun className="w-4 h-4" />
+          <Sun className={iconSize} />
         </button>
         <button
           type="button"
@@ -597,7 +632,7 @@ function ThemeControls({ theme, setTheme, compact = false }: { theme: Theme, set
           aria-label="Темна тема"
           className={`${buttonSize} rounded-full border flex items-center justify-center transition-all ${theme === 'dark' ? 'bg-indigo-600 border-indigo-600 text-white shadow-md shadow-indigo-600/30' : 'bg-white text-slate-500 border-slate-200 hover:bg-indigo-50 hover:text-indigo-700 hover:border-indigo-300'}`}
         >
-          <Moon className="w-4 h-4" />
+          <Moon className={iconSize} />
         </button>
         <button
           type="button"
@@ -606,7 +641,7 @@ function ThemeControls({ theme, setTheme, compact = false }: { theme: Theme, set
           aria-label="Кольорова тема"
           className={`${buttonSize} rounded-full border flex items-center justify-center transition-all ${theme === 'colorful' ? 'bg-gradient-to-br from-fuchsia-500 via-indigo-500 to-cyan-500 border-indigo-500 text-white shadow-md shadow-indigo-600/30' : 'bg-white text-slate-500 border-slate-200 hover:bg-violet-50 hover:text-violet-700 hover:border-violet-300'}`}
         >
-          <Palette className="w-4 h-4" />
+          <Palette className={iconSize} />
         </button>
       </div>
     </div>
@@ -1165,16 +1200,16 @@ const QuizView = ({
 
   return (
     <div id="quiz-view" className="max-w-4xl mx-auto p-4 md:p-6 space-y-4">
-      <nav className="flex flex-wrap justify-between items-center gap-3 mb-4">
+      <nav className="flex flex-wrap justify-between items-center gap-2 mb-4">
         <button onClick={onQuit} className="text-slate-400 hover:text-slate-900 flex items-center gap-2 text-sm font-semibold">
           <RotateCcw className="w-4 h-4" />
           Вийти
         </button>
-        <div className="flex flex-wrap items-center justify-end gap-2">
+        <div className="flex items-center gap-2">
           <div className="px-3 py-1 bg-slate-100 rounded-full text-[10px] font-bold text-slate-500 uppercase tracking-widest">
             {topic} • {mode === 'training' ? 'Навчання' : 'Екзамен'}
           </div>
-          <ThemeControls theme={theme} setTheme={setTheme} compact />
+          <ThemeControls theme={theme} setTheme={setTheme} minimal />
         </div>
       </nav>
 
