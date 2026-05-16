@@ -1,0 +1,46 @@
+{
+  "id": "krok-file-1-q085",
+  "number": 85,
+  "blockId": "krok-file-1",
+  "source": "крок файл 1.pdf",
+  "sourceQuestion": "Питання 86",
+  "question": "Пацієнт скаржиться на сильний біль у лівій гомілці та стопі під час ходьби. Об'єктивно спостерігається: ціаноз шкіри стопи. Лівою ногою пацієнт не може стояти на пальцях, зникла чутливість на задній поверхні гомілки та підошві. Який нерв, найімовірніше, уражений у пацієнта?",
+  "options": [
+    "Великогомілковий",
+    "Затульний",
+    "Стегновий",
+    "Сідничний",
+    "Малогомілковий"
+  ],
+  "answers": [
+    {
+      "key": "a",
+      "text": "Великогомілковий",
+      "isCorrect": false
+    },
+    {
+      "key": "b",
+      "text": "Затульний",
+      "isCorrect": false
+    },
+    {
+      "key": "c",
+      "text": "Стегновий",
+      "isCorrect": false
+    },
+    {
+      "key": "d",
+      "text": "Сідничний",
+      "isCorrect": false
+    },
+    {
+      "key": "e",
+      "text": "Малогомілковий",
+      "isCorrect": false
+    }
+  ],
+  "correctAnswer": null,
+  "correctAnswerKey": null,
+  "correctAnswerText": null,
+  "extractionIssue": "no plus marker"
+}

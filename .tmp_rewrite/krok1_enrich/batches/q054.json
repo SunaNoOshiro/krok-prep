@@ -1,0 +1,45 @@
+{
+  "id": "krok-file-1-q054",
+  "number": 54,
+  "blockId": "krok-file-1",
+  "source": "крок файл 1.pdf",
+  "sourceQuestion": "Питання 55",
+  "question": "Який тест можна використовувати для оцінювання координаційних здібностей літніх людей?",
+  "options": [
+    "Флосінга",
+    "Френчай",
+    "Ловетта",
+    "Мотрісіті",
+    "Тіннеті"
+  ],
+  "answers": [
+    {
+      "key": "a",
+      "text": "Флосінга",
+      "isCorrect": false
+    },
+    {
+      "key": "b",
+      "text": "Френчай",
+      "isCorrect": false
+    },
+    {
+      "key": "c",
+      "text": "Ловетта",
+      "isCorrect": false
+    },
+    {
+      "key": "d",
+      "text": "Мотрісіті",
+      "isCorrect": false
+    },
+    {
+      "key": "e",
+      "text": "Тіннеті",
+      "isCorrect": true
+    }
+  ],
+  "correctAnswer": 4,
+  "correctAnswerKey": "e",
+  "correctAnswerText": "Тіннеті"
+}

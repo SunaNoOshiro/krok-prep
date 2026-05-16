@@ -1,0 +1,45 @@
+{
+  "id": "krok-file-1-q060",
+  "number": 60,
+  "blockId": "krok-file-1",
+  "source": "крок файл 1.pdf",
+  "sourceQuestion": "Питання 61",
+  "question": "Яке положення нижньої травмованої кінцівки спостерігатиметься у разі позитивного тесту Обера в пацієнта із синдромом іліотібіального тракту?",
+  "options": [
+    "Приведення",
+    "Відведення",
+    "Розгинання",
+    "Внутрішня ротація",
+    "Згинання"
+  ],
+  "answers": [
+    {
+      "key": "a",
+      "text": "Приведення",
+      "isCorrect": false
+    },
+    {
+      "key": "b",
+      "text": "Відведення",
+      "isCorrect": true
+    },
+    {
+      "key": "c",
+      "text": "Розгинання",
+      "isCorrect": false
+    },
+    {
+      "key": "d",
+      "text": "Внутрішня ротація",
+      "isCorrect": false
+    },
+    {
+      "key": "e",
+      "text": "Згинання",
+      "isCorrect": false
+    }
+  ],
+  "correctAnswer": 1,
+  "correctAnswerKey": "b",
+  "correctAnswerText": "Відведення"
+}

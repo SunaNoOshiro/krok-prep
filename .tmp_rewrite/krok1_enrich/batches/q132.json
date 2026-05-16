@@ -1,0 +1,45 @@
+{
+  "id": "krok-file-1-q132",
+  "number": 132,
+  "blockId": "krok-file-1",
+  "source": "крок файл 1.pdf",
+  "sourceQuestion": "Питання 133",
+  "question": "Що оцінюється за допомогою мануально-м'язового тестування?",
+  "options": [
+    "Пропріоцепція",
+    "Витривалість м'язів",
+    "Чутливість м'язів",
+    "Діапазон рухів у суглобах",
+    "Сила м'язів"
+  ],
+  "answers": [
+    {
+      "key": "a",
+      "text": "Пропріоцепція",
+      "isCorrect": false
+    },
+    {
+      "key": "b",
+      "text": "Витривалість м'язів",
+      "isCorrect": false
+    },
+    {
+      "key": "c",
+      "text": "Чутливість м'язів",
+      "isCorrect": false
+    },
+    {
+      "key": "d",
+      "text": "Діапазон рухів у суглобах",
+      "isCorrect": false
+    },
+    {
+      "key": "e",
+      "text": "Сила м'язів",
+      "isCorrect": true
+    }
+  ],
+  "correctAnswer": 4,
+  "correctAnswerKey": "e",
+  "correctAnswerText": "Сила м'язів"
+}

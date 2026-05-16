@@ -1,0 +1,45 @@
+{
+  "id": "krok-file-1-q137",
+  "number": 137,
+  "blockId": "krok-file-1",
+  "source": "крок файл 1.pdf",
+  "sourceQuestion": "Питання 138",
+  "question": "Під час обстеження чотиримісячної дитини щодо підвищеного тонусу м'язів фізичним терапевтом використано тест для оцінки ризику розвитку церебрального паралічу, що включає неврологічне обстеження, оцінку розвитку моторних функцій та поведінку. Який тест використав фізичний терапевт у цьому разі?",
+  "options": [
+    "Ашворта",
+    "GMFCS",
+    "PEDI",
+    "AIMS",
+    "HINE"
+  ],
+  "answers": [
+    {
+      "key": "a",
+      "text": "Ашворта",
+      "isCorrect": false
+    },
+    {
+      "key": "b",
+      "text": "GMFCS",
+      "isCorrect": false
+    },
+    {
+      "key": "c",
+      "text": "PEDI",
+      "isCorrect": false
+    },
+    {
+      "key": "d",
+      "text": "AIMS",
+      "isCorrect": false
+    },
+    {
+      "key": "e",
+      "text": "HINE",
+      "isCorrect": true
+    }
+  ],
+  "correctAnswer": 4,
+  "correctAnswerKey": "e",
+  "correctAnswerText": "HINE"
+}

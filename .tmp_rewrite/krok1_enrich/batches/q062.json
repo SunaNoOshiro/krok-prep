@@ -1,0 +1,45 @@
+{
+  "id": "krok-file-1-q062",
+  "number": 62,
+  "blockId": "krok-file-1",
+  "source": "крок файл 1.pdf",
+  "sourceQuestion": "Питання 63",
+  "question": "Для збільшення амплітуди рухів при артрогенній контрактурі колінного суглоба у пацієнта вирішили використовувати мобілізацію за методом Кальтенборна третього ступеня. Якою буде середня тривалість обраної мобілізації?",
+  "options": [
+    "40-50 с",
+    "10-15 с",
+    "50-60 с",
+    "30-40 с",
+    "20-30 с"
+  ],
+  "answers": [
+    {
+      "key": "a",
+      "text": "40-50 с",
+      "isCorrect": false
+    },
+    {
+      "key": "b",
+      "text": "10-15 с",
+      "isCorrect": false
+    },
+    {
+      "key": "c",
+      "text": "50-60 с",
+      "isCorrect": false
+    },
+    {
+      "key": "d",
+      "text": "30-40 с",
+      "isCorrect": true
+    },
+    {
+      "key": "e",
+      "text": "20-30 с",
+      "isCorrect": false
+    }
+  ],
+  "correctAnswer": 3,
+  "correctAnswerKey": "d",
+  "correctAnswerText": "30-40 с"
+}

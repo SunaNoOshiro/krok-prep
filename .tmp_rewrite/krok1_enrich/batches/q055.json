@@ -1,0 +1,45 @@
+{
+  "id": "krok-file-1-q055",
+  "number": 55,
+  "blockId": "krok-file-1",
+  "source": "крок файл 1.pdf",
+  "sourceQuestion": "Питання 56",
+  "question": "Які фізичні вправи не показані пацієнтам із діагнозом: хронічний гломерулонефрит, підгостра форма?",
+  "options": [
+    "Коригувальні",
+    "На розтягування",
+    "Силові",
+    "Дихальні",
+    "На розслаблення"
+  ],
+  "answers": [
+    {
+      "key": "a",
+      "text": "Коригувальні",
+      "isCorrect": false
+    },
+    {
+      "key": "b",
+      "text": "На розтягування",
+      "isCorrect": false
+    },
+    {
+      "key": "c",
+      "text": "Силові",
+      "isCorrect": true
+    },
+    {
+      "key": "d",
+      "text": "Дихальні",
+      "isCorrect": false
+    },
+    {
+      "key": "e",
+      "text": "На розслаблення",
+      "isCorrect": false
+    }
+  ],
+  "correctAnswer": 2,
+  "correctAnswerKey": "c",
+  "correctAnswerText": "Силові"
+}

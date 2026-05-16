@@ -1,0 +1,45 @@
+{
+  "id": "krok-file-1-q117",
+  "number": 117,
+  "blockId": "krok-file-1",
+  "source": "крок файл 1.pdf",
+  "sourceQuestion": "Питання 118",
+  "question": "Під час визначення ефективності програми фізичної терапії оцінюють показники спірометрії. Який показник вказує на зміну легеневої тканини у пацієнтів з пневмонією?",
+  "options": [
+    "МОШ50",
+    "ЧД",
+    "ЖЄЛ",
+    "ПШВ",
+    "ОФВ1"
+  ],
+  "answers": [
+    {
+      "key": "a",
+      "text": "МОШ50",
+      "isCorrect": false
+    },
+    {
+      "key": "b",
+      "text": "ЧД",
+      "isCorrect": false
+    },
+    {
+      "key": "c",
+      "text": "ЖЄЛ",
+      "isCorrect": true
+    },
+    {
+      "key": "d",
+      "text": "ПШВ",
+      "isCorrect": false
+    },
+    {
+      "key": "e",
+      "text": "ОФВ1",
+      "isCorrect": false
+    }
+  ],
+  "correctAnswer": 2,
+  "correctAnswerKey": "c",
+  "correctAnswerText": "ЖЄЛ"
+}

@@ -1,0 +1,45 @@
+{
+  "id": "krok-file-1-q069",
+  "number": 69,
+  "blockId": "krok-file-1",
+  "source": "крок файл 1.pdf",
+  "sourceQuestion": "Питання 70",
+  "question": "Укажіть рівень ураження спинного мозку, на якому пацієнти з хребетно- спинномозковою травмою потребуватимуть використання ортезів UFO для забезпечення функції ходьби.",
+  "options": [
+    "L2-L3",
+    "S2-S4",
+    "L1-L2",
+    "L4-S1",
+    "L5-S2"
+  ],
+  "answers": [
+    {
+      "key": "a",
+      "text": "L2-L3",
+      "isCorrect": false
+    },
+    {
+      "key": "b",
+      "text": "S2-S4",
+      "isCorrect": false
+    },
+    {
+      "key": "c",
+      "text": "L1-L2",
+      "isCorrect": false
+    },
+    {
+      "key": "d",
+      "text": "L4-S1",
+      "isCorrect": true
+    },
+    {
+      "key": "e",
+      "text": "L5-S2",
+      "isCorrect": false
+    }
+  ],
+  "correctAnswer": 3,
+  "correctAnswerKey": "d",
+  "correctAnswerText": "L4-S1"
+}

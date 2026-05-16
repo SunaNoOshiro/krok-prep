@@ -1,0 +1,45 @@
+{
+  "id": "krok-file-1-q024",
+  "number": 24,
+  "blockId": "krok-file-1",
+  "source": "крок файл 1.pdf",
+  "sourceQuestion": "Питання 24",
+  "question": "Укажіть тип порушення постави, при якому спостерігається гіперлордоз поперекового відділу.",
+  "options": [
+    "Кругло-увігнута спина",
+    "Сколіотична постава",
+    "Сутула спина",
+    "Кіфосколіоз",
+    "Плоска спина"
+  ],
+  "answers": [
+    {
+      "key": "a",
+      "text": "Кругло-увігнута спина",
+      "isCorrect": true
+    },
+    {
+      "key": "b",
+      "text": "Сколіотична постава",
+      "isCorrect": false
+    },
+    {
+      "key": "c",
+      "text": "Сутула спина",
+      "isCorrect": false
+    },
+    {
+      "key": "d",
+      "text": "Кіфосколіоз",
+      "isCorrect": false
+    },
+    {
+      "key": "e",
+      "text": "Плоска спина",
+      "isCorrect": false
+    }
+  ],
+  "correctAnswer": 0,
+  "correctAnswerKey": "a",
+  "correctAnswerText": "Кругло-увігнута спина"
+}

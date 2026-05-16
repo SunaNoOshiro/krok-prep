@@ -1,0 +1,45 @@
+{
+  "id": "krok-file-1-q001",
+  "number": 1,
+  "blockId": "krok-file-1",
+  "source": "крок файл 1.pdf",
+  "sourceQuestion": "Питання 1",
+  "question": "На скільки відсотків маса тіла перевищує фізіологічну норму в пацієнта з ІІ-м ступенем ожиріння?",
+  "options": [
+    "70-80%",
+    "20-25%",
+    "10-15%",
+    "30-49%",
+    "50-60%"
+  ],
+  "answers": [
+    {
+      "key": "a",
+      "text": "70-80%",
+      "isCorrect": true
+    },
+    {
+      "key": "b",
+      "text": "20-25%",
+      "isCorrect": false
+    },
+    {
+      "key": "c",
+      "text": "10-15%",
+      "isCorrect": false
+    },
+    {
+      "key": "d",
+      "text": "30-49%",
+      "isCorrect": false
+    },
+    {
+      "key": "e",
+      "text": "50-60%",
+      "isCorrect": false
+    }
+  ],
+  "correctAnswer": 0,
+  "correctAnswerKey": "a",
+  "correctAnswerText": "70-80%"
+}

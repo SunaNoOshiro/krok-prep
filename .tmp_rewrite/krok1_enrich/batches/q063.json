@@ -1,0 +1,45 @@
+{
+  "id": "krok-file-1-q063",
+  "number": 63,
+  "blockId": "krok-file-1",
+  "source": "крок файл 1.pdf",
+  "sourceQuestion": "Питання 64",
+  "question": "Укажіть тип вправ, що найбільш ефективний у роботі з пацієнтом, який має мозочкову атаксію.",
+  "options": [
+    "З опором",
+    "На витривалість",
+    "На покращення балансу",
+    "З обтяженнями",
+    "На розтягування"
+  ],
+  "answers": [
+    {
+      "key": "a",
+      "text": "З опором",
+      "isCorrect": false
+    },
+    {
+      "key": "b",
+      "text": "На витривалість",
+      "isCorrect": false
+    },
+    {
+      "key": "c",
+      "text": "На покращення балансу",
+      "isCorrect": true
+    },
+    {
+      "key": "d",
+      "text": "З обтяженнями",
+      "isCorrect": false
+    },
+    {
+      "key": "e",
+      "text": "На розтягування",
+      "isCorrect": false
+    }
+  ],
+  "correctAnswer": 2,
+  "correctAnswerKey": "c",
+  "correctAnswerText": "На покращення балансу"
+}

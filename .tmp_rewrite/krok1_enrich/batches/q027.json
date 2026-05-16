@@ -1,0 +1,45 @@
+{
+  "id": "krok-file-1-q027",
+  "number": 27,
+  "blockId": "krok-file-1",
+  "source": "крок файл 1.pdf",
+  "sourceQuestion": "Питання 27",
+  "question": "За якою шкалою проводиться оцінка індивідуального сприйняття навантаження?",
+  "options": [
+    "Берса",
+    "Бреса",
+    "Борга",
+    "Брюса",
+    "Берга"
+  ],
+  "answers": [
+    {
+      "key": "a",
+      "text": "Берса",
+      "isCorrect": false
+    },
+    {
+      "key": "b",
+      "text": "Бреса",
+      "isCorrect": false
+    },
+    {
+      "key": "c",
+      "text": "Борга",
+      "isCorrect": true
+    },
+    {
+      "key": "d",
+      "text": "Брюса",
+      "isCorrect": false
+    },
+    {
+      "key": "e",
+      "text": "Берга",
+      "isCorrect": false
+    }
+  ],
+  "correctAnswer": 2,
+  "correctAnswerKey": "c",
+  "correctAnswerText": "Борга"
+}

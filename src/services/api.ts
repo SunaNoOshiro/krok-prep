@@ -2,6 +2,7 @@ import quizData from '../data/quizData.json';
 import selfControlData from '../data/selfControlData.json';
 import edkiData from '../data/edkiData.json';
 import krokFile8Import from '../data/imports/krok-file-8.json';
+import krokFile1Import from '../data/imports/krok-file-1.enriched.json';
 import { applyEdkiTopic, sortKrokTopics } from '../data/edkiTopics';
 import { normalizeDisplayText } from '../utils/text';
 
@@ -56,7 +57,7 @@ export interface UserStats {
   lastSession: string | null;
 }
 
-export type QuestionSource = 'quiz' | 'selfControl' | 'edki' | 'krokFile8' | 'combined';
+export type QuestionSource = 'quiz' | 'selfControl' | 'edki' | 'krokFile8' | 'krokFile1' | 'combined';
 
 const defaultStats: UserStats = {
   totalAnswers: 0,
@@ -73,7 +74,15 @@ function mapImportedQuestion(question: typeof krokFile8Import.blocks[number]['qu
   };
 }
 
+function mapKrokFile1Question(question: typeof krokFile1Import.blocks[number]['questions'][number]): Question {
+  return {
+    ...question,
+    id: question.number,
+  } as unknown as Question;
+}
+
 const krokFile8Questions = krokFile8Import.blocks.flatMap((block) => block.questions.map(mapImportedQuestion));
+const krokFile1Questions = krokFile1Import.blocks.flatMap((block) => block.questions.map(mapKrokFile1Question));
 const edkiQuestions = (edkiData as Question[]).map(applyEdkiTopic);
 
 const dataBySource: Record<QuestionSource, Question[]> = {
@@ -81,7 +90,8 @@ const dataBySource: Record<QuestionSource, Question[]> = {
   selfControl: selfControlData as Question[],
   edki: edkiQuestions,
   krokFile8: krokFile8Questions,
-  combined: [...edkiQuestions, ...krokFile8Questions],
+  krokFile1: krokFile1Questions,
+  combined: [...edkiQuestions, ...krokFile8Questions, ...krokFile1Questions],
 };
 
 function normalizeQuestion(question: Question): Question {
