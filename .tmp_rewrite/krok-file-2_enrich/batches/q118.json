@@ -1,0 +1,45 @@
+{
+  "id": "krok-file-2-q118",
+  "number": 118,
+  "blockId": "krok-file-2",
+  "source": "крок файл 2.pdf",
+  "sourceQuestion": "Питання 118",
+  "question": "Який основний метод проведення інструктажу з правильного користування допоміжним засобом?",
+  "options": [
+    "Підтримка позитивного психоемоційного стану",
+    "Фасилітація",
+    "Страхування",
+    "Підбадьорювання",
+    "Демонстрація"
+  ],
+  "answers": [
+    {
+      "key": "a",
+      "text": "Підтримка позитивного психоемоційного стану",
+      "isCorrect": false
+    },
+    {
+      "key": "b",
+      "text": "Фасилітація",
+      "isCorrect": false
+    },
+    {
+      "key": "c",
+      "text": "Страхування",
+      "isCorrect": false
+    },
+    {
+      "key": "d",
+      "text": "Підбадьорювання",
+      "isCorrect": false
+    },
+    {
+      "key": "e",
+      "text": "Демонстрація",
+      "isCorrect": true
+    }
+  ],
+  "correctAnswer": 4,
+  "correctAnswerKey": "e",
+  "correctAnswerText": "Демонстрація"
+}

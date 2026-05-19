@@ -3,6 +3,7 @@ import selfControlData from '../data/selfControlData.json';
 import edkiData from '../data/edkiData.json';
 import krokFile8Import from '../data/imports/krok-file-8.json';
 import krokFile1Import from '../data/imports/krok-file-1.enriched.json';
+import krokFile2Import from '../data/imports/krok-file-2.enriched.json';
 import { applyEdkiTopic, sortKrokTopics } from '../data/edkiTopics';
 import { normalizeDisplayText } from '../utils/text';
 
@@ -21,7 +22,7 @@ export interface Question {
   correctAnswerKey?: string;
   correctAnswerText?: string;
   keys?: string[];
-  explanation: string;
+  explanation?: string;
   answers?: Array<{
     key: string;
     text: string;
@@ -57,7 +58,7 @@ export interface UserStats {
   lastSession: string | null;
 }
 
-export type QuestionSource = 'quiz' | 'selfControl' | 'edki' | 'krokFile8' | 'krokFile1' | 'combined';
+export type QuestionSource = 'quiz' | 'selfControl' | 'edki' | 'krokFile8' | 'krokFile1' | 'krokFile2' | 'combined';
 
 const defaultStats: UserStats = {
   totalAnswers: 0,
@@ -81,8 +82,16 @@ function mapKrokFile1Question(question: typeof krokFile1Import.blocks[number]['q
   } as unknown as Question;
 }
 
+function mapKrokFile2Question(question: typeof krokFile2Import.blocks[number]['questions'][number]): Question {
+  return {
+    ...question,
+    id: question.number,
+  } as unknown as Question;
+}
+
 const krokFile8Questions = krokFile8Import.blocks.flatMap((block) => block.questions.map(mapImportedQuestion));
 const krokFile1Questions = krokFile1Import.blocks.flatMap((block) => block.questions.map(mapKrokFile1Question));
+const krokFile2Questions = krokFile2Import.blocks.flatMap((block) => block.questions.map(mapKrokFile2Question));
 const edkiQuestions = (edkiData as Question[]).map(applyEdkiTopic);
 
 const dataBySource: Record<QuestionSource, Question[]> = {
@@ -91,7 +100,8 @@ const dataBySource: Record<QuestionSource, Question[]> = {
   edki: edkiQuestions,
   krokFile8: krokFile8Questions,
   krokFile1: krokFile1Questions,
-  combined: [...edkiQuestions, ...krokFile8Questions, ...krokFile1Questions],
+  krokFile2: krokFile2Questions,
+  combined: [...edkiQuestions, ...krokFile8Questions, ...krokFile1Questions, ...krokFile2Questions],
 };
 
 function normalizeQuestion(question: Question): Question {
@@ -101,7 +111,7 @@ function normalizeQuestion(question: Question): Question {
     source: question.source ? normalizeDisplayText(question.source) : question.source,
     hint: question.hint ? normalizeDisplayText(question.hint) : question.hint,
     options: question.options.map(normalizeDisplayText),
-    explanation: normalizeDisplayText(question.explanation),
+    explanation: question.explanation ? normalizeDisplayText(question.explanation) : question.explanation,
     visual: question.visual
       ? {
         ...question.visual,

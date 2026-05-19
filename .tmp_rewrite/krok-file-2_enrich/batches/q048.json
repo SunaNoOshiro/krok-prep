@@ -1,0 +1,45 @@
+{
+  "id": "krok-file-2-q048",
+  "number": 48,
+  "blockId": "krok-file-2",
+  "source": "крок файл 2.pdf",
+  "sourceQuestion": "Питання 48",
+  "question": "Упродовж якого часу рекомендовано позиціонувати пацієнта з ішемічним інсультом в одному положенні для профілактики контрактур?",
+  "options": [
+    "3-4 год",
+    "7-8 год",
+    "1-2 год",
+    "5-6 год",
+    "9-10 год"
+  ],
+  "answers": [
+    {
+      "key": "a",
+      "text": "3-4 год",
+      "isCorrect": false
+    },
+    {
+      "key": "b",
+      "text": "7-8 год",
+      "isCorrect": false
+    },
+    {
+      "key": "c",
+      "text": "1-2 год",
+      "isCorrect": true
+    },
+    {
+      "key": "d",
+      "text": "5-6 год",
+      "isCorrect": false
+    },
+    {
+      "key": "e",
+      "text": "9-10 год",
+      "isCorrect": false
+    }
+  ],
+  "correctAnswer": 2,
+  "correctAnswerKey": "c",
+  "correctAnswerText": "1-2 год"
+}

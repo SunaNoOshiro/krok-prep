@@ -1,0 +1,45 @@
+{
+  "id": "krok-file-2-q081",
+  "number": 81,
+  "blockId": "krok-file-2",
+  "source": "крок файл 2.pdf",
+  "sourceQuestion": "Питання 81",
+  "question": "Передчасно народжена дитина щоденно отримує до 10-12 стресових процедур догляду, зокрема забір крові. Яку шкалу застосовують для вимірювання процедурного болю недоношених і доношених немовлят?",
+  "options": [
+    "NIPS",
+    "NBPAS",
+    "—",
+    "N-PASS",
+    "Шкалу ВАШ"
+  ],
+  "answers": [
+    {
+      "key": "a",
+      "text": "NIPS",
+      "isCorrect": true
+    },
+    {
+      "key": "b",
+      "text": "NBPAS",
+      "isCorrect": false
+    },
+    {
+      "key": "c",
+      "text": "—",
+      "isCorrect": false
+    },
+    {
+      "key": "d",
+      "text": "N-PASS",
+      "isCorrect": false
+    },
+    {
+      "key": "e",
+      "text": "Шкалу ВАШ",
+      "isCorrect": false
+    }
+  ],
+  "correctAnswer": 0,
+  "correctAnswerKey": "a",
+  "correctAnswerText": "NIPS"
+}

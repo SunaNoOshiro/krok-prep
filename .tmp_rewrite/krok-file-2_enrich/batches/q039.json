@@ -1,0 +1,45 @@
+{
+  "id": "krok-file-2-q039",
+  "number": 39,
+  "blockId": "krok-file-2",
+  "source": "крок файл 2.pdf",
+  "sourceQuestion": "Питання 39",
+  "question": "Укажіть неврологічний рівень пошкодження спинного мозку, за якого прогноз навчання ходьби за допомогою ортезів і милиць є позитивним?",
+  "options": [
+    "S2-S4",
+    "L1-L2",
+    "L2-L3",
+    "L1-Th11",
+    "L4-S1"
+  ],
+  "answers": [
+    {
+      "key": "a",
+      "text": "S2-S4",
+      "isCorrect": false
+    },
+    {
+      "key": "b",
+      "text": "L1-L2",
+      "isCorrect": false
+    },
+    {
+      "key": "c",
+      "text": "L2-L3",
+      "isCorrect": true
+    },
+    {
+      "key": "d",
+      "text": "L1-Th11",
+      "isCorrect": false
+    },
+    {
+      "key": "e",
+      "text": "L4-S1",
+      "isCorrect": false
+    }
+  ],
+  "correctAnswer": 2,
+  "correctAnswerKey": "c",
+  "correctAnswerText": "L2-L3"
+}

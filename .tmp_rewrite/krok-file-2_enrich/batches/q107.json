@@ -1,0 +1,45 @@
+{
+  "id": "krok-file-2-q107",
+  "number": 107,
+  "blockId": "krok-file-2",
+  "source": "крок файл 2.pdf",
+  "sourceQuestion": "Питання 107",
+  "question": "Під час оцінювання рівня спастичності двоголового м'яза плеча за шкалою Ашворт фізичний терапевт відчуває опір м'яза протягом усього руху, але пасивний рух виконано в повній амплітуді. Якою кількістю балів за шкалою Ашворта можна оцінити спастичність м'яза в цьому разі?",
+  "options": [
+    "2",
+    "1",
+    "4",
+    "3",
+    "0"
+  ],
+  "answers": [
+    {
+      "key": "a",
+      "text": "2",
+      "isCorrect": false
+    },
+    {
+      "key": "b",
+      "text": "1",
+      "isCorrect": true
+    },
+    {
+      "key": "c",
+      "text": "4",
+      "isCorrect": false
+    },
+    {
+      "key": "d",
+      "text": "3",
+      "isCorrect": false
+    },
+    {
+      "key": "e",
+      "text": "0",
+      "isCorrect": false
+    }
+  ],
+  "correctAnswer": 1,
+  "correctAnswerKey": "b",
+  "correctAnswerText": "1"
+}

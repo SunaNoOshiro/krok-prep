@@ -77,11 +77,11 @@ const EXAM_CONFIGS: Record<ExamFamily, {
     title: 'ЄДКІ',
     subtitle: 'Бакалаври "Фізична терапія, ерготерапія"',
     sourceText: 'ЄДКІ Бакалаври "Фізична терапія, ерготерапія"',
-    sourceNote: 'Тестові завдання ЄДКІ від 2026 року, «крок 4 курс.pdf» (Педіатрія), «крок файл 1.pdf» та «крок файл 8.pdf».',
+    sourceNote: 'Тестові завдання ЄДКІ від 2026 року, «крок 4 курс.pdf» (Педіатрія), «крок файл 1.pdf», «крок файл 2.pdf» та «крок файл 8.pdf».',
     defaultSource: 'combined',
     variantSource: 'combined',
     variantTitle: 'ЄДКІ',
-    variantDescription: 'Об\'єднаний банк ЄДКІ + Крок файл 1 + Крок файл 8.',
+    variantDescription: 'Об\'єднаний банк ЄДКІ + Крок файл 1 + Крок файл 2 + Крок файл 8.',
     variantName: 'ЄДКІ',
     variantUnit: 'ЄДКІ',
   },
@@ -490,7 +490,8 @@ function CorrectAnswerExplanationSection({
   explanationText: string,
 }) {
   const sections = splitExplanationSections(explanationText);
-  const correctExplanation = sections.correct || explanationText;
+  const correctAnswerWhy = question?.answers?.find((a) => a.isCorrect)?.why ?? '';
+  const correctExplanation = sections.correct || explanationText || correctAnswerWhy;
   const answerLetter = question ? String.fromCharCode(65 + question.correctAnswer) : '';
 
   return (
@@ -663,20 +664,17 @@ const Dashboard = ({
   const [variants, setVariants] = useState<number[]>([]);
   const config = EXAM_CONFIGS[examFamily];
   const totalQuestionCount = Object.values(topicCounts).reduce((sum, count) => sum + count, 0);
-  const pediatricsQuestionCount = examFamily === 'edki' ? topicCounts['Педіатрія'] ?? 0 : 0;
-  const edkiCoreQuestionCount = examFamily === 'edki'
-    ? Math.max(totalQuestionCount - pediatricsQuestionCount, 0)
-    : 0;
-  const edkiQuestionBankDescription = totalQuestionCount > 0
-    ? `${totalQuestionCount} питань: ${edkiCoreQuestionCount} з тестових завдань ЄДКІ 2026 року та ${pediatricsQuestionCount} з «крок 4 курс.pdf» (Педіатрія).`
+  const totalSourceCount = sources.reduce((sum, s) => sum + s.count, 0);
+  const edkiQuestionBankDescription = totalSourceCount > 0
+    ? `${totalSourceCount} питань з ${sources.length} джерел: ЄДКІ 2026, крок файл 1, крок файл 2, крок файл 8 та «крок 4 курс.pdf» (Педіатрія).`
     : config.variantDescription;
   const sourceNote = examFamily === 'edki' ? edkiQuestionBankDescription : config.sourceNote;
   const variantDescription = examFamily === 'edki' ? edkiQuestionBankDescription : config.variantDescription;
   const mixedDescription = examFamily === 'edki'
-    ? `Випадкова вибірка з усіх ${totalQuestionCount || 0} питань ЄДКІ + Крок файл 8.`
+    ? `Випадкова вибірка з усіх ${totalSourceCount || 0} питань ЄДКІ + Крок файл 1 + Крок файл 2 + Крок файл 8.`
     : 'Випадкова вибірка з усього банку Крок.';
   const topicsDescription = examFamily === 'edki'
-    ? 'Теми KROK з усіх джерел (ЄДКІ + Крок файл 8 + Педіатрія).'
+    ? `Теми KROK з усіх джерел (ЄДКІ + Крок файл 1 + Крок файл 2 + Крок файл 8 + Педіатрія).`
     : 'Виберіть конкретний розділ для глибокого вивчення.';
 
   useEffect(() => {

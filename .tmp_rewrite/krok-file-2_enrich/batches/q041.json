@@ -1,0 +1,45 @@
+{
+  "id": "krok-file-2-q041",
+  "number": 41,
+  "blockId": "krok-file-2",
+  "source": "крок файл 2.pdf",
+  "sourceQuestion": "Питання 41",
+  "question": "Укажіть допоміжний засіб, який у разі неправильного використання може викликати компресійну нейропатію у зв'язку з пахвовою, передплічовою або зап'ястною компресією серединного нерва.",
+  "options": [
+    "Милиці",
+    "Ходунки",
+    "Реабілітаційні бруси",
+    "Тростини",
+    "Крісло колісне"
+  ],
+  "answers": [
+    {
+      "key": "a",
+      "text": "Милиці",
+      "isCorrect": true
+    },
+    {
+      "key": "b",
+      "text": "Ходунки",
+      "isCorrect": false
+    },
+    {
+      "key": "c",
+      "text": "Реабілітаційні бруси",
+      "isCorrect": false
+    },
+    {
+      "key": "d",
+      "text": "Тростини",
+      "isCorrect": false
+    },
+    {
+      "key": "e",
+      "text": "Крісло колісне",
+      "isCorrect": false
+    }
+  ],
+  "correctAnswer": 0,
+  "correctAnswerKey": "a",
+  "correctAnswerText": "Милиці"
+}

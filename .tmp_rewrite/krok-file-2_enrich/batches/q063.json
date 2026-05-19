@@ -1,0 +1,45 @@
+{
+  "id": "krok-file-2-q063",
+  "number": 63,
+  "blockId": "krok-file-2",
+  "source": "крок файл 2.pdf",
+  "sourceQuestion": "Питання 63",
+  "question": "Під час вибору допоміжних засобів пересування орієнтуються на величину кута в ліктьовому суглобі. Який кут згинання в ліктьовому суглобі рекомендований при виборі тростини (ходунків, милиць, паралельних брусів)?",
+  "options": [
+    "15-20°",
+    "25-30°",
+    "10-15°",
+    "5-10°",
+    "20-25°"
+  ],
+  "answers": [
+    {
+      "key": "a",
+      "text": "15-20°",
+      "isCorrect": false
+    },
+    {
+      "key": "b",
+      "text": "25-30°",
+      "isCorrect": true
+    },
+    {
+      "key": "c",
+      "text": "10-15°",
+      "isCorrect": false
+    },
+    {
+      "key": "d",
+      "text": "5-10°",
+      "isCorrect": false
+    },
+    {
+      "key": "e",
+      "text": "20-25°",
+      "isCorrect": false
+    }
+  ],
+  "correctAnswer": 1,
+  "correctAnswerKey": "b",
+  "correctAnswerText": "25-30°"
+}

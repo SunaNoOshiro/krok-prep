@@ -1,0 +1,45 @@
+{
+  "id": "krok-file-2-q009",
+  "number": 9,
+  "blockId": "krok-file-2",
+  "source": "крок файл 2.pdf",
+  "sourceQuestion": "Питання 9",
+  "question": "Пацієнту віком 65 років діагностовано COVID-19, SpO2 – 70%. Яке позиціонування може посприяти значному підвищенню показників сатурації?",
+  "options": [
+    "На правому боці",
+    "Напівсидячи",
+    "На спині",
+    "На животі",
+    "На лівому боці"
+  ],
+  "answers": [
+    {
+      "key": "a",
+      "text": "На правому боці",
+      "isCorrect": false
+    },
+    {
+      "key": "b",
+      "text": "Напівсидячи",
+      "isCorrect": false
+    },
+    {
+      "key": "c",
+      "text": "На спині",
+      "isCorrect": false
+    },
+    {
+      "key": "d",
+      "text": "На животі",
+      "isCorrect": true
+    },
+    {
+      "key": "e",
+      "text": "На лівому боці",
+      "isCorrect": false
+    }
+  ],
+  "correctAnswer": 3,
+  "correctAnswerKey": "d",
+  "correctAnswerText": "На животі"
+}
