@@ -1,0 +1,4822 @@
+{
+  "schemaVersion": "krok-cross-file-duplicates.v1",
+  "generatedAt": "2026-05-20T08:17:16.279326+00:00",
+  "summary": {
+    "totalGroups": 160,
+    "consensusGroups": 133,
+    "mismatchGroups": 27
+  },
+  "groups": [
+    {
+      "questionNormalized": "ykaжіtьoпtиmaльнeaнtиkoнtpaktypнeпoлoжeнняypaзіoпіkycteгнa",
+      "questionRaw": "Укажіть оптимальне антиконтрактурне положення у разі опіку стегна.",
+      "status": "mismatch",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-1",
+          "qId": "krok-file-1-q017",
+          "qNumber": 17,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Нейтральне положення під кутом відведення 20^o",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-8",
+          "qId": "krok-file-8-q124",
+          "qNumber": 124,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Нейтральне положення під кутом відведення 20°",
+          "correctAnswer": 0,
+          "confidence": null,
+          "clinicalAgreement": null,
+          "needsReview": null
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пaцієнtybіkom66pokіbяkииxbopієнaішemічнyxbopoбycepцязmetoюpoзpoблeнняeфektиbнoіkomплekcнoіпpoгpamифізичнoіtepaпііпpизнaч...",
+      "questionRaw": "Пацієнту віком 66 років, який хворіє на ішемічну хворобу серця, з метою розроблення ефективної комплексної програми фізичної терапії призначено проведення функціональної проби для оцінки швидкості його адаптаційних можливостей на фізичне навантаження з визначенням часу відновлювальних процесів. Якою пробою визначається здатність серцево-судинної системи відновлюватися після занять фізичними вправами?",
+      "status": "mismatch",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q022",
+          "qNumber": 22,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Мартіне-Кушелевського",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q022",
+          "qNumber": 22,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Руф'є",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "яkmaєpyxatиcяфaxіbeцьctpaxyючипaцієнtaпідчaccпyckyзіcxoдіb",
+      "questionRaw": "Як має рухатися фахівець, страхуючи пацієнта під час спуску зі сходів?",
+      "status": "mismatch",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q025",
+          "qNumber": 25,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Стояти нижче пацієнта та переходити на сходинку нижче, після того як пацієнт зробив",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q025",
+          "qNumber": 25,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Стояти нижче пацієнта та переходити на сходинку нижче, після того як пацієнт зробив крок",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "чoлobіkbіkom25pokіbпotpaпиbдoліkybaльнoгoзakлaдybнacлідokгіпotoнічнoгokpизyпіcлянaдaннядoпomoгиіпpobeдeнняліkybaнняиoгoc...",
+      "questionRaw": "Чоловік віком 25 років потрапив до лікувального закладу внаслідок гіпотонічного кризу. Після надання допомоги і проведення лікування його стан поліпшився. Які терапевтичні вправи найбільш доцільно призначити для цього пацієнта?",
+      "status": "mismatch",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q027",
+          "qNumber": 27,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Швидкісно-силові вправи та вправи з невеликим обтяженням",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "disagree",
+          "needsReview": true
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q027",
+          "qNumber": 27,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Дихальні вправи із затримкою дихання на видиху",
+          "correctAnswer": 0,
+          "confidence": "medium",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пaцієнtзaпpизнaчeнняmфізичнoгotepaпebtabиkoнyєbпpabyплaнkaykaжіtьxapaktepнyocoблиbіctьctatичнoіpoбotиmязіbyцьomypaзі",
+      "questionRaw": "Пацієнт за призначенням фізичного терапевта виконує вправу «планка». Укажіть характерну особливість статичної роботи м'язів у цьому разі.",
+      "status": "mismatch",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q045",
+          "qNumber": 45,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Наявне напруження",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q045",
+          "qNumber": 45,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Значне напруження",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пaцієнtybіkom45pokіbbctaнobлeнoдіaгнoзнeгocпіtaльнaліboбічнaнижньoдoльobaпнebmoніяykaжіtьдpeнaжнeпoлoжeнняяkeбyдecпpияtи...",
+      "questionRaw": "Пацієнту віком 45 років встановлено діагноз: негоспітальна лівобічна нижньодольова пневмонія. Укажіть дренажне положення, яке буде сприяти відходженню мокротиння.",
+      "status": "mismatch",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q050",
+          "qNumber": 50,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Латеральне або бокове положення лежачи на правому боці",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "disagree",
+          "needsReview": true
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q050",
+          "qNumber": 50,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "На правому боці з опущеним головним кінцем",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "чoлobіkybіkom38pokіbypeзyльtatіboєннoіtpabmиbиkoнaнotpaнcфemopaльнyamпytaціюліboіkінціbkифyнkціoнybaнняbepxніxkінціbokзн...",
+      "questionRaw": "Чоловіку віком 38 років, у результаті воєнної травми виконано трансфеморальну ампутацію лівої кінцівки. Функціонування верхніх кінцівок значних обмежень не має, проживає у приватному секторі, де середовище не безбар'єрне. Який допоміжний засіб реабілітації доцільно обрати на період передпротезної реабілітації?",
+      "status": "mismatch",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q052",
+          "qNumber": 52,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Ролатор",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q052",
+          "qNumber": 52,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Крісло колісне",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "oбepіtьoдинзaиbиипyнktзішkaлипobcяkдeннoіaktиbнoctібapteл",
+      "questionRaw": "Оберіть один зайвий пункт зі шкали повсякденної активності Бартел.",
+      "status": "mismatch",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q053",
+          "qNumber": 53,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Приймання їжі, купання, вмивання, акт дефекації, сечовипускання",
+          "correctAnswer": 2,
+          "confidence": "medium",
+          "clinicalAgreement": "agree",
+          "needsReview": true
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q053",
+          "qNumber": 53,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Приймання їжі, одягання, ходьба по сходах, біг по рівній поверхні",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "дляbctaнobлeнняtoлepaнtнoctідoфізичниxнabaнtaжeньtackлaдaнняпpoгpamиpeaбіліtaціідляпaцієнtaпіcляпepeнeceнoгoінфapktymіok...",
+      "questionRaw": "Для встановлення толерантності до фізичних навантажень та складання програми реабілітації для пацієнта після перенесеного інфаркту міокарда фізичний терапевт запланував проведення тредміл-ергометрії. Який тип навантаження при тредміл-ергометрії найчастіше застосовують у цьому разі?",
+      "status": "mismatch",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q055",
+          "qNumber": 55,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Зі східчастим збільшенням навантаження без періодів відпочинку",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q055",
+          "qNumber": 55,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Зі східчастим збільшенням навантаження",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "піcляпopaнeнняbділянціпaxboboіяmkипaцієнtbідчybaєtpyднoщізpoзгинaнняmіпpиbeдeнняmплeчaдotyлyбaatakoжoбeptaнняmиoгoдocepe...",
+      "questionRaw": "Після поранення в ділянці пахвової ямки пацієнт відчуває труднощі з розгинанням і приведенням плеча до тулуба, а також обертанням його досередини. Який м'яз ушкоджено в пацієнта?",
+      "status": "mismatch",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q061",
+          "qNumber": 61,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Найширший м'яз спини",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q061",
+          "qNumber": 61,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Великий круглий",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "yпoctінcyльtнoгoпaцієнtaзпomіpниmліboбічниmгemіпapeзomyпіcлягoctpиипepіoдpeaбіліtaцііcпoctepігaєtьcяпopyшeнняceлektиbнoг...",
+      "questionRaw": "У постінсультного пацієнта з помірним лівобічним геміпарезом у післягострий період реабілітації спостерігається порушення селективного рухового контролю, згинальна синергія в руці, розгинальна — у нозі, спастичність м'язів 2-3 бали за шкалою Ашворта. Який із тестів є оптимальним для оцінювання сили м'язів нижніх кінцівок пацієнта з урахуванням зазначених проявів?",
+      "status": "mismatch",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q062",
+          "qNumber": 62,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Моторний контроль вертикалізації",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q062",
+          "qNumber": 62,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Мануальний м'язовий тест",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "підчacbибopyдoпomіжниxзacoбіbпepecybaнняopієнtyюtьcянabeличинykytabліktьobomycyглoбіяkииkytзгинaнняbліktьobomycyглoбіpek...",
+      "questionRaw": "Під час вибору допоміжних засобів пересування орієнтуються на величину кута в ліктьовому суглобі. Який кут згинання в ліктьовому суглобі рекомендований при виборі тростини (ходунків, милиць, паралельних брусів)?",
+      "status": "mismatch",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q063",
+          "qNumber": 63,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "25-30°",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": null
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q063",
+          "qNumber": 63,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "15-20°",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": null
+        }
+      ]
+    },
+    {
+      "questionNormalized": "yпoctінcyльtнoгoпaцієнtaзгemіпapeзomзapeзyльtatamиmaнyaльнomязoboгotectybaнняcилaдboгoлoboгomязacteгнactaнobиtь1бaляkomy...",
+      "questionRaw": "У постінсультного пацієнта з геміпарезом за результатами мануально- м'язового тестування сила двоголового м'яза стегна становить 1 бал. Якому кваліфікатору МКФ для функцій організму відповідає зазначений показник сили м'язів?",
+      "status": "mismatch",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q065",
+          "qNumber": 65,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "3",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q065",
+          "qNumber": 65,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "4",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пoctінcyльtнomyпaцієнtybіkom60pokіbдіaгнoctobaнocпactичниигemіпapeзcпactичніctьmязіbзгинaчіbbepxньoіkінціbkиctaнobиtь34б...",
+      "questionRaw": "Постінсультному пацієнту віком 60 років діагностовано: спастичний геміпарез, спастичність м'язів-згиначів верхньої кінцівки становить 3-4 бали за шкалою Ашворта, больовий синдром. Яке втручання ерготерапії є оптимальним для пацієнта з урахуванням ступеня спастичності?",
+      "status": "mismatch",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q066",
+          "qNumber": 66,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Тривале статичне розтягнення",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q066",
+          "qNumber": 66,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Тривале статичне розтягнення м'язів",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пaцієнtbіkom56pokіbпpoxoдиtьpaнніиetaпpeaбіліtaцііпіcляtotaльнoгoeндoпpoteзybaнняkyльшoboгocyглoбaяkymoдeльxoдьбинeoбxід...",
+      "questionRaw": "Пацієнт віком 56 років проходить ранній етап реабілітації після тотального ендопротезування кульшового суглоба. Яку модель ходьби необхідно застосовувати в цьому разі?",
+      "status": "mismatch",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q069",
+          "qNumber": 69,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Приточкову з милицями",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q069",
+          "qNumber": 69,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Триточкову з милицями",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "яkнaзиbaєtьcяbільнииyпpoctopіpyxщobиkoнyєtьcядиctaльниmceгmeнtomkінціbkи",
+      "questionRaw": "Як називається вільний у просторі рух, що виконується дистальним сегментом кінцівки?",
+      "status": "mismatch",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q070",
+          "qNumber": 70,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Вирава з відкритим кінематичним ланцюгом",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q070",
+          "qNumber": 70,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Вправа з відкритим кінематичним ланцюгом",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "yпaцієнtabіkom48pokіbліboбічниигoнaptpoз2ctyпeняпoшkoджeнняmeдіaльнoгomeніckaліboгokoліннoгocyглoбabиpaжeниибoльobииcинд...",
+      "questionRaw": "У пацієнта віком 48 років — лівобічний гонартроз 2 ступеня, пошкодження медіального меніска лівого колінного суглоба. Виражений больовий синдром. Який метод обстеження дозволить визначити обсяг активних рухів у пошкодженому суглобі?",
+      "status": "mismatch",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q075",
+          "qNumber": 75,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Гоніометрія (згідно з позначкою)",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q075",
+          "qNumber": 75,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Гоніометрія",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "дляпpobeдeнняpeaбіліtaцііпaцієнtaпіcляпepeнeceнoгoінфapktymіokapдaнeoбxіднooціниtиtoлepaнtніctьдoфізичнoгoнabaнtaжeнняяk...",
+      "questionRaw": "Для проведення реабілітації пацієнта після перенесеного інфаркту міокарда необхідно оцінити толерантність до фізичного навантаження. Який діагностичний метод потрібно застосувати в цьому разі?",
+      "status": "mismatch",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q078",
+          "qNumber": 78,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Велоергометрію (Згідно з позначкою на фото, хоча може здатися, що це А)",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q078",
+          "qNumber": 78,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Велоергометрію",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "підчacoпиtybaнняepгotepaпebtomпaцієнtkaнaдaлatakyінфopmaціюяпpaцююбібліotekapkoюtaнabчaюcянakypcaxmeдcectpинctbaдoяkoгoд...",
+      "questionRaw": "Під час опитування ерготерапевтом пацієнтка надала таку інформацію: «Я працюю бібліотекаркою та навчаюся на курсах медсестринства...». До якого домену МКФ належить отримана інформація про пацієнтку?",
+      "status": "mismatch",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q085",
+          "qNumber": 85,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Участь",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q085",
+          "qNumber": 85,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Особистісні фактори",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "bиkoнyючизпaцієнtombпpabидляpoзtягybaнняmязіbkyльшoboгocyглoбaфізичнииtepaпebtзbepнybybaгyнaпatoлoгічнізmінияkієпpotипok...",
+      "questionRaw": "Виконуючи з пацієнтом вправи для розтягування м'язів кульшового суглоба, фізичний терапевт звернув увагу на патологічні зміни, які є протипоказанням до виконання таких вправ. Укажіть це протипоказання.",
+      "status": "mismatch",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q089",
+          "qNumber": 89,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Патологічно стягувальні рубці",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q089",
+          "qNumber": 89,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Гіпермобільність суглоба",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "яkykoнцeпtyaльнymoдeльпpaktиkиbиkopиctobyєycboіипpoфecіиніидіяльнoctіepгotepaпebtkoлиaнaлізyєзaняttєbyaktиbніctьtabaжлиb...",
+      "questionRaw": "Яку концептуальну модель практики використовує у своїй професійній діяльності ерготерапевт, коли аналізує заняттєву активність та важливі для особи заняття з метою їх покращення, враховуючи вплив середовища та наратив самої особи?",
+      "status": "mismatch",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q092",
+          "qNumber": 92,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Модель «Особа-середовище-заняття-виконання» (PEOP)",
+          "correctAnswer": 1,
+          "confidence": "medium",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q092",
+          "qNumber": 92,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Канадська модель виконання заняття та залучення (CMOP-E)",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "яkyctpateгіюпotpібнobибpatидляpeaлізaціізabдaнняізbдockoнaлeннянabичokпepecідaннянapіbнobиcokіпobepxніocoбoюзнacлідkamиx...",
+      "questionRaw": "Яку стратегію потрібно вибрати для реалізації завдання із вдосконалення навичок пересідання на рівновисокі поверхні особою з наслідками хребетно- спинномозкової травми на рівні С7 (ASIA C)?",
+      "status": "mismatch",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q117",
+          "qNumber": 117,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Пересідання з повною допомогою фізичного терапевта",
+          "correctAnswer": 4,
+          "confidence": "medium",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q117",
+          "qNumber": 117,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Пересідання за допомогою ковзної дошки",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пaцієнtkabіkom27pokіbпepeбybaє5дeньyнebpoлoгічнomybідділeнніпіcляoпepaціізіctaбілізaцііxpeбtaнapіbніxpeбціbt11l1зaнamнeз...",
+      "questionRaw": "Пацієнтка віком 27 років перебуває 5 день у неврологічному відділенні після операції зі стабілізації хребта на рівні хребців T11-L1. З анамнезу відомо, що місяць тому, після дорожньо-транспортної пригоди, жінка була шпиталізована до лікарні з діагнозом перелом хребта на рівні T12 з повним пошкодженням спинного мозку. Фізичний терапевт планує на занятті навчити пацієнтку техніці самостійної стимуляції кашлю. Яке вихідне положення протипоказане для пацієнтки під час проведення цієї процедури?",
+      "status": "mismatch",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q126",
+          "qNumber": 126,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Лежачи на спині",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q126",
+          "qNumber": 126,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Сидячи",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "яkіbпpabидoцільнopekomeндybatипaцієнtamщoxbopіюtьнaгіпeptoнічнyxbopoбybpізниxctaдіяxзmetoюзнижeнняaptepіaльнoгotиcky",
+      "questionRaw": "Які вправи доцільно рекомендувати пацієнтам, що хворіють на гіпертонічну хворобу в різних стадіях, з метою зниження артеріального тиску?",
+      "status": "mismatch",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q130",
+          "qNumber": 130,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Дихальні із затримкою дихання на видиху",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q130",
+          "qNumber": 130,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Ізотонічні",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "фізичнииtepaпebtпpoboдиtьmaнyaльнemязobetectybaнняпpиbідниxmязіbcteгнaяkиипpинципєocнobниmпpabилomtectybaнняtaoцінюbaння...",
+      "questionRaw": "Фізичний терапевт проводить мануальне м'язове тестування привідних м'язів стегна. Який принцип є основним правилом тестування та оцінювання м'язової сили?",
+      "status": "mismatch",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q134",
+          "qNumber": 134,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Напруження та розслаблення",
+          "correctAnswer": 0,
+          "confidence": "medium",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q134",
+          "qNumber": 134,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Напруження та подолання",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "дoфізичнoгotepaпebtaзbepнyлacяпaцієнtkabіkom61pіkзaпobtopнoюkoнcyльtaцієюboнa2tижніbиkoнybaлaпpизнaчeнyпpoгpamykapдіopea...",
+      "questionRaw": "До фізичного терапевта звернулася пацієнтка віком 61 рік за повторною консультацією. Вона 2 тижні виконувала призначену програму кардіореабілітації за післягострим періодом після інфаркту міокарда. Пацієнтка зазначила, що стала почувати себе краще, може проходити більшу дистанцію та виконувати значний обсяг побутових навантажень без задишки. Яку динаміку функціонального показника роботи серця, найімовірніше, буде встановлено під час обстеження у цьому разі?",
+      "status": "mismatch",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q143",
+          "qNumber": 143,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Збільшення фракції викиду лівого шлуночка",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "disagree",
+          "needsReview": true
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q143",
+          "qNumber": 143,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Збільшення кінцево-діастолічного об'єму лівого шлуночка",
+          "correctAnswer": 1,
+          "confidence": "medium",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пaцієнtзбpoнxіaльнoюactmoюпepeбybaєнactaціoнapнomyetaпіліkybaнняпіcлязabepшeннябpoнxocпaзmyacиcteнtфізичнoгotepaпebtapek...",
+      "questionRaw": "Пацієнт з бронхіальною астмою перебуває на стаціонарному етапі лікування. Після завершення бронхоспазму асистент фізичного терапевта рекомендує використовувати терапевтичні дихальні вправи. Укажіть ці вправи.",
+      "status": "mismatch",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q145",
+          "qNumber": 145,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Дихальні вправи з промовою звуків на подовженому видиху",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q145",
+          "qNumber": 145,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Дихальні вправи з вимовою звуків на подовженому видиху",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "щoєпpotипokaзaнняmдoпoctypaльнoгoдpeнaжy",
+      "questionRaw": "Що є протипоказанням до постурального дренажу?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q001",
+          "qNumber": 1,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Легенева кровотеча",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q001",
+          "qNumber": 1,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Легенева кровотеча",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пoctінcyльtниипaцієнtbіkom62pokипіcлягoctpиипepіoдpeaбіліtaцііbeptиkaлізobaнииyпoлoжeнняcидячиtpyднoщізytpиmaнняmбaлaнcy...",
+      "questionRaw": "Постінсультний пацієнт віком 62 роки: післягострий період реабілітації, вертикалізований у положення сидячи, труднощі з утриманням балансу. Яке тренування для покращення самостійного сидіння є оптимальним для такого пацієнта?",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q003",
+          "qNumber": 3,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Тренування опорної функції рук, сидячи",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q003",
+          "qNumber": 3,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Тренування опорної функції рук, сидячи",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "yпaцієнtkиbіkom67pokіbгoctpeпopyшeнняmoзkoboгokpobooбігybиpaжeниигemіпapeзbaнamнeзіцykpobиидіaбetнectaбільнaгemoдинamіka...",
+      "questionRaw": "У пацієнтки віком 67 років гостре порушення мозкового кровообігу, виражений геміпарез. В анамнезі: цукровий діабет, нестабільна гемодинаміка, високий ризик утворення пролежнів. Який проміжок часу є оптимальним для зміни положення тіла пацієнтки для профілактики пролежнів?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q004",
+          "qNumber": 4,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Кожні 2 години",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q004",
+          "qNumber": 4,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Кожні 2 години",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пaцієнtkabіkom35pokіbпepeбybaєbtepaпebtичнomybідділeннізпpиboдyпнebmoніізaгaльнииctaнзaдobільнииєдинeщotypбyєжінkyцeпoгa...",
+      "questionRaw": "Пацієнтка віком 35 років перебуває в терапевтичному відділенні з приводу пневмонії. Загальний стан задовільний, єдине, що турбує жінку, це погане відходження мокротиння під час кашлю, що створює для неї дискомфорт. Який елемент масажу необхідно застосувати, щоб полегшити відходження мокротиння?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q005",
+          "qNumber": 5,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Вібрацію",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q005",
+          "qNumber": 5,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Вібрацію",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "жінkabіkom35pokіbmaєcиндpomзaпяctkoboгokaнaлyckapжиtьcянateщoнemoжeдpykybatибільшe10xbпepшніжбільctaнeнeпepeбopниmяkізax...",
+      "questionRaw": "Жінка віком 35 років має синдром зап'ясткового каналу. Скаржиться на те, що не може друкувати більше 10 хв, перш ніж біль стане непереборним. Які заходи фізичної терапії та ерготерапії застосовуватимуться з метою зменшення больових відчуттів у перші 5 днів?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q006",
+          "qNumber": 6,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Ортезування почергово з вправами з полегшених вихідних положень",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q006",
+          "qNumber": 6,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Ортезування почергово з вправами з полегшених вихідних положень",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пaцієнtckapжиtьcянaбільtaoніmінняbділянціпepeдпліччяtakиctіпpaboіpykияkіпocилююtьcяbнoчіtaпідчacpoбotизakomпюtepomфізичн...",
+      "questionRaw": "Пацієнт скаржиться на біль та оніміння в ділянці передпліччя та кисті правої руки, які посилюються вночі та під час роботи за комп'ютером. Фізичний терапевт провів два тести: запропонував пацієнту зігнути кисть максимально вниз та утримувати в такому положенні руку протягом 30-60 с; виконав постукування в ділянці зап'ястя та середини передпліччя. Про компресію якого нерва свідчитимуть позитивні результати цих тестів?",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q007",
+          "qNumber": 7,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Серединного",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q007",
+          "qNumber": 7,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Серединного",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "яkиmиocнobниmиmetoдamиbизнaчaюtьcяпokaзниkизobнішньoгoдиxaння",
+      "questionRaw": "Якими основними методами визначаються показники зовнішнього дихання?",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-1",
+          "qId": "krok-file-1-q008",
+          "qNumber": 8,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Спірометрією, спірографією",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-8",
+          "qId": "krok-file-8-q054",
+          "qNumber": 54,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Спірометрією, спірографією",
+          "correctAnswer": 1,
+          "confidence": null,
+          "clinicalAgreement": null,
+          "needsReview": null
+        }
+      ]
+    },
+    {
+      "questionNormalized": "чoлobіkbіkom62pokипepeніcішemічнииінcyльtyбaceиніcepeдньoіmoзkoboіaptepііпpaboіпіbkyлі3mіcяціtomyoбєktиbнocпoctepігaєtьc...",
+      "questionRaw": "Чоловік віком 62 роки переніс ішемічний інсульт у басейні середньої мозкової артерії правої півкулі 3 місяці тому. Об'єктивно спостерігається: виражена спастичність у лівій верхній кінцівці, особливо у згиначах кисті та лікті (за шкалою Ашворт — 3 бали). Пацієнт має труднощі в розгинанні руки, утриманні предметів та виконанні функціональних рухів. Яка техніка фізичної терапії є найбільш ефективною для зменшення спастичності в цьому разі?",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q008",
+          "qNumber": 8,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Використання методики повільного розтягування спазмованих м'язів",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q008",
+          "qNumber": 8,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Використання методики повільного розтягування спазмованих м'язів",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пaцієнtybіkom65pokіbдіaгнoctobaнocovid19spo270яkeпoзиціoнybaнняmoжeпocпpияtизнaчнomyпідbищeннюпokaзниkіbcatypaціі",
+      "questionRaw": "Пацієнту віком 65 років діагностовано COVID-19, SpO2 – 70%. Яке позиціонування може посприяти значному підвищенню показників сатурації?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q009",
+          "qNumber": 9,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "На животі",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q009",
+          "qNumber": 9,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "На животі",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "яkииtectєbaжлиbиmeлemeнtomпідчacпідгotobkидopeaбіліtaцііtomyщoдaєmoжлиbіctьbизнaчиtигotobніctьпaцієнtaдoпoчatkyфізичниxн...",
+      "questionRaw": "Який тест є важливим елементом під час підготовки до реабілітації, тому що дає можливість визначити готовність пацієнта до початку фізичних навантажень?",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-1",
+          "qId": "krok-file-1-q010",
+          "qNumber": 10,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Тест 2-хвилинної ходьби",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-8",
+          "qId": "krok-file-8-q025",
+          "qNumber": 25,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Тест 2-хвилинної ходьби",
+          "correctAnswer": 1,
+          "confidence": null,
+          "clinicalAgreement": null,
+          "needsReview": null
+        }
+      ]
+    },
+    {
+      "questionNormalized": "яkyшkaлybиkopиctobyюtьbepгotepaпіідляctaндaptизobaнoіoцінkиpіbняpoзbиtkybeлиkиxmotopниxфyнkціиyдіteиізцepeбpaльниmпapaлі...",
+      "questionRaw": "Яку шкалу використовують в ерготерапії для стандартизованої оцінки рівня розвитку великих моторних функцій у дітей із церебральним паралічем?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q010",
+          "qNumber": 10,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "GMFCS",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q010",
+          "qNumber": 10,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "GMFCS",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "cпoptcmeнпіcлязaгoctpeнняocteoaptpoзykoліннoгocyглoбaotpиmabpekomeндaцііфізичнoгotepaпebtaщoдopoзbиtkykapдіopecпіpatopнo...",
+      "questionRaw": "Спортсмен після загострення остеоартрозу колінного суглоба отримав рекомендації фізичного терапевта щодо розвитку кардіореспіраторної витривалості. Фізичний терапевт рекомендував тренування за допомогою аеробних вправ від 20 до 30 хв зі збільшенням інтенсивності до діапазону 60-85% максимального ЧСС. На якій стадії розвитку кардіореспіраторної витривалості перебуває спортсмен?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-1",
+          "qId": "krok-file-1-q011",
+          "qNumber": 11,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Вдосконалення",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-8",
+          "qId": "krok-file-8-q045",
+          "qNumber": 45,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Вдосконалення",
+          "correctAnswer": 0,
+          "confidence": null,
+          "clinicalAgreement": null,
+          "needsReview": null
+        }
+      ]
+    },
+    {
+      "questionNormalized": "яkідііmaєbиkoнybatифізичнииtepaпebtдляпідbищeнняeфektиbнoctідpeнaжнoіпoзицііbpaзінakoпичeнняmokpotинняігнoюbбpoнxaxyпaці...",
+      "questionRaw": "Які дії має виконувати фізичний терапевт для підвищення ефективності дренажної позиції в разі накопичення мокротиння і гною в бронхах у пацієнта?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q011",
+          "qNumber": 11,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Під час видиху натискати на відповідну ділянку грудної клітки, виконуючи вібраційний масаж",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q011",
+          "qNumber": 11,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Під час видиху натискати на відповідну ділянку грудної клітки, виконуючи вібраційний масаж",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "яkізabдaнняфізичнoіtepaпіібyдytьпpіopиtetниmиbпepшіtpидніxpeбetнocпиннomoзkoboіtpabmи",
+      "questionRaw": "Які завдання фізичної терапії будуть пріоритетними в перші три дні хребетно- спинномозкової травми?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q012",
+          "qNumber": 12,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Профілактика ускладнень",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q012",
+          "qNumber": 12,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Профілактика ускладнень",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "підчacoбcteжeнняпaцієнtaзнacлідkamичmtзatectombctaньtaидибyлootpиmaнopeзyльtat15cяkaздatніctьдoпepemіщeнняyцьoгoпaцієнta",
+      "questionRaw": "Під час обстеження пацієнта з наслідками ЧМТ за тестом «Встань та йди» було отримано результат — 15 с. Яка здатність до переміщення у цього пацієнта?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q013",
+          "qNumber": 13,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Переважно незалежна здатність до переміщення",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "disagree",
+          "needsReview": true
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q013",
+          "qNumber": 13,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Переважно незалежна здатність до переміщення",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "чoлobіkbіkom45pokіbckapжиtьcянaзaдишkyщoпocилюєtьcяпідчacнeзнaчнoгoфізичнoгoнabaнtaжeнняtamaлoпpoдyktиbнииkaшeльbaнamнeз...",
+      "questionRaw": "Чоловік віком 45 років скаржиться на задишку, що посилюється під час незначного фізичного навантаження та малопродуктивний кашель. В анамнезі: ХОЗЛ. Укажіть найбільш інформативний метод для визначення дихальної недостатності в пацієнта.",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q014",
+          "qNumber": 14,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Спірографія",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q014",
+          "qNumber": 14,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Спірографія",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "peнtгeнoлoгічнobпaцієнtaдіaгнoctobaнoпepeлomплeчoboіkіctkиbділянціmіжгopбkoboібopoзниcyxoжилokяkoгomязamoжeбytинacamпepe...",
+      "questionRaw": "Рентгенологічно в пацієнта діагностовано перелом плечової кістки в ділянці міжгорбкової борозни. Сухожилок якого м'яза може бути насамперед травмований уламками кістки в цьому разі?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q016",
+          "qNumber": 16,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Двоголового м'яза плеча",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q016",
+          "qNumber": 16,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Двоголового м'яза плеча",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пaцієнtbіkom69pokіbзa6mіcяціbпіcляeндoпpoteзybaнняпpaboгokoліннoгocyглoбaпepeбybaєнaдobгotpиbaліиpeaбіліtaцііяkииtectдoц...",
+      "questionRaw": "Пацієнт віком 69 років за 6 місяців після ендопротезування правого колінного суглоба перебуває на довготривалій реабілітації. Який тест доцільно застосувати фізичному терапевту для оцінки швидкості ходьби?",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q017",
+          "qNumber": 17,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "10-метровий тест ходьби",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q017",
+          "qNumber": 17,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "10-метровий тест ходьби",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "hoboнapoджeніидиtиніbиkoнyєtьcяпoглaджybaннящokипpabopyчoбepіtьpeфлektopнybідпobідьяkaбyдebkaзybatинaзpілиипoшykobииpeфл...",
+      "questionRaw": "Новонародженій дитині виконується погладжування щоки праворуч. Оберіть рефлекторну відповідь, яка буде вказувати на зрілий пошуковий рефлекс.",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q018",
+          "qNumber": 18,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Поворот голови праворуч та відкривання рота",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q018",
+          "qNumber": 18,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Поворот голови праворуч та відкривання рота",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пaцієнtbіkom72pokипotpaпиbдoліkybaльнoгoзakлaдybнacлідokгіпeptoнічнoгokpизyпіcляпpobeдeнoгoліkybaнняиoгoctaнчactkoboпoлі...",
+      "questionRaw": "Пацієнт віком 72 роки потрапив до лікувального закладу внаслідок гіпертонічного кризу. Після проведеного лікування його стан частково поліпшився. Укажіть одне з основних завдань терапевтичних вправ при гіпертонічній хворобі.",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q019",
+          "qNumber": 19,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Покращення діяльності ЦНС, усунення порушень процесів регуляції артеріального тиску",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q019",
+          "qNumber": 19,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Покращення діяльності ЦНС, усунення порушень процесів регуляції артеріального тиску",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "фізичнииtepaпebtoцінюєcилytpaпeцієпoдібнoгomязaпaцієнtyпoлoжeнніcидячиcamoctіинoпідніmaєплeчіbгopyзmakcиmaльнoюamпліtyдo...",
+      "questionRaw": "Фізичний терапевт оцінює силу трапецієподібного м'яза. Пацієнт у положенні сидячи самостійно піднімає плечі вгору з максимальною амплітудою, але не може виконати рух, якщо фізичний терапевт чинить невеликий опір руховій дії. Визначте максимальний бал за ММТ.",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-1",
+          "qId": "krok-file-1-q020",
+          "qNumber": 20,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "3",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-8",
+          "qId": "krok-file-8-q039",
+          "qNumber": 39,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "3",
+          "correctAnswer": 0,
+          "confidence": null,
+          "clinicalAgreement": null,
+          "needsReview": null
+        }
+      ]
+    },
+    {
+      "questionNormalized": "ykaжіtьнaиeфektиbнішииcпocібпpoфілaktиkипpoлeжніbyпaцієнtіbзxpeбetнocпиннomoзkoboюtpabmoю",
+      "questionRaw": "Укажіть найефективніший спосіб профілактики пролежнів у пацієнтів з хребетно-спинномозковою травмою.",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q020",
+          "qNumber": 20,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Часта зміна положення тіла",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q020",
+          "qNumber": 20,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Часта зміна положення тіла",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "яkииtectmoжнaзactocybatищoбoціниtиздatніctьпaцієнtamoдифіkobybatиxoдьбyпobязaнyзpyxomгoлobиkoгніtиbниmизabдaнняmизmінoюі...",
+      "questionRaw": "Який тест можна застосувати, щоб оцінити здатність пацієнта модифіковувати ходьбу, пов'язану з рухом голови, когнітивними завданнями, зміною її швидкості чи перешкод?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-1",
+          "qId": "krok-file-1-q021",
+          "qNumber": 21,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Динамічний індекс ходьби",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-8",
+          "qId": "krok-file-8-q146",
+          "qNumber": 146,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Динамічний індекс ходьби",
+          "correctAnswer": 1,
+          "confidence": null,
+          "clinicalAgreement": null,
+          "needsReview": null
+        }
+      ]
+    },
+    {
+      "questionNormalized": "чoлobіkbіkom46pokіbзіндekcommacиtілa302kгm2ckapжиtьcянaзнижeнняфізичнoіtapoзymoboіпpaцeздatнoctіпpoфecіинaдіяльніctьпobя...",
+      "questionRaw": "Чоловік віком 46 років з індексом маси тіла — 30,2 кг/м² скаржиться на зниження фізичної та розумової працездатності. Професійна діяльність пов'язана з роботою за комп'ютером. Інші скарги відсутні. Вправи якої спрямованості та інтенсивності доцільно рекомендувати пацієнту?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q021",
+          "qNumber": 21,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Аеробні, помірної інтенсивності",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q021",
+          "qNumber": 21,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Аеробні, помірної інтенсивності",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": null
+        }
+      ]
+    },
+    {
+      "questionNormalized": "яkииkлінічнииінctpymeнtbиkopиctobyєtьcядляoцінюbaнняtяжkoctіtapіbняпoшkoджeнняcпиннoгomoзky",
+      "questionRaw": "Який клінічний інструмент використовується для оцінювання тяжкості та рівня пошкодження спинного мозку?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q023",
+          "qNumber": 23,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Шкала ASIA",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q023",
+          "qNumber": 23,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Шкала ASIA",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пaцієнtbіkom73pokиxbopієнaxbopoбyпapkінcoнaakінetиkopигіднyфopmyпіcляtectybaнняbизнaчeнaivctaдіяxbopoбизamoдифіkobaнoюшk...",
+      "questionRaw": "Пацієнт віком 73 роки хворіє на хворобу Паркінсона, акінетико-ригідну форму. Після тестування визначена IV стадія хвороби за модифікованою шкалою Хена та Яра. Якому рівню рухової активності відповідає ця стадія хвороби в пацієнта?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q024",
+          "qNumber": 24,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Істотне обмеження рухової активності, але залишається можливим самостійне пересування",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "disagree",
+          "needsReview": true
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q024",
+          "qNumber": 24,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Істотне обмеження рухової активності, але залишається можливим самостійне пересування",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пaцієнtabіkom56pokіbшпиtaлізobaнoзіckapгamинaінteнcиbниипekyчиибільзaгpyднинoюяkииіppaдіюєbліbypykyлoпatkyнижнющeлeпytpи...",
+      "questionRaw": "Пацієнта віком 56 років шпиталізовано зі скаргами на інтенсивний пекучий біль за грудниною, який іррадіює в ліву руку, лопатку, нижню щелепу, триває більше години та не знімається нітрогліцерином. Встановлено діагноз: інфаркт міокарда. Якою буде основна мета першого (стаціонарного) етапу реабілітації для цього пацієнта?",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q026",
+          "qNumber": 26,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Протидія негативним впливам тривалого ліжкового режиму та підготовка пацієнта до повернення до нормальної повсякденної діяльності",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "disagree",
+          "needsReview": true
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q026",
+          "qNumber": 26,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Протидія негативним впливам тривалого ліжкового режиму та підготовка пацієнта до повернення до нормальної повсякденної діяльності",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "disagree",
+          "needsReview": true
+        }
+      ]
+    },
+    {
+      "questionNormalized": "зaяkoюшkaлoюпpoboдиtьcяoцінkaіндиbідyaльнoгocпpииняttянabaнtaжeння",
+      "questionRaw": "За якою шкалою проводиться оцінка індивідуального сприйняття навантаження?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-1",
+          "qId": "krok-file-1-q027",
+          "qNumber": 27,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Борга",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-8",
+          "qId": "krok-file-8-q023",
+          "qNumber": 23,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Борга",
+          "correctAnswer": 4,
+          "confidence": null,
+          "clinicalAgreement": null,
+          "needsReview": null
+        }
+      ]
+    },
+    {
+      "questionNormalized": "ykaжіtьнaибільшeфektиbнeпoлoжeннядлязmeншeннябoлюtaпoлeгшeнняekckypcіігpyднoіkліtkидляпaцієнtaзплebpиtomнaліжkobomypeжиm...",
+      "questionRaw": "Укажіть найбільш ефективне положення для зменшення болю та полегшення екскурсії грудної клітки для пацієнта з плевритом на ліжковому режимі.",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q029",
+          "qNumber": 29,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "На хворому боці",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q029",
+          "qNumber": 29,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "На хворому боці",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "яkізaxoдифізичнoіtepaпіідoцільнobиkopиctatизmetoюbіднobлeнняctepeoгнoзy",
+      "questionRaw": "Які заходи фізичної терапії доцільно використати з метою відновлення стереогнозу?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q031",
+          "qNumber": 31,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Впізнання предмета шляхом його обмацування із заплющеними очима",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q031",
+          "qNumber": 31,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Впізнання предмета шляхом його обмацування із заплющеними очима",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "щoєпpotипokaзaнняmдляaepoбниxtpeнybaньнabиtpиbaліctьдляпaцієнtіbkapдіoлoгічнoгoпpoфілю",
+      "questionRaw": "Що є протипоказанням для аеробних тренувань на витривалість для пацієнтів кардіологічного профілю?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-1",
+          "qId": "krok-file-1-q033",
+          "qNumber": 33,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Виражена вторинна мітральна недостатність",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-8",
+          "qId": "krok-file-8-q135",
+          "qNumber": 135,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Виражена вторинна мітральна недостатність",
+          "correctAnswer": 3,
+          "confidence": null,
+          "clinicalAgreement": null,
+          "needsReview": null
+        }
+      ]
+    },
+    {
+      "questionNormalized": "яkииcпіpoгpaфічниипokaзниkbbaжaєtьcянaиkpaщиmдляoцінkиctyпeняoбctpykціідиxaльниxшляxіb",
+      "questionRaw": "Який спірографічний показник вважається найкращим для оцінки ступеня обструкції дихальних шляхів?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q033",
+          "qNumber": 33,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Об'єм форсованого видиху за першу секунду (ОФВ1)",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": null
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q033",
+          "qNumber": 33,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Об'єм форсованого видиху за першу секунду (ОФВ1)",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "ykaжіtьmetoдфyнkціoнaльнoідіaгнoctиkищoдocліджyєeлektpичніпoteнціaлияkіbиниkaюtьbmіokapдізіxпoдaльшиmгpaфічниmзoбpaжeння...",
+      "questionRaw": "Укажіть метод функціональної діагностики, що досліджує електричні потенціали, які виникають в міокарді з їх подальшим графічним зображенням.",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q034",
+          "qNumber": 34,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Електрокардіографія",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q034",
+          "qNumber": 34,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Електрокардіографія",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пaцієнtybіkom37pokіbbctaнobлeнoдіaгнoзпobнeyшkoджeнняcпиннoгomoзkyнapіbніt5підчacзaняtьyліжkypaпtoboпoчepboніbtaпockapжи...",
+      "questionRaw": "Пацієнту віком 37 років встановлено діагноз: повне ушкодження спинного мозку на рівні Т5. Під час занять у ліжку раптово почервонів та поскаржився на різкий головний біль і серцебиття, розпливчастість перед очима, сильну пітливість. Під час обстеження артеріальний тиск становив 185/100 мм рт. ст. Які дії повинен здійснити фізичний терапевт як домедичну допомогу в цьому разі?",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q035",
+          "qNumber": 35,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Надати пацієнту положення сидячи та повідомити лікаря",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "disagree",
+          "needsReview": true
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q035",
+          "qNumber": 35,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Надати пацієнту положення сидячи та повідомити лікаря",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "яkytaktиkyнeoбxіднobиkopиctatидляліkybaнняпaцієнtaзпpaboбічниmcпactичниmгemіпapeзomзізбepeжeниmиceлektиbниmиpyxamипaльці...",
+      "questionRaw": "Яку тактику необхідно використати для лікування пацієнта з правобічним спастичним геміпарезом зі збереженими селективними рухами пальців і кисті, щоб уникнути \"навченого невикористання\" верхньої кінцівки?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-1",
+          "qId": "krok-file-1-q036",
+          "qNumber": 36,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Обмеження неушкодженої руки та посилення тренування/використання ураженої руки",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-8",
+          "qId": "krok-file-8-q056",
+          "qNumber": 56,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Обмеження неушкодженої руки та посилення тренування/використання ураженої руки",
+          "correctAnswer": 1,
+          "confidence": null,
+          "clinicalAgreement": null,
+          "needsReview": null
+        }
+      ]
+    },
+    {
+      "questionNormalized": "яkииmetoдoбcteжeнняпaцієнtіbізпatoлoгієюopгaніbдиxaнняbиkopиctobyюtьпідчacпepebіpkигoлocoboгotpemtінняbизнaчeнняtypгopyb...",
+      "questionRaw": "Який метод обстеження пацієнтів із патологією органів дихання використовують під час перевірки голосового тремтіння, визначення тургору, вологості шкіри, тонусу м'язів, товщини підшкірного жирового шару та периферичних лімфатичних вузлів?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q036",
+          "qNumber": 36,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Пальпацію",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q036",
+          "qNumber": 36,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Пальпацію",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "oбepіtьmoбілізaціиниипpииomяkииbиkopиctobyєtьcяпpизгинaльніиkoнtpaktypіbпpomeнeboзaпяctkobomycyглoбізypaxybaнняmпpabилao...",
+      "questionRaw": "Оберіть мобілізаційний прийом, який використовується при згинальній контрактурі в променево-зап'ястковому суглобі, з урахуванням правила опуклості-вгнутості.",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q037",
+          "qNumber": 37,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Ковзання вниз",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q037",
+          "qNumber": 37,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Ковзання вниз",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "яkнaзиbaєtьcязaxиcнииpeфлekcpoзtягybaннящoзaпoбігaєпepepoзtягybaннюmязіb",
+      "questionRaw": "Як називається захисний рефлекс розтягування, що запобігає перерозтягуванню м'язів?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q038",
+          "qNumber": 38,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Міотатичний рефлекс",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q038",
+          "qNumber": 38,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Міотатичний рефлекс",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "ykaжіtьдoпomіжниизacібяkииypaзінeпpabильнoгobиkopиctaнняmoжebиkлиkatиkomпpecіинyнeиpoпatіюyзbязkyзпaxboboюпepeдплічoboюa...",
+      "questionRaw": "Укажіть допоміжний засіб, який у разі неправильного використання може викликати компресійну нейропатію у зв'язку з пахвовою, передплічовою або зап'ястною компресією серединного нерва.",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q041",
+          "qNumber": 41,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Милиці",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q041",
+          "qNumber": 41,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Милиці",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "дomoлoдoгoфізичнoгotepaпebtaзbepнybcячoлobіkbіkom26pokіbзіckapгamинayшkoджeнняпpaboгokoлінayпpoцecіoпиtybaнняфізичнииtep...",
+      "questionRaw": "До молодого фізичного терапевта звернувся чоловік віком 26 років зі скаргами на ушкодження правого коліна. У процесі опитування фізичний терапевт сформулював 2 ймовірні гіпотези порушення рухливості в колінному суглобі. Одна з них: порушення цілісності передньої хрестоподібної зв’язки колінного суглоба. Який діагностичний тест має більшу чутливість і специфічність, ніж інші, для підтвердження або спростування цієї гіпотези?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-1",
+          "qId": "krok-file-1-q042",
+          "qNumber": 42,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Лахмана",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-8",
+          "qId": "krok-file-8-q049",
+          "qNumber": 49,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Лахмана",
+          "correctAnswer": 1,
+          "confidence": null,
+          "clinicalAgreement": null,
+          "needsReview": null
+        }
+      ]
+    },
+    {
+      "questionNormalized": "yчoлobіkabіkom68pokіbгemopaгічнииінcyльtбaлзaшkaлoюkomглaзгo8яkииіззaxoдіbфізичнoіtepaпіізactocobyюtьyпepші4дніbpeaніmaц...",
+      "questionRaw": "У чоловіка віком 68 років — геморагічний інсульт, бал за шкалою ком Глазго — 8. Який із заходів фізичної терапії застосовують у перші 4 дні в реанімаційному відділенні?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q042",
+          "qNumber": 42,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Позиціонування та пасивні вправи",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q042",
+          "qNumber": 42,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Позиціонування та пасивні вправи",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "ykaжіtьпpичинybиниkнeннядeфektyxoдьбипідиomнaнocokyпaцієнtaізпpoteзomнatpaнcфemopaльнomypіbні",
+      "questionRaw": "Укажіть причину виникнення дефекту ходьби «підйом на носок» у пацієнта із протезом на трансфеморальному рівні.",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q044",
+          "qNumber": 44,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Жорсткий протез стопи",
+          "correctAnswer": 2,
+          "confidence": "medium",
+          "clinicalAgreement": "uncertain",
+          "needsReview": true
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q044",
+          "qNumber": 44,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Жорсткий протез стопи",
+          "correctAnswer": 2,
+          "confidence": "medium",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "піcляпepeнeceнoіtpabmипaцієнtнemoжeзігнytипpabeплeчebплeчobomycyглoбіtaпpиbectииoгoдotyлyбaяkииmязбyлotpabmobaнo",
+      "questionRaw": "Після перенесеної травми пацієнт не може зігнути праве плече в плечовому суглобі та привести його до тулуба. Який м'яз було травмовано?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q047",
+          "qNumber": 47,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Дзьобо-плечовий",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "disagree",
+          "needsReview": true
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q047",
+          "qNumber": 47,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Дзьобо-плечовий",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "disagree",
+          "needsReview": true
+        }
+      ]
+    },
+    {
+      "questionNormalized": "yпpoдobжяkoгoчacypekomeндobaнoпoзиціoнybatипaцієнtaзішemічниmінcyльtomboднomyпoлoжeннідляпpoфілaktиkиkoнtpaktyp",
+      "questionRaw": "Упродовж якого часу рекомендовано позиціонувати пацієнта з ішемічним інсультом в одному положенні для профілактики контрактур?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q048",
+          "qNumber": 48,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "1-2 год",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q048",
+          "qNumber": 48,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "1-2 год",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "ykaжіtьпpabильнyпoзиціюpykфізичнoгotepaпebtaпpиctpaxybaнніпaцієнtaпідчacxoдьби",
+      "questionRaw": "Укажіть правильну позицію рук фізичного терапевта при страхуванні пацієнта під час ходьби.",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q049",
+          "qNumber": 49,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Одна рука страхує за пояс, інша тримає за плече",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q049",
+          "qNumber": 49,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Одна рука страхує за пояс, інша тримає за плече",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пaцієнtckapжиtьcянaчactізaпamopoчeннягoлobokpyжінняпідчacзmінипoлoжeннягoлobиbaнamнeзічepeпнomoзkobatpabmaяkииtectпotpіб...",
+      "questionRaw": "Пацієнт скаржиться на часті запаморочення, головокружіння під час зміни положення голови. В анамнезі: черепно-мозкова травма. Який тест потрібно провести для вестибулярного обстеження?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-1",
+          "qId": "krok-file-1-q050",
+          "qNumber": 50,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Маневр Дікса-Холпайка",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-8",
+          "qId": "krok-file-8-q148",
+          "qNumber": 148,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Маневр Дікса-Холпайка",
+          "correctAnswer": 2,
+          "confidence": null,
+          "clinicalAgreement": null,
+          "needsReview": null
+        }
+      ]
+    },
+    {
+      "questionNormalized": "yпaцієнtabіkom67pokіbпідчacoглядybияbлeнobідcytніctьпpoпpіoцeпtиbнoіtataktильнoічytлиboctішkіpиbepxньoіkінціbkиtabepxньo...",
+      "questionRaw": "У пацієнта віком 67 років під час огляду виявлено: відсутність пропріоцептивної та тактильної чутливості шкіри верхньої кінцівки та верхньої половини тулуба. Про ураження якого провідного шляху це свідчить?",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q051",
+          "qNumber": 51,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Клиноподібного пучка Бурдаха",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "disagree",
+          "needsReview": true
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q051",
+          "qNumber": 51,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Клиноподібного пучка Бурдаха",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пaцієнtпіcляпepeнeceнoічmtпepeбybaєнaпіcлягoctpomyetaпіpeaбіліtaціізapeзyльtatamиoбcteжeньпaцієнtakoнctatobaнoпяtииpіbeн...",
+      "questionRaw": "Пацієнт після перенесеної ЧМТ перебуває на післягострому етапі реабілітації. За результатами обстежень пацієнта констатовано п'ятий рівень за когнітивною шкалою Ранчо Лос Амігос та 40 балів за індексом Бартел. Який подальший реабілітаційний маршрут пацієнта згідно з отриманими результатами обстеження та критеріями направлення для надання реабілітаційної допомоги?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-1",
+          "qId": "krok-file-1-q053",
+          "qNumber": 53,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Реабілітаційна допомога в стаціонарних умовах",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-8",
+          "qId": "krok-file-8-q097",
+          "qNumber": 97,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Реабілітаційна допомога в стаціонарних умовах",
+          "correctAnswer": 2,
+          "confidence": null,
+          "clinicalAgreement": null,
+          "needsReview": null
+        }
+      ]
+    },
+    {
+      "questionNormalized": "yчoлobіkapaпtobobиниkлиcильниибільyліbіипoлobинігpyднoіkліtkиkaшeльpяcнekpoboxapkaнняtemпepatypatілaпідbищилacядo382cпід...",
+      "questionRaw": "У чоловіка раптово виникли сильний біль у лівій половині грудної клітки, кашель, рясне кровохаркання, температура тіла підвищилася до 38,2 °С. Під час обстеження встановлено, що ліва половина грудної клітки дещо відстає в акті дихання. Під час аускультації прослуховується крепітація і шум тертя плеври. Установіть попередній діагноз.",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q054",
+          "qNumber": 54,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Пневмонія",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q054",
+          "qNumber": 54,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Пневмонія",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пaцієнtyізгemіпapeзomпіcляпepeнeceнoгoішemічнoгoінcyльtybpaнньomybіднobнomyпepіoдіплaнyєtьcяпpobectидинamічнyeлektpoctиm...",
+      "questionRaw": "Пацієнту із геміпарезом після перенесеного ішемічного інсульту в ранньому відновному періоді планується провести динамічну електростимуляцію. На яких м'язах потрібно розміщувати електроди під час проведення цієї процедури?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-1",
+          "qId": "krok-file-1-q056",
+          "qNumber": 56,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "На антагоністах спастичних м'язів руки та ноги",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-8",
+          "qId": "krok-file-8-q144",
+          "qNumber": 144,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "На антагоністах спастичних м'язів руки та ноги",
+          "correctAnswer": 0,
+          "confidence": null,
+          "clinicalAgreement": null,
+          "needsReview": null
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пaцієнtckapжиtьcянaзmішaнyзaдишkyoбєktиbнobияbлeнotaxіпнoebідctabaнняoднієіпoлobинигpyднoіkліtkиbaktідиxaнняtaзглaджeніc...",
+      "questionRaw": "Пацієнт скаржиться на змішану задишку. Об'єктивно виявлено: тахіпное, відставання однієї половини грудної клітки в акті дихання та згладженість міжреберних проміжків на цьому боці. Під час пальпації цього боку грудної клітки не визначається голосове тремтіння, при порівняльній перкусії виявляється тимпанічний звук. Аускультативно — над зоною тимпанічного перкуторного звуку везикулярне дихання відсутнє. Укажіть наявний синдром ураження системи дихання.",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q056",
+          "qNumber": 56,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Синдром пневмотораксу",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q056",
+          "qNumber": 56,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Синдром пневмотораксу",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пoctізometpичнypeлakcaціюbиkopиctobyюtьдляліkbідaцііmіoгeнниxkoнtpaktypпіcлязakінчeнняізometpичнoгoнaпpyжeнняmязіbпaцієн...",
+      "questionRaw": "Постізометричну релаксацію використовують для ліквідації міогенних контрактур. Після закінчення ізометричного напруження м'язів пацієнта фізичний терапевт легко й повільно виконує пасивне розтягування м'язів. Упродовж скількох секунд він це робить?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q057",
+          "qNumber": 57,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "6-10",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q057",
+          "qNumber": 57,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "6-10",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "чoлobіkybіkom60pokіbдbaдніtomybиkoнaнoeндoпpoteзybaнняпpaboгokyльшoboгocyглoбaykaжіtьoбmeжeнняяkиxпobинeндotpиmybatиcяпa...",
+      "questionRaw": "Чоловіку віком 60 років два дні тому виконано ендопротезування правого кульшового суглоба. Укажіть обмеження, яких повинен дотримуватися пацієнт упродовж 3-х місяців.",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q058",
+          "qNumber": 58,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Сідати під кутом більше ніж на 90° між тулубом та нижніми кінцівками",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q058",
+          "qNumber": 58,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Сідати під кутом більше ніж на 90° між тулубом та нижніми кінцівками",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пaцієнtзtяжkoюtpabmoюгoлobнoгomoзkybпіcлягoctpomyпepіoдіpeaбіліtaцііcamoctіинoнeпepemіщyєtьcяєpизиkacпіpaцііяkиизbapіaнt...",
+      "questionRaw": "Пацієнт з тяжкою травмою головного мозку в післягострому періоді реабілітації самостійно не переміщується, є ризик аспірації. Який з варіантів позиціонування після приймання їжі доцільно обрати в цьому разі?",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q059",
+          "qNumber": 59,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Напівлежачи на спині з піднятим узголів'ям ліжка принаймні на 30-45°",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q059",
+          "qNumber": 59,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Напівлежачи на спині з піднятим узголів'ям ліжка принаймні на 30-45°",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "підчacпpobeдeнняayckyльtaціінaднижньoючactинoюлeгeньнebиcлyxobyєtьcядиxaннядляяkoгoзaxbopюbaнняцexapaktepнo",
+      "questionRaw": "Під час проведення аускультації над нижньою частиною легень не вислуховується дихання. Для якого захворювання це характерно?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q060",
+          "qNumber": 60,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Ексудативного плевриту",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": null
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q060",
+          "qNumber": 60,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Ексудативного плевриту",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "длязбільшeнняamпліtyдиpyxіbпpиaptpoгeнніиkoнtpaktypіkoліннoгocyглoбayпaцієнtabиpішилиbиkopиctobybatиmoбілізaціюзametoдom...",
+      "questionRaw": "Для збільшення амплітуди рухів при артрогенній контрактурі колінного суглоба у пацієнта вирішили використовувати мобілізацію за методом Кальтенборна третього ступеня. Якою буде середня тривалість обраної мобілізації?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-1",
+          "qId": "krok-file-1-q062",
+          "qNumber": 62,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "30-40 с",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-8",
+          "qId": "krok-file-8-q140",
+          "qNumber": 140,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "30-40 с",
+          "correctAnswer": 4,
+          "confidence": null,
+          "clinicalAgreement": null,
+          "needsReview": null
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пaцієнtkabіkom32pokиmaєbaнamнeзіpeцидиbнopemіtyючииpoзcіянииckлepoзпідчacoбcteжeнняbияbлeнoдиckoopдинaціяpyxіbпopyшeнняб...",
+      "questionRaw": "Пацієнтка віком 32 роки має в анамнезі: рецидивно-ремітуючий розсіяний склероз. Під час обстеження виявлено: дискоординація рухів, порушення балансу та хитання при ходьбі. Який патологічний стан виник у пацієнтки?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q064",
+          "qNumber": 64,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Атаксія",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q064",
+          "qNumber": 64,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Атаксія",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "яkeocнobнeзabдaнняфізичнoіtepaпііyпepіoдзaгoctpeнняxpoнічнoгoxoлeциctиtyyпaцієнta",
+      "questionRaw": "Яке основне завдання фізичної терапії у період загострення хронічного холециститу у пацієнта?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-8",
+          "qId": "krok-file-8-q064",
+          "qNumber": 64,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Зменшення запального процесу у жовчному міхурі",
+          "correctAnswer": 0,
+          "confidence": null,
+          "clinicalAgreement": null,
+          "needsReview": null
+        },
+        {
+          "file": "krok-file-8",
+          "qId": "krok-file-8-q088",
+          "qNumber": 88,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Зменшення запального процесу у жовчному міхурі",
+          "correctAnswer": 1,
+          "confidence": null,
+          "clinicalAgreement": null,
+          "needsReview": null
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пaцієнtkabіkom45pokіbmaиctepпepykapзbepнyлacядoфізичнoгotepaпebtaзіckapгamинaбільyліbomyплeчobomycyглoбіщoзбільшyєtьcяпp...",
+      "questionRaw": "Пацієнтка віком 45 років, майстер-перукар, звернулася до фізичного терапевта зі скаргами на біль у лівому плечовому суглобі, що збільшується при рухах у суглобі, у нічний час та під кінець робочої зміни. Вимушена обмежувати хатню та професійну роботу у зв’язку зі складністю при згинанні та утриманні руки. Не може розчісуватися та сушити волосся феном, обмежена можливість застібнути бретельки бюстгальтера. Проживає у власному будинку із трирічною донькою. Які скарги характеризують порушення функції?",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-1",
+          "qId": "krok-file-1-q065",
+          "qNumber": 65,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Труднощі при згинанні руки",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-8",
+          "qId": "krok-file-8-q141",
+          "qNumber": 141,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Труднощі при згинанні руки",
+          "correctAnswer": 1,
+          "confidence": null,
+          "clinicalAgreement": null,
+          "needsReview": null
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пaцієнtabіkom32pokишпиtaлізobaнoзглибokиmиoпіkamиділянkиліktьoboгocyглoбaпpotипokaзіbдooбcteжeнняamпліtyдиpyxіbнemaєпpot...",
+      "questionRaw": "Пацієнта віком 32 роки шпиталізовано з глибокими опіками ділянки ліктьового суглоба. Протипоказів до обстеження амплітуди рухів немає. Протягом якого терміну треба провести обстеження амплітуди рухів ліктьового суглоба?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-1",
+          "qId": "krok-file-1-q068",
+          "qNumber": 68,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "72 годин з моменту отримання травми",
+          "correctAnswer": 3,
+          "confidence": "medium",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-8",
+          "qId": "krok-file-8-q117",
+          "qNumber": 117,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "72 годин з моменту отримання травми",
+          "correctAnswer": 4,
+          "confidence": null,
+          "clinicalAgreement": null,
+          "needsReview": null
+        }
+      ]
+    },
+    {
+      "questionNormalized": "підчacпpobeдeнняпpoбизфізичниmнabaнtaжeнняmpeakціяcepцebocyдиннoіcиctemиxapaktepизybaлacяпідbищeнняmcиctoлічнoгoaptepіaл...",
+      "questionRaw": "Під час проведення проби з фізичним навантаженням реакція серцево- судинної системи характеризувалася підвищенням систолічного артеріального тиску більше ніж на 70 мм рт. ст., а показник діастолічного становив більше 95 мм рт. ст. Який із нижченаведених типів реакцій спостерігається в пацієнта?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q068",
+          "qNumber": 68,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Гіпертонічний",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": null
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q068",
+          "qNumber": 68,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Гіпертонічний",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "ybіиcьkobocлyжбobцязлeгkoючmtcпoctepігaєtьcяпopyшeнняпідчacoднoчacнoгobиkoнaннядboxдіияkізabдaнняmaєpekomeндybatифізични...",
+      "questionRaw": "У військовослужбовця з легкою ЧМТ спостерігається порушення під час одночасного виконання двох дій. Які завдання має рекомендувати фізичний терапевт у цьому разі?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-1",
+          "qId": "krok-file-1-q070",
+          "qNumber": 70,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "У дедалі складніших умовах",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-8",
+          "qId": "krok-file-8-q072",
+          "qNumber": 72,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "У дедалі складніших умовах",
+          "correctAnswer": 0,
+          "confidence": null,
+          "clinicalAgreement": null,
+          "needsReview": null
+        }
+      ]
+    },
+    {
+      "questionNormalized": "яkіфyнkціінижньoіkінціbkибyдytьпopyшeніпpиpoзpиbідboгoлoboгomязacteгнaщobиниkypeзyльtatіпaдіннязbиcotи",
+      "questionRaw": "Які функції нижньої кінцівки будуть порушені при розриві двоголового м'яза стегна, що виник у результаті падіння з висоти?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q071",
+          "qNumber": 71,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Розгинання стегна та згинання гомілки",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "disagree",
+          "needsReview": true
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q071",
+          "qNumber": 71,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Розгинання стегна та згинання гомілки",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "яkametabиkopиctaннядoпomіжниxзacoбіbypoбotізпaцієнtamи",
+      "questionRaw": "Яка мета використання допоміжних засобів у роботі з пацієнтами?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q072",
+          "qNumber": 72,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Забезпечити пацієнту більшу мобільність під час відновлення його здатності пересуватися",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q072",
+          "qNumber": 72,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Забезпечити пацієнту більшу мобільність під час відновлення його здатності пересуватися",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "піcляпepeнeceнoгocovid19yпaцієнtacпoctepігaєtьcядyжeнизьkatoлepaнtніctьдoнabaнtaжeнняяkaфізичнaaktиbніctьpekomeндobaнaць...",
+      "questionRaw": "Після перенесеного COVID-19 у пацієнта спостерігається дуже низька толерантність до навантаження. Яка фізична активність рекомендована цьому пацієнтові у перші 6 тижнів після виписки?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-1",
+          "qId": "krok-file-1-q073",
+          "qNumber": 73,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Виконувати свою повсякденну діяльність і додаткові фізичні вправи низької та середньої інтенсивності з короткими інтервалами",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-8",
+          "qId": "krok-file-8-q127",
+          "qNumber": 127,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Виконувати свою повсякденну діяльність і додаткові фізичні вправи низької та середньої інтенсивності з короткими інтервалами",
+          "correctAnswer": 0,
+          "confidence": null,
+          "clinicalAgreement": null,
+          "needsReview": null
+        }
+      ]
+    },
+    {
+      "questionNormalized": "фізичнииtepaпebtпpoboдиtьoбcteжeнняkoліннoгocyглoбaпaцієнtaзпідoзpoюнaпoшkoджeнняпepeдньoіxpectoпoдібнoізbязkипaцієнtлeж...",
+      "questionRaw": "Фізичний терапевт проводить обстеження колінного суглоба пацієнта з підозрою на пошкодження передньої хрестоподібної зв'язки. Пацієнт лежить на спині, коліно зігнуте під кутом приблизно 30°. Фізичний терапевт однією рукою стабілізує стегно, а іншою намагається змістити великогомілкову кістку вперед. Який тест використовується в цьому разі для оцінки надмірного зміщення великогомілкової кістки?",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q073",
+          "qNumber": 73,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Тест Лахмана",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q073",
+          "qNumber": 73,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Тест Лахмана",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "щoєпpotипokaзaнняmдляпpobeдeнняtectyнatoлepaнtніctьдoфізичнoгoнabaнtaжeння",
+      "questionRaw": "Що є протипоказанням для проведення тесту на толерантність до фізичного навантаження?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q074",
+          "qNumber": 74,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Коронарна недостатність із частими нападами стенокардії",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q074",
+          "qNumber": 74,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Коронарна недостатність із частими нападами стенокардії",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пepeдчacнoнapoджeнeнemobляckopигobaнииbіk36tижніbmaєпідbищeнииpіbeньpoзbиtkyaпнoeykaжіtьпoзиціoнyючeпoлoжeннядляздіиcнeн...",
+      "questionRaw": "Передчасно народжене немовля (скоригований вік 36 тижнів) має підвищений рівень розвитку апное. Укажіть позиціонуюче положення для здійснення орального годування через соску.",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q076",
+          "qNumber": 76,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Альтернативне положення «живіт до живота»",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q076",
+          "qNumber": 76,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Альтернативне положення «живіт до живота»",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "підчacoглядyпaцієнtaзбpoнxіaльнoюactmoюфізичнииtepaпebtbctaнobиbщoпepeдньoзaдніиpoзmіpгpyднoіkліtkизбільшeниипepebaжнoyb...",
+      "questionRaw": "Під час огляду пацієнта з бронхіальною астмою фізичний терапевт встановив, що передньо-задній розмір грудної клітки збільшений переважно у верхній частині, ребра мають горизонтальне положення, міжреберні проміжки розширені, над- та підключичні ямки згладжені. Для якої форми грудної клітки характерні виявлені ознаки?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q077",
+          "qNumber": 77,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Емфізематозної",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q077",
+          "qNumber": 77,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Емфізематозної",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "ykaжіtьmetoдфізичнoіtepaпііяkиидoцільнoзactocobybatипpипнebmoніізmetoюзбільшeннянaдxoджeнняaнtибіotиkіbдoлeгeнeboіtkaнин...",
+      "questionRaw": "Укажіть метод фізичної терапії, який доцільно застосовувати при пневмонії з метою збільшення надходження антибіотиків до легеневої тканини.",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q079",
+          "qNumber": 79,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Дихальні вправи",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q079",
+          "qNumber": 79,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Дихальні вправи",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "ypaзіypaжeнняяkoгopіbняcпиннoгomoзkyпaцієнtyнaдaєtьcяпobнaдoпomoгaпідчacпpииomyіжі",
+      "questionRaw": "У разі ураження якого рівня спинного мозку пацієнту надається повна допомога під час прийому їжі?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q080",
+          "qNumber": 80,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "С1-С4",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q080",
+          "qNumber": 80,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "C1-C4",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пepeдчacнoнapoджeнaдиtинaщoдeннootpиmyєдo1012ctpecobиxпpoцeдypдoглядyзokpemaзaбіpkpobіяkyшkaлyзactocobyюtьдляbиmіpюbaння...",
+      "questionRaw": "Передчасно народжена дитина щоденно отримує до 10-12 стресових процедур догляду, зокрема забір крові. Яку шкалу застосовують для вимірювання процедурного болю недоношених і доношених немовлят?",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q081",
+          "qNumber": 81,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "NIPS",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q081",
+          "qNumber": 81,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "NIPS",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "ckільkиpeзepbyчactotиcepцebиxckopoчeньbиkopиctobyюtьbпpabиcepeдньoіінteнcиbнoctі",
+      "questionRaw": "Скільки резерву частоти серцевих скорочень використовують вправи середньої інтенсивності?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-1",
+          "qId": "krok-file-1-q082",
+          "qNumber": 82,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Від 40% до 60%",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-8",
+          "qId": "krok-file-8-q046",
+          "qNumber": 46,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Від 40% до 60%",
+          "correctAnswer": 0,
+          "confidence": null,
+          "clinicalAgreement": null,
+          "needsReview": null
+        }
+      ]
+    },
+    {
+      "questionNormalized": "піcляoпepatиbнoгoліkybaнняkoліннoгocyглoбabпaцієнtacфopmybaлacяпіcляіmmoбілізaціинamязobakoнtpaktypaдлязбільшeнняamпліty...",
+      "questionRaw": "Після оперативного лікування колінного суглоба в пацієнта сформувалася післяіммобілізаційна м'язова контрактура. Для збільшення амплітуди руху пацієнт самостійно розгинає колінний суглоб, утримуючи його у крайній можливій точці амплітуди за допомогою напруження чотириголового м'яза. Як називається цей тип розтягнення?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q082",
+          "qNumber": 82,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Активний",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q082",
+          "qNumber": 82,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Активний",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "яkииkpиtepіиєkpaщиmдляпpoгнoзybaнняпoteнціaлyнabчaльнoіcпpomoжнoctіпaцієнtіbізчepeпнomoзkoboюtpabmoю",
+      "questionRaw": "Який критерій є кращим для прогнозування потенціалу навчальної спроможності пацієнтів із черепно-мозковою травмою?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-1",
+          "qId": "krok-file-1-q084",
+          "qNumber": 84,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Тривалість після травматичної амнезії",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-8",
+          "qId": "krok-file-8-q060",
+          "qNumber": 60,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Тривалість після травматичної амнезії",
+          "correctAnswer": 2,
+          "confidence": null,
+          "clinicalAgreement": null,
+          "needsReview": null
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пaцієнtckapжиtьcянaзatepпліctьtaoніmіннябeзіmeннoгoпaльцяtamізинцяпpaboіkиctіпідчacoглядybияbлeнoпopyшeннязгинaнняtaшkіp...",
+      "questionRaw": "Пацієнт скаржиться на затерплість та оніміння безіменного пальця та мізинця правої кисті. Під час огляду виявлено: порушення згинання та шкірної чутливості цих пальців, долонного згинання кисті, зведення і розведення пальців кисті, а також приведення великого пальця кисті. Міжкісткові, а також м'язи підвищення мізинця частково атрофовані (починає формуватися «пазуриста лапа»). Який нерв уражений в пацієнта?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q084",
+          "qNumber": 84,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Ліктьовий",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q084",
+          "qNumber": 84,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Ліктьовий",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пaцієнtckapжиtьcящoнemoжepoзігнytиbepxнюkінціbkybліktьobomyпpomeнeboзaпяctkobomytaпяctkoboфaлaнгobиxcyглoбaxbідbectиbeли...",
+      "questionRaw": "Пацієнт скаржиться, що не може розігнути верхню кінцівку в ліктьовому, променевозап'ястковому та п'ястково-фалангових суглобах, відвести великий палець, а також здійснити супінацію передпліччя та кисті. Який нерв, найімовірніше, пошкоджено?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q086",
+          "qNumber": 86,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Променевий",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "disagree",
+          "needsReview": true
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q086",
+          "qNumber": 86,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Променевий",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пaцієнtчepeзmіcяцьпіcлячepeпнomoзkoboіtpabmидemoнctpyєoзнakи4pіbняkoгніtиbнoгoфyнkціoнybaнняpaнчoяkebtpyчaннябyдeoпtиmaл...",
+      "questionRaw": "Пацієнт через місяць після черепно-мозкової травми демонструє ознаки 4 рівня когнітивного функціонування Ранчо. Яке втручання буде оптимальним для цього пацієнта?",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q087",
+          "qNumber": 87,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Заняття тривалістю до 20 хв у спокійному оточенні з виконанням простих команд",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q087",
+          "qNumber": 87,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Заняття тривалістю до 20 хв у спокійному оточенні з виконанням простих команд",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пaцієнtізtpabmoюcпиннoгomoзkyнapіbніth6піcляctaбілізaцііctaнyпpoxoдиtьpeaбіліtaціюbінmaєпapaплeгіюзбepeжeнycилymязіbbepx...",
+      "questionRaw": "Пацієнт із травмою спинного мозку на рівні Th6 після стабілізації стану проходить реабілітацію. Він має параплегію, збережену силу м'язів верхніх кінцівок і труднощі з підтриманням рівноваги в сидячому положенні. Тренування якої навички першочергово необхідне пацієнту для самостійного пересаджування в крісло колісне?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q088",
+          "qNumber": 88,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Переміщення в різних напрямках в положенні сидячи з опорою на руки",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "disagree",
+          "needsReview": true
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q088",
+          "qNumber": 88,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Переміщення в різних напрямках в положенні сидячи з опорою на руки",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пpabильнeпoлoжeнняпaцієнtaпідчacmaнyaльнomязoboгotectybaннядoзboляєзaпoбігtиbkлючeннюbpyxіншиxmязіbпpиoцінюbaнніcилиbідп...",
+      "questionRaw": "Правильне положення пацієнта під час мануально-м'язового тестування дозволяє запобігти включенню в рух інших м'язів при оцінюванні сили відповідного м'яза. Яке вихідне положення пацієнта передбачено для оцінювання сили чотириголового м'яза на 4 бали?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q090",
+          "qNumber": 90,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Сидячи на кушетці зі звішеними ногами",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "disagree",
+          "needsReview": true
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q090",
+          "qNumber": 90,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Сидячи на кушетці зі звішеними ногами",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пepeдчacнoнapoджeнeнemobлядocяглokoopдинaцііbmoдeліcmoktaнняkobtaннядиxaнняcockyяkoіфopmибyдepekomeндobaнoдлязбepeжeнняc...",
+      "questionRaw": "Передчасно народжене немовля досягло координації в моделі «смоктання- ковтання-дихання». Соску якої форми буде рекомендовано для збереження смоктального рефлексу?",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q093",
+          "qNumber": 93,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Округлої",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q093",
+          "qNumber": 93,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Округлої",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "підчacoбcteжeнняпaцієнtabияbлeнocпactичніctьдboгoлoboгomязabepxньoіkінціbkизoцінkoю1зamoдифіkobaнoюшkaлoюaшboptaщoбyдeдe...",
+      "questionRaw": "Під час обстеження пацієнта виявлено спастичність двоголового м'яза верхньої кінцівки з оцінкою 1+ за модифікованою шкалою Ашворта. Що буде демонструвати двоголовий м'яз з такою оцінкою під час пасивного розгинання передпліччя?",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q094",
+          "qNumber": 94,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Незначне підвищення м'язового тонусу, що проявляється хапанням, з мінімальним опором протягом подальшої (менше половини) амплітуди руху",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "disagree",
+          "needsReview": true
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q094",
+          "qNumber": 94,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Незначне підвищення м'язового тонусу, що проявляється хапанням, з мінімальним опором протягом подальшої (менше половини) амплітуди руху",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "disagree",
+          "needsReview": true
+        }
+      ]
+    },
+    {
+      "questionNormalized": "yпepeдчacнoнapoджeнoідиtиниoцінюєtьcяздatніctьдoopaльнoгoгoдybaнняykaжіtьфaзykobtaнняпідчacяkoібyдytьaktиbнoзaдіянінижня...",
+      "questionRaw": "У передчасно народженої дитини оцінюється здатність до орального годування. Укажіть фазу ковтання, під час якої будуть активно задіяні нижня щелепа, язик, м'яке та тверде піднебіння з частковим залученням губ.",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q095",
+          "qNumber": 95,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Ротова",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "disagree",
+          "needsReview": true
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q095",
+          "qNumber": 95,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Ротова",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "disagree",
+          "needsReview": true
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пaцієнtkabіkom61pіkckapжиtьcяфізичнomytepaпebtyнaзaдишkyпідчacxoдьбищoзmyшyєіізyпиняtиcядляbіднobлeннядиxaнняпіcляпpoxoд...",
+      "questionRaw": "Пацієнтка віком 61 рік скаржиться фізичному терапевту на задишку під час ходьби, що змушує її зупинятися для відновлення дихання, після проходження дистанції до 100 м. Із анамнезу відомо, що 8 тижнів тому вона була виписана з кардіологічного стаціонару, де перебувала через інфаркт міокарда. Фізичний терапевт для оцінювання використав Шкалу вираженості задишки (modified Medical Research Council (mMRC), рекомендовану МОЗ України. Яким є рівень задишки в цієї пацієнтки?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q096",
+          "qNumber": 96,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "3",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q096",
+          "qNumber": 96,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "3",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "disagree",
+          "needsReview": true
+        }
+      ]
+    },
+    {
+      "questionNormalized": "жінkabіkom42pokипіcляпідняttяbaжkoгoпpeдmetabідчyлapізkиибільyпoпepekobokpижobomybідділіxpeбtaзіppaдіaцієюbcідницюtaпoпe...",
+      "questionRaw": "Жінка віком 42 роки після підняття важкого предмета відчула різкий біль у попереково-крижовому відділі хребта з іррадіацією в сідницю та по передній поверхні стегна і внутрішній поверхні гомілки праворуч. Об'єктивно спостерігається: напружені м'язи поперекової ділянки, сколіоз, випрямлення поперекового лордозу, обмеження рухів у поперековому відділі хребта та болючість під час глибокої пальпації паравертебральних точок L4-S1 праворуч. Симптом Ласега позитивний з правого боку. Ахілловий рефлекс праворуч не викликається. Гіпестезія по зовнішньому краю правої стопи. Який найімовірніший діагноз?",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q097",
+          "qNumber": 97,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Радикулопатія S1",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": null
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q097",
+          "qNumber": 97,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Радикулопатія S1",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": null
+        }
+      ]
+    },
+    {
+      "questionNormalized": "фізичнииtepaпebtпpaцюєykлініцізbиcokиmнabaнtaжeнняmчepeзнectaчyпepcoнaлybінзmyшeниичactoзaлишatиcяпіcлязmінипpoпyckatипe...",
+      "questionRaw": "Фізичний терапевт працює у клініці з високим навантаженням. Через нестачу персоналу він змушений часто залишатися після зміни, пропускати перерви та відчуває емоційне виснаження. Останнім часом у нього знизилася концентрація, з'явилися проблеми зі сном і дратівливість. Який підхід найбільш ефективно сприятиме його психологічній безпеці?",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q098",
+          "qNumber": 98,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Оптимізація робочого графіка з поступовим упровадженням чітких меж між роботою та відпочинком, включаючи раціональне планування перерв",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q098",
+          "qNumber": 98,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Оптимізація робочого графіка з поступовим упровадженням чітких меж між роботою та відпочинком, включаючи раціональне планування перерв",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "ykaжіtьнaибільшbaжлиbииacпektпідчacздіиcнeнняпpaktичнoідіяльнoctіmyльtидиcциплінapнoіkomaндиmдktaoдинізocнobниxkomпoнeнt...",
+      "questionRaw": "Укажіть найбільш важливий аспект під час здійснення практичної діяльності мультидисциплінарної команди (МДК) та один із основних компонентів мультидисциплінарного підходу.",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-1",
+          "qId": "krok-file-1-q099",
+          "qNumber": 99,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Спільна постановка командних цілей реабілітації",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-8",
+          "qId": "krok-file-8-q040",
+          "qNumber": 40,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Спільна постановка командних цілей реабілітації",
+          "correctAnswer": 4,
+          "confidence": null,
+          "clinicalAgreement": null,
+          "needsReview": null
+        }
+      ]
+    },
+    {
+      "questionNormalized": "підчacoглядyфізичнииtepaпebtoцінюєamпліtyдypyxіbyгpyдниннokлючичнomycyглoбіпaцієнtahabkoлoяkoіbіcіmoжлиbeпідніmaнняtaoпy...",
+      "questionRaw": "Під час огляду фізичний терапевт оцінює амплітуду рухів у груднинно- ключичному суглобі пацієнта. Навколо якої вісі можливе піднімання та опускання ключиці?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q099",
+          "qNumber": 99,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Сагітальної",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q099",
+          "qNumber": 99,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Сагітальної",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "жінkabіkom49pokіbbиkлaдaчckapжиtьcянaбільyпoпepekytackytіctьyпoпepekobomybідділіxpeбtaпідчacздіиcнeнняпoбytoboідіяльнoct...",
+      "questionRaw": "Жінка віком 49 років, викладач, скаржиться на біль у попереку та скутість у поперековому відділі хребта під час здійснення побутової діяльності. Яке доступне функціональне дослідження доцільно застосувати, щоб дослідити амплітуду руху хребта в цьому разі?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q100",
+          "qNumber": 100,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Тест Шобера",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q100",
+          "qNumber": 100,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Тест Шобера",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пoctінcyльtниипaцієнtyпіcлягoctpиипepіoдpeaбіліtaцііckapжиtьcянaзнижeннячytлиboctіbиpaжeнycлaбkіctьmязіbypyціtaпomіpнииб...",
+      "questionRaw": "Постінсультний пацієнт у післягострий період реабілітації скаржиться на зниження чутливості, виражену слабкість м'язів у руці та помірний біль у плечі. Якої доказової стратегії втручання необхідно дотримуватися з метою попередження сублюксації та болю в плечі пацієнта?",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q101",
+          "qNumber": 101,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Правильне позиціювання кінцівки, підтримувальні пов'язки, щадне ставлення до руки",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q101",
+          "qNumber": 101,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Правильне позиціювання кінцівки, підтримувальні пов'язки, щадне ставлення до руки",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "yпaцієнtkиbіkom56pokіbяkaxbopієнaбpoнxіaльнyactmyoбєktиbнocпoctepігaєtьcяoбличчяціaнotичнeшииніbeнинaбyxліkaшляєпідчacди...",
+      "questionRaw": "У пацієнтки віком 56 років, яка хворіє на бронхіальну астму, об'єктивно спостерігається: обличчя ціанотичне, шийні вени набухлі, кашляє, під час дихання чути свистячі хрипи, жінка налякана. Яке положення необхідно надати пацієнтці для полегшення стану?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q102",
+          "qNumber": 102,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Ортопное",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q102",
+          "qNumber": 102,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Ортопное",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пaцієнtbіkom64pokипіcляeндoпpoteзybaнняkyльшoboгocyглoбatpeнyєнabичkиxoдьбиcxoдamидeпobинeнпepeбybatифізичнииtepaпebtпід...",
+      "questionRaw": "Пацієнт віком 64 роки після ендопротезування кульшового суглоба тренує навички ходьби сходами. Де повинен перебувати фізичний терапевт під час страхування пацієнта?",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q103",
+          "qNumber": 103,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Дещо позаду і збоку від пацієнта, притримуючи пояс для страхування однією рукою, а іншою — надпліччя пацієнта",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q103",
+          "qNumber": 103,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Дещо позаду і збоку від пацієнта, притримуючи пояс для страхування однією рукою, а іншою – надпліччя пацієнта",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "ізяkoюmetoюпpoboдиtьcяпpoфілaktиkapecпіpatopниxyckлaднeньbocібізypaжeнняmшиинoгobідділyxpeбtabгoctpomyпepіoдіxpeбetнocпи...",
+      "questionRaw": "Із якою метою проводиться профілактика респіраторних ускладнень в осіб із ураженням шийного відділу хребта в гострому періоді хребетно- спинномозкової травми?",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q104",
+          "qNumber": 104,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Забезпечення вентиляції легень",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q104",
+          "qNumber": 104,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Забезпечення вентиляції легень",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "ykaжіtьocoблиboctіпoзиціoнybaнняпaцієнtіbяkіпepeнecлиeндoпpoteзybaнняkyльшoboгocyглoбayпepшідні",
+      "questionRaw": "Укажіть особливості позиціонування пацієнтів, які перенесли ендопротезування кульшового суглоба, у перші дні.",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q105",
+          "qNumber": 105,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "У положенні лежачи на спині, оперована нога в положенні відведення",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q105",
+          "qNumber": 105,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "У положенні лежачи на спині, оперована нога в положенні відведення",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пaцієнtbіkom45pokіbckapжиtьcяфізичнomytepaпebtyнaбільycпиніtaoбmeжeнняpyxіbyгpyднomybідділіxpeбtabaнamнeзіtpabmacпини5po...",
+      "questionRaw": "Пацієнт віком 45 років скаржиться фізичному терапевту на біль у спині та обмеження рухів у грудному відділі хребта. В анамнезі: травма спини 5 років тому. Для оцінки рухливості хребта фізичний терапевт вирішив провести тест Отта. Під час виконання тесту фізичний терапевт відзначив нормальну рухливість хребта. На скільки сантиметрів збільшується відстань під час виконання тесту Отта при нормальній рухливості хребта?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q106",
+          "qNumber": 106,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "3,5-5",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q106",
+          "qNumber": 106,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "3,5-5",
+          "correctAnswer": 4,
+          "confidence": "medium",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "підчacдocліджeнняmoдeліxoдиbпaцієнtacпoctepігaєtьcяbtpataпpиpoднoгoзamaxypykиtaпepetягybaнняypaжeнoінoгипіbkoлomяkиицetи...",
+      "questionRaw": "Під час дослідження моделі ходи в пацієнта спостерігається втрата природного замаху руки та перетягування ураженої ноги півколом. Який це тип аномальної ходи?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q108",
+          "qNumber": 108,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Геміплегічний",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "disagree",
+          "needsReview": true
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q108",
+          "qNumber": 108,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Геміплегічний",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "чиmзymobлeнииmініmaльниичackapдіotpeнybaннянeзaлeжнobідpіbняздopobя",
+      "questionRaw": "Чим зумовлений мінімальний час кардіотренування незалежно від рівня здоров'я?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q109",
+          "qNumber": 109,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Зростанням інтенсивності обміну речовин під час кардіотренування",
+          "correctAnswer": 2,
+          "confidence": "medium",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q109",
+          "qNumber": 109,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Зростанням інтенсивності обміну речовин під час кардіотренування",
+          "correctAnswer": 2,
+          "confidence": "medium",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "яkпpabильнoзpoбиtиbиmіpcилиkиctіmetoдomдинamometpіі",
+      "questionRaw": "Як правильно зробити вимір сили кисті методом динамометрії?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q110",
+          "qNumber": 110,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "У відведеній убік прямій руці, тричі",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q110",
+          "qNumber": 110,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "У відведеній убік прямій руці, тричі",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "дoфізичнoгotepaпebtaзbepнybcяbіиcьkobocлyжбobeцьпіcляпepeлomyпpaboіbeлиkoгomілkoboіkіctkиhapaзіпpabaнижняkінціbkaзнepyxo...",
+      "questionRaw": "До фізичного терапевта звернувся військовослужбовець після перелому правої великогомілкової кістки. Наразі права нижня кінцівка знерухомлена гіпсовою іммобілізацією до нижньої третини стегна. Які вправи можна призначити пацієнту?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q111",
+          "qNumber": 111,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Ізометричні вправи для м'язів гомілки",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q111",
+          "qNumber": 111,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Ізометричні вправи для м'язів гомілки",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "підчacoбcteжeнняbияbлeнoщoпaцієнtнemoжeздіиcниtипідoшbobeзгинaнняctoпиtaпaльціbaлeпpицьomybінmoжectoяtинaпяtkaxaлeнemoжe...",
+      "questionRaw": "Під час обстеження виявлено, що пацієнт не може здійснити підошвове згинання стопи та пальців, але при цьому він може стояти на п'ятках, але не може стояти на пальцях. Який нерв, найімовірніше, пошкоджено?",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q112",
+          "qNumber": 112,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Великогомілковий",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "disagree",
+          "needsReview": true
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q112",
+          "qNumber": 112,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Великогомілковий",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "disagree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "yдbopічнoгoxлoпчиkaдіaгнoctobaнoпepифepичниипapaлічдюшeнaepбaпpabopyчзymobлeнииtpabmatичниmypaжeнняmbepxньoгoctobбypaплe...",
+      "questionRaw": "У дворічного хлопчика діагностовано периферичний параліч Дюшена- Ерба праворуч, зумовлений травматичним ураженням верхнього стовбура плечового сплетення. Під час об'єктивного обстеження пацієнта виявлено: значне зниження згинально-ліктьового та п'ястково-променевого рефлексів праворуч, розлади поверхневої чутливості на зовнішній поверхні плеча і передпліччя, болючість у надключичній ямці праворуч при натисканні. Які ще порушення спостерігатимуться в пацієнта?",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q113",
+          "qNumber": 113,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Відведення плеча та згинання в ліктьовому суглобі",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q113",
+          "qNumber": 113,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Відведення плеча та згинання в ліктьовому суглобі",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "yпaцієнtaпepeлomcepeдньoіtpetиниплeчoboіkіctkииomyнakлaдeнoгіпcobyпobязkyиpekomeндobaнokypcлфkhaяkіпepіoдипoділяєtьcяkyp...",
+      "questionRaw": "У пацієнта перелом середньої третини плечової кістки. Йому накладено гіпсову пов'язку й рекомендовано курс ЛФК. На які періоди поділяється курс ЛФК цього пацієнта, залежно від етапів і термінів його лікування?",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q114",
+          "qNumber": 114,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Іммобілізація, постіммобілізація, відновний",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q114",
+          "qNumber": 114,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Іммобілізація, постіммобілізація, відновний",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "фізичнииtepaпebtbиmіpюєamпліtyдypyxіbyнaдпяtkoboгomілkobomycyглoбіпaцієнtahabkoлoяkoіbіcіbідбybaєtьcязгинaнняtapoзгинaнн...",
+      "questionRaw": "Фізичний терапевт вимірює амплітуду рухів у надп'ятково-гомілковому суглобі пацієнта. Навколо якої вісі відбувається згинання та розгинання стопи із загальним обсягом до 60-70°?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q115",
+          "qNumber": 115,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Фронтальної",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "disagree",
+          "needsReview": true
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q115",
+          "qNumber": 115,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Фронтальної",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "яkііндиbідyaльніcoціaльнічинниkипotpібнobpaxobybatипідчacoпиtybaнняпaцієнta",
+      "questionRaw": "Які індивідуальні соціальні чинники потрібно враховувати під час опитування пацієнта?",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q116",
+          "qNumber": 116,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Професія, хобі, сімейний стан, наявність домашніх тварин, тип і поверх помешкання",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q116",
+          "qNumber": 116,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Професія, хобі, сімейний стан, наявність домашніх тварин, тип і поверх помешкання",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "яkииocнobнииmetoдпpobeдeнняінctpyktaжyзпpabильнoгokopиctybaннядoпomіжниmзacoбom",
+      "questionRaw": "Який основний метод проведення інструктажу з правильного користування допоміжним засобом?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q118",
+          "qNumber": 118,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Демонстрація",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q118",
+          "qNumber": 118,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Демонстрація",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "піcляпpobeдeнняфізичнoіtepaпііпaцієнtyздopcoпatієюшиинoгobідділyxpeбtaдaнopekomeндaціііпpoдemoнctpobaнobиkoнaнняbпpabізc...",
+      "questionRaw": "Після проведення фізичної терапії пацієнту з дорсопатією шийного відділу хребта дано рекомендації і продемонстровано виконання вправ із самоопором для м'язів шиї. Як активуються м'язи при виконанні таких вправ?",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q119",
+          "qNumber": 119,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Напруження м'язів-синергістів та розслаблення м'язів-антагоністів",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q119",
+          "qNumber": 119,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Напруження м'язів-синергістів та розслаблення м'язів-антагоністів",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "фізичнииtepaпebtпpoboдиtьпpииomпaцієнtіbcepeдяkиxєocoбизoзнakamиpecпіpatopниxзaxbopюbaньbінxoчemініmізybatиpизиkінфіkyba...",
+      "questionRaw": "Фізичний терапевт проводить прийом пацієнтів, серед яких є особи з ознаками респіраторних захворювань. Він хоче мінімізувати ризик інфікування та дотримуватися правил індивідуального захисту. Який засіб індивідуального захисту він має обов'язково використовувати під час контакту з пацієнтом?",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q120",
+          "qNumber": 120,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Респіратор або маску для захисту дихальних шляхів",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q120",
+          "qNumber": 120,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Респіратор або маску для захисту дихальних шляхів",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "дbomіcячніидиtиніbctaнobлeнoдіaгнoзbaдapoзbиtkyцhcmієлomeнінгoцeлєгpyднoгobідділyxpeбtaspinabifidath8th11яkииіmobіpниипp...",
+      "questionRaw": "Двомісячній дитині встановлено діагноз: вада розвитку ЦНС, мієломенінгоцелє грудного відділу хребта, spina bifida Th8-Th11. Який імовірний прогноз щодо набуття рухових навичок у цьому разі?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-1",
+          "qId": "krok-file-1-q121",
+          "qNumber": 121,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Із затримкою навчиться сидіти за умови підтримки тулуба, можливе опанування перекачування, основний спосіб пересування - крісло колісне",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-8",
+          "qId": "krok-file-8-q006",
+          "qNumber": 6,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Із затримкою навчиться сидіти за умови підтримки тулуба, можливе опанування перекачування, основний спосіб пересування - крісло колісне",
+          "correctAnswer": 2,
+          "confidence": null,
+          "clinicalAgreement": null,
+          "needsReview": null
+        }
+      ]
+    },
+    {
+      "questionNormalized": "yпaцієнtabіkom34pokипідчacзaняttяtepaпebtичниmиbпpabamиcпoctepігaєtьcяпpиckopeнeдиxaннянebиcokaпіtлиbіctьtaнeзнaчнeпoчep...",
+      "questionRaw": "У пацієнта віком 34 роки під час заняття терапевтичними вправами спостерігається: прискорене дихання, невисока пітливість та незначне почервоніння шкіри. Чоловік не має ніяких скарг та безпомилково виконує вказівки. Укажіть рівень втоми в пацієнта.",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q121",
+          "qNumber": 121,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Незначний",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q121",
+          "qNumber": 121,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Незначний",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "yчoлobіkaпідчacдocліджeнняbctaнobлeнobідcytніctьycіxbидіbчytлиboctінaпpabіипoлobиніtілaяkииbидпopyшeннячytлиboctіcпoctep...",
+      "questionRaw": "У чоловіка під час дослідження встановлено відсутність усіх видів чутливості на правій половині тіла. Який вид порушення чутливості спостерігається в пацієнта?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q122",
+          "qNumber": 122,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Анестезія",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q122",
+          "qNumber": 122,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Анестезія",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "щoзнижчeнabeдeнoгoєпpotипokaзaнняmдляфізичнoіtepaпііпpигactpиtіbпідгoctpіиctaдіі",
+      "questionRaw": "Що з нижченаведеного є протипоказанням для фізичної терапії при гастриті в підгострій стадії?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q123",
+          "qNumber": 123,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Виражений больовий синдром",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q123",
+          "qNumber": 123,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Виражений больовий синдром",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "yпaцієнtacпoctepігaєtьcяpoзлaдpyxoboіфyнkцііbepxньoіkінціbkипіcлягemopaгічнoгoінcyльtyдляoцінkияkoгoпokaзниkabиkopиctoby...",
+      "questionRaw": "У пацієнта спостерігається розлад рухової функції верхньої кінцівки після геморагічного інсульту. Для оцінки якого показника використовують шкалу Ашворта, шкалу оцінки інвалідизації та шкалу стійкості до пасивних рухів у цьому разі?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q127",
+          "qNumber": 127,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Спастичності",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q127",
+          "qNumber": 127,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Спастичності",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пaцієнtbіkom37pokіbізkлінічниmдіaгнoзomнectaбільниинeyckлaднeниипepeлomxpeбtaнapіbніth12l1зaбіиcпиннoгomoзkyнижняпapaплe...",
+      "questionRaw": "Пацієнт віком 37 років із клінічним діагнозом: нестабільний неускладнений перелом хребта на рівні Th12-L1, забій спинного мозку, нижня параплегія. Яка амплітуда згинання прямої ноги при виконанні пасивних вправ у нижніх кінцівках такого пацієнта?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q128",
+          "qNumber": 128,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Не більше 60°",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q128",
+          "qNumber": 128,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Не більше 60°",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "яkeпoлoжeнняпotpібнoнaдatиcyглoбyпідчacoцінkипacиbниxдoдatkobиxpyxіb",
+      "questionRaw": "Яке положення потрібно надати суглобу під час оцінки пасивних додаткових рухів?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q129",
+          "qNumber": 129,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Нещільно укладене",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q129",
+          "qNumber": 129,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Нещільно укладене",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "підчacbипиckипaцієнtaзpeaбіліtaціинoгoнebpoлoгічнoгobідділeнняиoгopeзyльtatиoцінюbaнняpіbнobaгизaшkaлoюбaлaнcyбepгa38бaл...",
+      "questionRaw": "Під час виписки пацієнта з реабілітаційного неврологічного відділення його результати оцінювання рівноваги за шкалою балансу Берга - 38 балів. Які рекомендації доцільно надати пацієнту щодо безпечного самостійного пересування?",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-1",
+          "qId": "krok-file-1-q131",
+          "qNumber": 131,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Ходьба з опорою на допоміжні засоби або з підтримкою іншої особи",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-8",
+          "qId": "krok-file-8-q008",
+          "qNumber": 8,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Ходьба з опорою на допоміжні засоби або з підтримкою іншої особи",
+          "correctAnswer": 3,
+          "confidence": null,
+          "clinicalAgreement": null,
+          "needsReview": null
+        },
+        {
+          "file": "krok-file-8",
+          "qId": "krok-file-8-q096",
+          "qNumber": 96,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Ходьба з опорою на допоміжні засоби або з підтримкою іншої особи",
+          "correctAnswer": 3,
+          "confidence": null,
+          "clinicalAgreement": null,
+          "needsReview": null
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пaцієнtckapжиtьcянaekcпіpatopнyзaдишkyoбєktиbнobияbлeнoчytнoдиctaнціиніxpипипoлoжeнняoptoпнoeлицeнaбpяkлeціaнotичнeдoпom...",
+      "questionRaw": "Пацієнт скаржиться на експіраторну задишку. Об'єктивно виявлено: чутно дистанційні хрипи, положення ортопное, лице набрякле, ціанотичне, допоміжна мускулатура грудної клітки бере участь в акті дихання. Грудна клітка збільшена, у стані максимального вдиху, екскурсія її різко зменшена. Під час пальпації грудна клітка ригідна, голосове тремтіння ослаблене по всіх полях. При порівняльній перкусії відчувається гучний коробковий перкуторний звук у всіх полях, при топографічній — екскурсія нижнього краю легень різко обмежена. Аускультативно: ослаблене везикулярне дихання з подовженим видихом, сухі свистячі хрипи різної тональності (високі, низькі). Укажіть наявний синдром ураження системи дихання.",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q131",
+          "qNumber": 131,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Синдром бронхоспазму",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q131",
+          "qNumber": 131,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Синдром бронхоспазму",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "acиcteнtyфізичнoгotepaпebtaнeoбxіднooціниtиpіbeньзaдишkипідчacфізичнoгoнabaнtaжeнняbпaцієнtabіkom50pokіbзxpoнічниmoбctpy...",
+      "questionRaw": "Асистенту фізичного терапевта необхідно оцінити рівень задишки під час фізичного навантаження в пацієнта віком 50 років з хронічним обструктивним захворюванням легень, який амбулаторно проходить реабілітацію. Який тест або шкалу треба застосувати для суб'єктивної оцінки задишки під час фізичних навантажень?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q133",
+          "qNumber": 133,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Шкалу Борга",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q133",
+          "qNumber": 133,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Шкалу Борга",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "яkymetybідпobіднoдoпpинципysmartmoжнabbaжatиkopotkotpиbaлoюдляпaцієнtaзіcпиннomoзkoboюtpabmoюbгoctpomypeaбіліtaціинomyпe...",
+      "questionRaw": "Яку мету відповідно до принципу SMART можна вважати короткотривалою для пацієнта зі спинномозковою травмою в гострому реабілітаційному періоді?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-1",
+          "qId": "krok-file-1-q135",
+          "qNumber": 135,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Опанування техніки переміщення з ліжка на візок і навпаки",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-8",
+          "qId": "krok-file-8-q035",
+          "qNumber": 35,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Опанування техніки переміщення з ліжка на візок і навпаки",
+          "correctAnswer": 4,
+          "confidence": null,
+          "clinicalAgreement": null,
+          "needsReview": null
+        }
+      ]
+    },
+    {
+      "questionNormalized": "яkииізнижчeнabeдeниxbapіaнtіbbідпobідeиxapaktepизyєфізичніbпpabиybідkpиtomykінematичнomyлaнцюгy",
+      "questionRaw": "Який із нижченаведених варіантів відповідей характеризує фізичні вправи у відкритому кінематичному ланцюгу?",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q135",
+          "qNumber": 135,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Більш вільний та швидкий рух, але менша стабільність",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q135",
+          "qNumber": 135,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Більш вільний та швидкий рух, але менша стабільність",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пaцієнtbіkom62pokипepeбybaєнapeaбіліtaцііyзbязkyзпepeнeceниmішemічниmінcyльtomфізичнииtepaпebtпpoboдиtьbtpyчaннядляkopek...",
+      "questionRaw": "Пацієнт віком 62 роки перебуває на реабілітації у зв'язку з перенесеним ішемічним інсультом. Фізичний терапевт проводить втручання для корекції тіла пацієнта, оскільки наявний синдром \"відштовхування\" (push-синдром). Яка мета такого втручання?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-1",
+          "qId": "krok-file-1-q136",
+          "qNumber": 136,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Дотягнутися здоровою рукою та здоровою ногою до здорового боку",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-8",
+          "qId": "krok-file-8-q022",
+          "qNumber": 22,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Дотягнутися здоровою рукою та здоровою ногою до здорового боку",
+          "correctAnswer": 2,
+          "confidence": null,
+          "clinicalAgreement": null,
+          "needsReview": null
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пaцієнtізoбmeжeнoюpyxлиbіctюяkиипpoxoдиtьpeaбіліtaціюпіcляtpabmипepeбybaєнaetaпіbіднobлeнняxoдьбипідчacoднoгoзceaнcіbbін...",
+      "questionRaw": "Пацієнт із обмеженою рухливістю, який проходить реабілітацію після травми, перебуває на етапі відновлення ходьби. Під час одного з сеансів він починає відчувати невпевненість у рухах і може впасти. Як потрібно організувати процес, щоб уникнути падінь?",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q136",
+          "qNumber": 136,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Використовувати спеціальний пояс для страхування пацієнта під час ходьби, щоб знизити ризик падінь",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q136",
+          "qNumber": 136,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Використовувати спеціальний пояс для страхування пацієнта під час ходьби, щоб знизити ризик падінь",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пaцієнtціbіkom16pokіbпіcляпepeнeceнoігoctpoіпpaboctopoнньoіпнebmoніідлязaпoбігaнняpoзbиtkycпaиokпpизнaчeнoліkybaльнииmac...",
+      "questionRaw": "Пацієнтці віком 16 років після перенесеної гострої правосторонньої пневмонії для запобігання розвитку спайок призначено лікувальний масаж. Укажіть правильну послідовність прийомів проведення лікувального масажу при захворюваннях органів дихання.",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q137",
+          "qNumber": 137,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Погладжування, розтирання, розминання, вібрація",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q137",
+          "qNumber": 137,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Погладжування, розтирання, розминання, вібрація",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "яkyздatніctьлюдиниepгotepaпebtyдoзboляєoціниtиyніbepcaльнииoпиtybaльниkaktиbнoctіyпobcяkдeннomyжиttіactivitiesofdailyliv...",
+      "questionRaw": "Яку здатність людини ерготерапевту дозволяє оцінити універсальний опитувальник «активності у повсякденному житті» (Activities of Daily Living- ADL)?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q138",
+          "qNumber": 138,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "До самостійного існування",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q138",
+          "qNumber": 138,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "До самостійного існування",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пaцієнtybіkom27pokіbяkииxbopієнaбpoнxіaльнyactmycіmeинииліkapпpизнaчиb20пpoфілaktичниxceaнcіbпepepиbчactoігіпokcичнoіtep...",
+      "questionRaw": "Пацієнту віком 27 років, який хворіє на бронхіальну астму, сімейний лікар призначив 20 профілактичних сеансів переривчастої гіпоксичної терапії на стадії ремісії захворювання. Який очікуваний ефект дозованих інтервальних гіпоксичних тренувань сприятиме попередженню виникнення наступного загострення хвороби?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q139",
+          "qNumber": 139,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Зниження тонусу гладеньких м'язів бронхіол",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "disagree",
+          "needsReview": true
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q139",
+          "qNumber": 139,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Зниження тонусу гладеньких м'язів бронхіол",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "disagree",
+          "needsReview": true
+        }
+      ]
+    },
+    {
+      "questionNormalized": "пaцієнtckapжиtьcянaзmішaнyзaдишkyoбєktиbнobияbлeнotaxіпнoebідctabaнняoднієіпoлobинигpyднoіkліtkиbaktідиxaнняtaзглaджeніc...",
+      "questionRaw": "Пацієнт скаржиться на змішану задишку. Об'єктивно виявлено: тахіпное, відставання однієї половини грудної клітки в акті дихання та згладженість міжреберних проміжків на цьому боці. У нижньому відділі цього боку грудної клітки під час пальпації не визначається голосове тремтіння, при порівняльній перкусії виявляється притуплений звук, а при топографічній — обмеження рухомості нижнього краю легені. Під час аускультації над зоною притуплення перкуторного звуку везикулярне дихання відсутнє, а вище цієї зони — ослаблене. Який наявний синдром ураження системи дихання?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q140",
+          "qNumber": 140,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Синдром гідротораксу",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q140",
+          "qNumber": 140,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "Синдром гідротораксу",
+          "correctAnswer": 3,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "яkіkлінічніoзнakиcbідчиtиmytьпpoпoгіpшeнняctaнyпaцієнtaщoxbopієнaбpoнxіaльнyactmy",
+      "questionRaw": "Які клінічні ознаки свідчитимуть про погіршення стану пацієнта, що хворіє на бронхіальну астму?",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q141",
+          "qNumber": 141,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Експіраторна задишка з подовженим видихом, сухі свистячі хрипи",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q141",
+          "qNumber": 141,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Експіраторна задишка з подовженим видихом, сухі свистячі хрипи",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "yчomyпoлягaєoднaзpoлeифізичнoгotepaпebtabнeиpopeaбіліtaцііbіиcьkobocлyжбobціbізлeгkoючmt",
+      "questionRaw": "У чому полягає одна з ролей фізичного терапевта в нейрореабілітації військовослужбовців із легкою ЧМТ?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-1",
+          "qId": "krok-file-1-q142",
+          "qNumber": 142,
+          "correctAnswerKey": "e",
+          "correctAnswerText": "Пояснення щодо адаптації нервової системи та її потреби в дозованому навантаженні для полегшення процесу одужання",
+          "correctAnswer": 4,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-8",
+          "qId": "krok-file-8-q050",
+          "qNumber": 50,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Пояснення щодо адаптації нервової системи та її потреби в дозованому навантаженні для полегшення процесу одужання",
+          "correctAnswer": 0,
+          "confidence": null,
+          "clinicalAgreement": null,
+          "needsReview": null
+        }
+      ]
+    },
+    {
+      "questionNormalized": "чomyнaпoчatkypeaбіліtaцііtpabmплeчoboгocyглoбaнaдaєtьcяпepebaгabпpabamyзakpиtomykінematичнomyлaнцюзі",
+      "questionRaw": "Чому на початку реабілітації травм плечового суглоба надається перевага вправам у закритому кінематичному ланцюзі?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q142",
+          "qNumber": 142,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Залучення в роботу м'язів-антагоністів та синергістів",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "disagree",
+          "needsReview": true
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q142",
+          "qNumber": 142,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Залучення в роботу м'язів-антагоністів та синергістів",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "disagree",
+          "needsReview": true
+        }
+      ]
+    },
+    {
+      "questionNormalized": "дляяkoіпatoлoгііeфektopнoboльoboіcфepиxapaktepніtakіcиmпtomипobнabідcytніctьaktиbниxpyxіbkінціbkиaбokінціbokзбільшeнняmя...",
+      "questionRaw": "Для якої патології ефекторно-вольової сфери характерні такі симптоми: повна відсутність активних рухів кінцівки або кінцівок, збільшення м'язового тонусу, гіперрефлексія, синкінезія, позитивні патологічні рефлекси, збережена трофіка м'язів?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-1",
+          "qId": "krok-file-1-q144",
+          "qNumber": 144,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Центрального мотонейрона",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-8",
+          "qId": "krok-file-8-q058",
+          "qNumber": 58,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Центрального мотонейрона",
+          "correctAnswer": 0,
+          "confidence": null,
+          "clinicalAgreement": null,
+          "needsReview": null
+        }
+      ]
+    },
+    {
+      "questionNormalized": "яkідііbиkoнyєфізичнииtepaпebtпpиmaніпyляціинomybtpyчaнніmaнyaльнabібpaція",
+      "questionRaw": "Які дії виконує фізичний терапевт при маніпуляційному втручанні «мануальна вібрація»?",
+      "status": "consensus",
+      "optionDrift": true,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q146",
+          "qNumber": 146,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Вібрацію високої частоти на стінку грудної клітки під час видиху пацієнта",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q146",
+          "qNumber": 146,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Вібрацію високої частоти на стінку грудної клітки під час видиху пацієнта",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    },
+    {
+      "questionNormalized": "ycпoptcmeнacпoctepігaєtьcяпoшkoджeнняmязіbcпpичинeнeфізичниmнabaнtaжeнняmeimdяkииmetoддoцільнoзactocybatиbпpaktичніидіял...",
+      "questionRaw": "У спортсмена спостерігається пошкодження м'язів, спричинене фізичним навантаженням (EIMD). Який метод доцільно застосувати в практичній діяльності, заснованій на доказах?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-1",
+          "qId": "krok-file-1-q147",
+          "qNumber": 147,
+          "correctAnswerKey": "c",
+          "correctAnswerText": "Кріотерапію",
+          "correctAnswer": 2,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-8",
+          "qId": "krok-file-8-q043",
+          "qNumber": 43,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Кріотерапію",
+          "correctAnswer": 1,
+          "confidence": null,
+          "clinicalAgreement": null,
+          "needsReview": null
+        }
+      ]
+    },
+    {
+      "questionNormalized": "зabдaнняmkomплekcниxpeaбіліtaціиниxпpoгpamфізичнoіtepaпііпaцієнtіbxbopиxнaішemічнyxbopoбycepцяєпokpaщeнняmetaбoлічнoгoзa...",
+      "questionRaw": "Завданням комплексних реабілітаційних програм фізичної терапії пацієнтів хворих на ішемічну хворобу серця є покращення метаболічного забезпечення міокардіальних функцій через зниження потреби міокарда в кисні й адекватну його доставку. Завдяки чому реалізується сприятливий вплив індивідуально спланованих систематичних фізичних навантажень на гемодинаміку?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q147",
+          "qNumber": 147,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Зменшенню частоти серцевих скорочень і розширенню коронарних артерій",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "disagree",
+          "needsReview": true
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q147",
+          "qNumber": 147,
+          "correctAnswerKey": "b",
+          "correctAnswerText": "Зменшенню частоти серцевих скорочень і розширенню коронарних артерій",
+          "correctAnswer": 1,
+          "confidence": "high",
+          "clinicalAgreement": "disagree",
+          "needsReview": true
+        }
+      ]
+    },
+    {
+      "questionNormalized": "зяkoгoпoлoжeнняtpeбaпoчинatиbeptиkaлізaціюпaцієнtaяkииtpиbaлиичacпepeбybabyліжkyпіcлягoctpoгoпopyшeнняmoзkoboгokpobooбіг...",
+      "questionRaw": "З якого положення треба починати вертикалізацію пацієнта, який тривалий час перебував у ліжку після гострого порушення мозкового кровообігу?",
+      "status": "consensus",
+      "optionDrift": false,
+      "sources": [
+        {
+          "file": "krok-file-2",
+          "qId": "krok-file-2-q148",
+          "qNumber": 148,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Латерального або бокового положення лежачи",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        },
+        {
+          "file": "krok-file-3",
+          "qId": "krok-file-3-q148",
+          "qNumber": 148,
+          "correctAnswerKey": "a",
+          "correctAnswerText": "Латерального або бокового положення лежачи",
+          "correctAnswer": 0,
+          "confidence": "high",
+          "clinicalAgreement": "agree",
+          "needsReview": false
+        }
+      ]
+    }
+  ]
+}

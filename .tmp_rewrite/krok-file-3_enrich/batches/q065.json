@@ -1,0 +1,45 @@
+{
+  "id": "krok-file-3-q065",
+  "number": 65,
+  "blockId": "krok-file-3",
+  "source": "крок файл 3.pdf",
+  "sourceQuestion": "Питання 65",
+  "question": "У постінсультного пацієнта з геміпарезом за результатами мануально-м'язового тестування сила двоголового м'яза стегна становить 1 бал. Якому кваліфікатору МКФ для функцій організму відповідає зазначений показник сили м'язів?",
+  "options": [
+    "3",
+    "2",
+    "4",
+    "1",
+    "0"
+  ],
+  "answers": [
+    {
+      "key": "a",
+      "text": "3",
+      "isCorrect": false
+    },
+    {
+      "key": "b",
+      "text": "2",
+      "isCorrect": false
+    },
+    {
+      "key": "c",
+      "text": "4",
+      "isCorrect": true
+    },
+    {
+      "key": "d",
+      "text": "1",
+      "isCorrect": false
+    },
+    {
+      "key": "e",
+      "text": "0",
+      "isCorrect": false
+    }
+  ],
+  "correctAnswer": 2,
+  "correctAnswerKey": "c",
+  "correctAnswerText": "4"
+}

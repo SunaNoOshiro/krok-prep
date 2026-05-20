@@ -1,0 +1,34 @@
+{
+  "uid": "krok-file-1-q001",
+  "verifiedBy": "codex-gpt-5.5-xhigh",
+  "verifiedAt": "2026-05-20T00:00:00Z",
+  "independentChoice": {
+    "key": "d",
+    "text": "30-49%",
+    "confidence": "high",
+    "reasoning": "ІІ ступінь ожиріння у традиційній класифікації за відсотком перевищення належної/фізіологічної маси тіла відповідає діапазону 30-49%. Нижчі діапазони належать до І ступеня, а 50% і більше — вже до ІІІ ступеня."
+  },
+  "perSourceVerdict": [
+    {
+      "file": "krok-file-1",
+      "claimedKey": "d",
+      "agrees": true,
+      "reason": "Джерело правильно вказує 30-49%, що відповідає ІІ ступеню ожиріння за класифікацією надлишку маси тіла."
+    }
+  ],
+  "finalAnswer": {
+    "key": "d",
+    "text": "30-49%",
+    "confidence": "high",
+    "agreeingSources": [
+      "krok-file-1"
+    ],
+    "disagreeingSources": [],
+    "ambiguityNote": null
+  },
+  "bestExistingExplanation": {
+    "source": "krok-file-1",
+    "verbatim": "ІІ ступінь ожиріння за класифікацією за надлишком маси тіла визначають як перевищення фізіологічної норми на 30-49% — проміжна категорія між легким (І) та вираженим (ІІІ) ступенями."
+  },
+  "notes": "Перевірка однозначна: варіант 30-49% є правильним, а позначка validation.clinicalAgreement='disagree' у джерелі суперечить його ж modelChosenKey і правильній відповіді."
+}

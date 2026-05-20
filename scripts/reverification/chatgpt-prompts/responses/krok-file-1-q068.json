@@ -1,0 +1,41 @@
+{
+  "uid": "krok-file-1-q068",
+  "verifiedBy": "codex-gpt-5.5-xhigh",
+  "verifiedAt": "2026-05-20T00:00:00Z",
+  "independentChoice": {
+    "key": "d",
+    "text": "72 годин з моменту отримання травми",
+    "confidence": "high",
+    "reasoning": "При опіках із залученням ділянки суглоба базову оцінку ROM треба виконати рано, якщо немає протипоказів, щоб зафіксувати вихідний стан і запобігати контрактурам. У стандартах фізіотерапії та ерготерапії при опіках British Burn Association поточні ROM і силу в уражених ділянках оцінюють у межах 72 годин за відсутності медичної нестабільності, graft-related обмежень чи супутніх травм."
+  },
+  "perSourceVerdict": [
+    {
+      "file": "krok-file-1",
+      "claimedKey": "d",
+      "agrees": true,
+      "reason": "Джерело обрало той самий варіант: 72 години для ранньої оцінки ROM у зоні, ураженій опіком, за відсутності протипоказів."
+    },
+    {
+      "file": "krok-file-8",
+      "claimedKey": "e",
+      "agrees": true,
+      "reason": "Ключ відрізняється лише через інший порядок варіантів; у цьому джерелі key e має той самий текст: «72 годин з моменту отримання травми»."
+    }
+  ],
+  "finalAnswer": {
+    "key": "d",
+    "text": "72 годин з моменту отримання травми",
+    "confidence": "high",
+    "agreeingSources": [
+      "krok-file-1",
+      "krok-file-8"
+    ],
+    "disagreeingSources": [],
+    "ambiguityNote": null
+  },
+  "bestExistingExplanation": {
+    "source": "krok-file-1",
+    "verbatim": "72 години від моменту опіку — прийняте у ранній опіковій реабілітації терапевтичне вікно для первинного об'єктивного виміру амплітуди рухів навколосуглобової зони."
+  },
+  "notes": "Клінічний орієнтир підтверджує British Burn Association, Standards of Physiotherapy and Occupational Therapy Practice in the Management of Burn Injured Adults and Children, Standard 6.2: https://www.britishburnassociation.org/wp-content/uploads/2022/11/Therapy-Standards-final-version-2022.pdf"
+}

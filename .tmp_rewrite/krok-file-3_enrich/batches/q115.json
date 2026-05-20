@@ -1,0 +1,45 @@
+{
+  "id": "krok-file-3-q115",
+  "number": 115,
+  "blockId": "krok-file-3",
+  "source": "крок файл 3.pdf",
+  "sourceQuestion": "Питання 115",
+  "question": "Фізичний терапевт вимірює амплітуду рухів у надп'ятково-гомілковому суглобі пацієнта. Навколо якої вісі відбувається згинання та розгинання стопи із загальним обсягом до 60-70°?",
+  "options": [
+    "Сагітальної",
+    "Фронтальної",
+    "Поздовжньої",
+    "Горизонтальної",
+    "Поперечної"
+  ],
+  "answers": [
+    {
+      "key": "a",
+      "text": "Сагітальної",
+      "isCorrect": false
+    },
+    {
+      "key": "b",
+      "text": "Фронтальної",
+      "isCorrect": true
+    },
+    {
+      "key": "c",
+      "text": "Поздовжньої",
+      "isCorrect": false
+    },
+    {
+      "key": "d",
+      "text": "Горизонтальної",
+      "isCorrect": false
+    },
+    {
+      "key": "e",
+      "text": "Поперечної",
+      "isCorrect": false
+    }
+  ],
+  "correctAnswer": 1,
+  "correctAnswerKey": "b",
+  "correctAnswerText": "Фронтальної"
+}

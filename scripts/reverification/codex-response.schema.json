@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "KrokDisputedChatGptResponse",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "uid",
+    "verifiedBy",
+    "verifiedAt",
+    "independentChoice",
+    "perSourceVerdict",
+    "finalAnswer",
+    "bestExistingExplanation",
+    "notes"
+  ],
+  "properties": {
+    "uid": { "type": "string" },
+    "verifiedBy": { "type": "string" },
+    "verifiedAt": { "type": "string" },
+    "independentChoice": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key", "text", "confidence", "reasoning"],
+      "properties": {
+        "key": { "type": "string", "enum": ["a", "b", "c", "d", "e"] },
+        "text": { "type": "string" },
+        "confidence": { "type": "string", "enum": ["high", "medium", "low"] },
+        "reasoning": { "type": "string" }
+      }
+    },
+    "perSourceVerdict": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["file", "claimedKey", "agrees", "reason"],
+        "properties": {
+          "file": { "type": "string" },
+          "claimedKey": { "type": "string" },
+          "agrees": { "type": "boolean" },
+          "reason": { "type": "string" }
+        }
+      }
+    },
+    "finalAnswer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "key",
+        "text",
+        "confidence",
+        "agreeingSources",
+        "disagreeingSources",
+        "ambiguityNote"
+      ],
+      "properties": {
+        "key": { "type": "string", "enum": ["a", "b", "c", "d", "e"] },
+        "text": { "type": "string" },
+        "confidence": { "type": "string", "enum": ["high", "medium", "low"] },
+        "agreeingSources": { "type": "array", "items": { "type": "string" } },
+        "disagreeingSources": { "type": "array", "items": { "type": "string" } },
+        "ambiguityNote": { "type": ["string", "null"] }
+      }
+    },
+    "bestExistingExplanation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source", "verbatim"],
+      "properties": {
+        "source": { "type": ["string", "null"] },
+        "verbatim": { "type": ["string", "null"] }
+      }
+    },
+    "notes": { "type": ["string", "null"] }
+  }
+}
