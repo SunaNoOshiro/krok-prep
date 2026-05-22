@@ -171,12 +171,15 @@ export const api = {
     return sortKrokTopics(Array.from(new Set(sourceData.map((q) => q.topic).filter((topic): topic is string => Boolean(topic)))));
   },
 
-  async getQuestions(topic?: string, variant?: number, source?: QuestionSource, sourceLabel?: string): Promise<Question[]> {
+  async getQuestions(topic?: string, variant?: number, source?: QuestionSource, sourceLabels?: string | string[]): Promise<Question[]> {
     const sourceData = getSourceData(source);
+    const labelFilter = Array.isArray(sourceLabels)
+      ? (sourceLabels.length > 0 ? new Set(sourceLabels) : null)
+      : (sourceLabels ? new Set([sourceLabels]) : null);
     const questions = sourceData.filter((q) => {
       if (topic && q.topic !== topic) return false;
       if (variant && (!('variant' in q) || q.variant !== variant)) return false;
-      if (sourceLabel && normalizeDisplayText(q.source ?? '') !== sourceLabel) return false;
+      if (labelFilter && !labelFilter.has(normalizeDisplayText(q.source ?? ''))) return false;
       return true;
     });
 

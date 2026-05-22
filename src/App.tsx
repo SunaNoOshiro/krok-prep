@@ -34,7 +34,8 @@ type StartOptions = {
   limit?: number,
   variant?: number,
   source?: QuestionSource,
-  sourceLabel?: string,
+  sourceLabels?: string[],
+  ignoreTopic?: boolean,
   allQuestions?: boolean,
   preserveOptionOrder?: boolean,
   preserveQuestionOrder?: boolean,
@@ -638,6 +639,7 @@ const Dashboard = ({
   topics,
   topicCounts,
   topicSources,
+  topicSourceCounts,
   sources,
   stats,
   onSelectTopic,
@@ -650,6 +652,7 @@ const Dashboard = ({
   topics: string[],
   topicCounts: Record<string, number>,
   topicSources: Record<string, string[]>,
+  topicSourceCounts: Record<string, Record<string, number>>,
   sources: Array<{ label: string, count: number }>,
   stats: UserStats | null,
   onSelectTopic: (topic: string, mode: QuizMode, options?: StartOptions) => void,
@@ -662,6 +665,39 @@ const Dashboard = ({
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
   const [selectedTopicOptions, setSelectedTopicOptions] = useState<StartOptions | undefined>();
   const [variants, setVariants] = useState<number[]>([]);
+  const [selectedSourceFilter, setSelectedSourceFilter] = useState<Set<string>>(new Set());
+
+  const sourceFilterActive = selectedSourceFilter.size > 0 && selectedSourceFilter.size < sources.length;
+  const activeSourceLabels: string[] | undefined = sourceFilterActive ? Array.from(selectedSourceFilter) : undefined;
+
+  const filteredTopics = sourceFilterActive
+    ? topics.filter((topic) => {
+      const labels = topicSources[topic] ?? [];
+      return labels.some((label) => selectedSourceFilter.has(label));
+    })
+    : topics;
+
+  const filteredTopicCounts: Record<string, number> = sourceFilterActive
+    ? filteredTopics.reduce<Record<string, number>>((acc, topic) => {
+      const perSource = topicSourceCounts[topic] ?? {};
+      let total = 0;
+      selectedSourceFilter.forEach((label: string) => {
+        total += perSource[label] ?? 0;
+      });
+      acc[topic] = total;
+      return acc;
+    }, {})
+    : topicCounts;
+
+  const toggleSourceFilter = (label: string) => {
+    setSelectedSourceFilter((prev) => {
+      const next = new Set(prev);
+      if (next.has(label)) next.delete(label); else next.add(label);
+      return next;
+    });
+  };
+
+  const clearSourceFilter = () => setSelectedSourceFilter(new Set());
   const config = EXAM_CONFIGS[examFamily];
   const totalQuestionCount = Object.values(topicCounts).reduce((sum, count) => sum + count, 0);
   const totalSourceCount = sources.reduce((sum, s) => sum + s.count, 0);
@@ -694,17 +730,23 @@ const Dashboard = ({
   };
 
   const renderTopicCard = (topic: string, i: number) => {
-    const total = topicCounts[topic] ?? 0;
-    const topicSourceLabels = topicSources[topic] ?? [];
+    const total = filteredTopicCounts[topic] ?? 0;
+    const topicSourceLabels = sourceFilterActive
+      ? (topicSources[topic] ?? []).filter((label) => selectedSourceFilter.has(label))
+      : (topicSources[topic] ?? []);
     const answered = stats?.topicStats?.[topic]?.count ?? 0;
     const correct = stats?.topicStats?.[topic]?.correct ?? 0;
     const accuracy = answered > 0 ? Math.round((correct / answered) * 100) : 0;
 
+    const topicOptions: StartOptions | undefined = activeSourceLabels
+      ? { source: config.defaultSource, sourceLabels: activeSourceLabels }
+      : undefined;
+
     const handleTopicClick = () => {
       if (examFamily === 'edki') {
-        onSelectTopic(topic, 'training', { source: config.defaultSource });
+        onSelectTopic(topic, 'training', { source: config.defaultSource, ...(activeSourceLabels ? { sourceLabels: activeSourceLabels } : {}) });
       } else {
-        openTopicSelection(topic);
+        openTopicSelection(topic, topicOptions);
       }
     };
 
@@ -962,7 +1004,7 @@ const Dashboard = ({
         {mainMode === 'topics' && (
           <motion.div key="topics" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-8">
             <div className="flex items-center gap-4">
-              <button 
+              <button
                 onClick={() => setMainMode('root')}
                 className="p-3 bg-white border border-slate-200 rounded-2xl hover:bg-slate-50 transition-colors"
                 title="Назад"
@@ -971,9 +1013,77 @@ const Dashboard = ({
               </button>
               <h2 className="text-3xl font-black text-slate-900 uppercase">Оберіть тему</h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {topics.map(renderTopicCard)}
-            </div>
+
+            {sources.length > 1 && (
+              <div className="rounded-3xl border border-slate-200 bg-white p-4 md:p-5 shadow-sm">
+                <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] font-black uppercase tracking-[0.18em] text-slate-500">Джерела</span>
+                    <span className="text-[10px] font-bold text-slate-400">
+                      {sourceFilterActive
+                        ? `Вибрано: ${selectedSourceFilter.size} з ${sources.length}`
+                        : 'Усі джерела'}
+                    </span>
+                  </div>
+                  {sourceFilterActive && (
+                    <button
+                      type="button"
+                      onClick={clearSourceFilter}
+                      className="text-[10px] font-black uppercase tracking-wider text-indigo-600 hover:text-indigo-800 transition-colors"
+                    >
+                      Скинути
+                    </button>
+                  )}
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <button
+                    type="button"
+                    onClick={clearSourceFilter}
+                    className={`flex items-center gap-2 rounded-2xl border px-3 py-2 text-xs font-bold transition-all ${
+                      !sourceFilterActive
+                        ? 'border-indigo-500 bg-indigo-50 text-indigo-700'
+                        : 'border-slate-200 bg-white text-slate-600 hover:border-indigo-300 hover:bg-indigo-50/40'
+                    }`}
+                  >
+                    <span className={`flex h-4 w-4 items-center justify-center rounded-md border ${!sourceFilterActive ? 'border-indigo-600 bg-indigo-600 text-white' : 'border-slate-300 bg-white'}`}>
+                      {!sourceFilterActive && <CheckCircle2 className="h-3 w-3" />}
+                    </span>
+                    Усі джерела
+                  </button>
+                  {sources.map((src) => {
+                    const checked = selectedSourceFilter.has(src.label);
+                    return (
+                      <button
+                        key={src.label}
+                        type="button"
+                        onClick={() => toggleSourceFilter(src.label)}
+                        className={`flex items-center gap-2 rounded-2xl border px-3 py-2 text-xs font-bold transition-all ${
+                          checked
+                            ? 'border-indigo-500 bg-indigo-50 text-indigo-700'
+                            : 'border-slate-200 bg-white text-slate-600 hover:border-indigo-300 hover:bg-indigo-50/40'
+                        }`}
+                      >
+                        <span className={`flex h-4 w-4 items-center justify-center rounded-md border ${checked ? 'border-indigo-600 bg-indigo-600 text-white' : 'border-slate-300 bg-white'}`}>
+                          {checked && <CheckCircle2 className="h-3 w-3" />}
+                        </span>
+                        <span className="leading-tight">{src.label}</span>
+                        <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">{src.count}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {filteredTopics.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredTopics.map(renderTopicCard)}
+              </div>
+            ) : (
+              <div className="rounded-3xl border border-dashed border-slate-200 bg-white p-10 text-center">
+                <p className="text-slate-500 font-medium">Немає тем для вибраних джерел.</p>
+              </div>
+            )}
           </motion.div>
         )}
 
@@ -996,7 +1106,7 @@ const Dashboard = ({
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: i * 0.05 }}
-                  onClick={() => openTopicSelection(src.label, { source: config.defaultSource, sourceLabel: src.label })}
+                  onClick={() => openTopicSelection(src.label, { source: config.defaultSource, sourceLabels: [src.label], ignoreTopic: true })}
                   className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm hover:shadow-xl hover:border-amber-500 transition-all cursor-pointer group"
                 >
                   <div className="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center text-amber-600 mb-4 group-hover:bg-amber-600 group-hover:text-white transition-colors">
@@ -1086,7 +1196,7 @@ const Dashboard = ({
                       </button>
                     ))}
                   </div>
-                ) : selectedTopicOptions?.sourceLabel ? (
+                ) : selectedTopicOptions?.ignoreTopic && selectedTopicOptions?.sourceLabels?.length ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
                     <button
                       onClick={() => onSelectTopic(selectedTopic, 'training', { ...selectedTopicOptions, limit: 50 })}
@@ -1527,6 +1637,7 @@ export default function App() {
   const [topics, setTopics] = useState<string[]>([]);
   const [topicCounts, setTopicCounts] = useState<Record<string, number>>({});
   const [topicSources, setTopicSources] = useState<Record<string, string[]>>({});
+  const [topicSourceCounts, setTopicSourceCounts] = useState<Record<string, Record<string, number>>>({});
   const [sources, setSources] = useState<Array<{ label: string, count: number }>>([]);
   const [stats, setStats] = useState<UserStats | null>(null);
   const [currentQuiz, setCurrentQuiz] = useState<{ 
@@ -1632,9 +1743,16 @@ export default function App() {
       const topicSourceMap = Object.fromEntries(
         Object.entries(sourceSets).map(([topic, sourceSet]) => [topic, Array.from(sourceSet)])
       );
+      const topicSourceCountMap = questions.reduce<Record<string, Record<string, number>>>((acc, question) => {
+        if (!question.topic || !question.source) return acc;
+        if (!acc[question.topic]) acc[question.topic] = {};
+        acc[question.topic][question.source] = (acc[question.topic][question.source] ?? 0) + 1;
+        return acc;
+      }, {});
       setTopics(t);
       setTopicCounts(counts);
       setTopicSources(topicSourceMap);
+      setTopicSourceCounts(topicSourceCountMap);
       setSources(sourceList);
       setStats(loadStats(examFamily));
     };
@@ -1671,13 +1789,13 @@ export default function App() {
     const source = options.source ?? EXAM_CONFIGS[targetExamFamily].defaultSource;
     const normalizedOptions: StartOptions = { ...options, source };
     const isFullEdkiSet = targetExamFamily === 'edki' && topic === EXAM_CONFIGS.edki.variantName;
-    const useAllQuestions = normalizedOptions.allQuestions || isFullEdkiSet || topic === MIXED_TOPIC || normalizedOptions.variant || Boolean(normalizedOptions.sourceLabel);
+    const useAllQuestions = normalizedOptions.allQuestions || isFullEdkiSet || topic === MIXED_TOPIC || Boolean(normalizedOptions.variant) || Boolean(normalizedOptions.ignoreTopic);
     const topicFilter = useAllQuestions ? undefined : topic;
     let questions = await api.getQuestions(
       topicFilter,
       normalizedOptions.variant,
       source,
-      normalizedOptions.sourceLabel
+      normalizedOptions.sourceLabels
     );
     
     const shouldShuffle = !normalizedOptions.preserveQuestionOrder
@@ -1748,6 +1866,7 @@ export default function App() {
               topics={topics}
               topicCounts={topicCounts}
               topicSources={topicSources}
+              topicSourceCounts={topicSourceCounts}
               sources={sources}
               stats={stats}
               onSelectTopic={handleStartQuiz}
