@@ -63,7 +63,7 @@ const EXAM_CONFIGS: Record<ExamFamily, {
 }> = {
   krok: {
     title: 'КРОК 2',
-    subtitle: 'Платформа підготовки до професійної сертифікації фізичних терапевтів',
+    subtitle: 'Магістри "Фізична терапія, ерготерапія"',
     sourceText: 'Платформа підготовки до професійної сертифікації фізичних терапевтів',
     sourceNote: 'На основі офіційних тестових завдань Крок 2 2025 року',
     sourceUrl: 'https://dspace.zsmu.edu.ua/bitstream/123456789/22800/1/%D0%9A%D0%A0%D0%9E%D0%9A%202_%D1%82%D0%B5%D1%81%D1%82%D0%BE%D0%B2%D1%96%20%D0%B7%D0%B0%D0%B2%D0%B4%D0%B0%D0%BD%D0%BD%D1%8F_2025.pdf',
@@ -702,7 +702,7 @@ const Dashboard = ({
   const totalQuestionCount = Object.values(topicCounts).reduce((sum, count) => sum + count, 0);
   const totalSourceCount = sources.reduce((sum, s) => sum + s.count, 0);
   const edkiQuestionBankDescription = totalSourceCount > 0
-    ? `${totalSourceCount} питань з ${sources.length} джерел: ЄДКІ 2026, крок файл 1, крок файл 2, крок файл 8 та «крок 4 курс.pdf» (Педіатрія).`
+    ? `${totalSourceCount} питань з ${sources.length} джерел: ЄДКІ 2026, крок файл 1, крок файл 2, крок файл 3, крок файл 8 та «крок 4 курс.pdf» (Педіатрія).`
     : config.variantDescription;
   const sourceNote = examFamily === 'edki' ? edkiQuestionBankDescription : config.sourceNote;
   const variantDescription = examFamily === 'edki' ? edkiQuestionBankDescription : config.variantDescription;
