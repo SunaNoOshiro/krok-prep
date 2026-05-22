@@ -1,6 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "KrokDisputedChatGptResponse",
+  "title": "KrokReverifyResponse",
+  "description": "Output shape produced by REVERIFY_PROMPT.md. Both Opus and codex emit this shape (codex via --output-schema enforcement; Opus by following the prompt template). NOTE: this schema avoids `oneOf`/`anyOf`/`allOf` because OpenAI's structured-outputs (used by codex) only supports a strict subset of JSON Schema. Optionality is expressed via nullable types (e.g. `\"type\": [\"string\", \"null\"]`) and all properties must be `required` even when nullable.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -8,15 +9,17 @@
     "verifiedBy",
     "verifiedAt",
     "independentChoice",
-    "perSourceVerdict",
+    "crossCheck",
     "finalAnswer",
-    "bestExistingExplanation",
+    "bestWhys",
+    "bestHint",
     "notes"
   ],
   "properties": {
     "uid": { "type": "string" },
     "verifiedBy": { "type": "string" },
     "verifiedAt": { "type": "string" },
+
     "independentChoice": {
       "type": "object",
       "additionalProperties": false,
@@ -28,20 +31,31 @@
         "reasoning": { "type": "string" }
       }
     },
-    "perSourceVerdict": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": ["file", "claimedKey", "agrees", "reason"],
-        "properties": {
-          "file": { "type": "string" },
-          "claimedKey": { "type": "string" },
-          "agrees": { "type": "boolean" },
-          "reason": { "type": "string" }
+
+    "crossCheck": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["perSource"],
+      "properties": {
+        "perSource": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["file", "qId", "claimedKey", "agrees", "verdict", "reason"],
+            "properties": {
+              "file": { "type": "string" },
+              "qId": { "type": "string" },
+              "claimedKey": { "type": "string" },
+              "agrees": { "type": "boolean" },
+              "verdict": { "type": "string", "enum": ["correct", "incorrect", "ambiguous"] },
+              "reason": { "type": "string" }
+            }
+          }
         }
       }
     },
+
     "finalAnswer": {
       "type": "object",
       "additionalProperties": false,
@@ -49,28 +63,51 @@
         "key",
         "text",
         "confidence",
+        "reasoning",
         "agreeingSources",
-        "disagreeingSources",
-        "ambiguityNote"
+        "disagreeingSources"
       ],
       "properties": {
         "key": { "type": "string", "enum": ["a", "b", "c", "d", "e"] },
         "text": { "type": "string" },
         "confidence": { "type": "string", "enum": ["high", "medium", "low"] },
+        "reasoning": { "type": "string" },
         "agreeingSources": { "type": "array", "items": { "type": "string" } },
-        "disagreeingSources": { "type": "array", "items": { "type": "string" } },
-        "ambiguityNote": { "type": ["string", "null"] }
+        "disagreeingSources": { "type": "array", "items": { "type": "string" } }
       }
     },
-    "bestExistingExplanation": {
+
+    "bestWhys": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["source", "verbatim"],
+      "description": "One required entry per answer key a-e. Each entry is a `bestEntry` object: if no matching candidate exists for that key, set source/angle/text to null and put the explanation in `reason`.",
+      "required": ["a", "b", "c", "d", "e"],
       "properties": {
-        "source": { "type": ["string", "null"] },
-        "verbatim": { "type": ["string", "null"] }
+        "a": { "$ref": "#/$defs/bestEntry" },
+        "b": { "$ref": "#/$defs/bestEntry" },
+        "c": { "$ref": "#/$defs/bestEntry" },
+        "d": { "$ref": "#/$defs/bestEntry" },
+        "e": { "$ref": "#/$defs/bestEntry" }
       }
     },
+
+    "bestHint": { "$ref": "#/$defs/bestEntry" },
+
     "notes": { "type": ["string", "null"] }
+  },
+
+  "$defs": {
+    "bestEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Either a real candidate (source+angle+text populated) or a no-candidate marker (those three null, reason explains). All four fields are required for OpenAI-structured-output compatibility; use null on the slot that doesn't apply.",
+      "required": ["source", "angle", "text", "reason"],
+      "properties": {
+        "source": { "type": ["string", "null"] },
+        "angle": { "type": ["string", "null"] },
+        "text": { "type": ["string", "null"] },
+        "reason": { "type": ["string", "null"] }
+      }
+    }
   }
 }

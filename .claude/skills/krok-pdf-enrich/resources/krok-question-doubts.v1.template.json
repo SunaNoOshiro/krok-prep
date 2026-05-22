@@ -1,0 +1,59 @@
+{
+  "$schema_note": "Template for schema `krok-question-doubts.v1`. Produced by merge.py as a sidecar to `<BLOCK_ID>.enriched.json`. One entry per question where the AI overrode the PDF answer OR validation flagged the answer as needing clinical review. Placeholders (<BLOCK_ID>, etc.) get filled in per run.",
+
+  "schemaVersion": "krok-question-doubts.v1",
+  "generatedAt": "<ISO-8601 timestamp>",
+  "sourceBlockId": "<BLOCK_ID>",
+  "sourceFileName": "<SOURCE_FILE_NAME>",
+  "summary": {
+    "questionCount": 150,
+    "reviewItemCount": 8,
+    "aiOverridePdfCount": 6,
+    "needsClinicalReviewCount": 2,
+    "missingResultsCount": 0
+  },
+  "missingResults": [],
+  "items": [
+    {
+      "questionNumber": 1,
+      "questionId": "<BLOCK_ID>-q001",
+      "question": "<verbatim question text>",
+      "options": ["<opt a>", "<opt b>", "<opt c>", "<opt d>"],
+      "pdfCorrectAnswer": "<opt a>",
+      "pdfCorrectAnswerKey": "a",
+      "aiCorrectAnswer": "<opt c>",
+      "aiCorrectAnswerKey": "c",
+      "reviewType": "ai_override_pdf",
+      "confidence": "high",
+      "reason": "<clinical rationale for the override>",
+      "modelChosenKey": "c",
+      "modelChosenText": "<opt c>",
+      "overrideApplied": true,
+      "pdfOriginal": {
+        "correctAnswer": 0,
+        "correctAnswerKey": "a",
+        "correctAnswerText": "<opt a>",
+        "reason": "<copy of the AI's reason for the override, snapshotted at merge time>"
+      },
+      "suggestedAction": "AI override applied — звірити з офіційним/навчальним джерелом перед мерджем."
+    },
+    {
+      "questionNumber": 42,
+      "questionId": "<BLOCK_ID>-q042",
+      "question": "<verbatim question text>",
+      "options": ["<opt a>", "<opt b>", "<opt c>", "<opt d>"],
+      "pdfCorrectAnswer": "<opt b>",
+      "pdfCorrectAnswerKey": "b",
+      "aiCorrectAnswer": "<opt b>",
+      "aiCorrectAnswerKey": "b",
+      "reviewType": "needs_clinical_review",
+      "confidence": "medium",
+      "reason": "<reason validator was uncertain even though PDF and AI agreed>",
+      "modelChosenKey": "b",
+      "modelChosenText": "<opt b>",
+      "overrideApplied": false,
+      "pdfOriginal": null,
+      "suggestedAction": "Низька впевненість моделі — потрібна ручна клінічна звірка."
+    }
+  ]
+}

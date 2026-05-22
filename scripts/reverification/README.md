@@ -42,7 +42,7 @@
                             ▼
     ┌──────────────────────────┬──────────────────────────┐
     ▼                          ▼                          ▼
-  run.sh                  run_codex.sh           gen_chatgpt_prompts.py
+  run_opus.sh             run_codex.sh           gen_chatgpt_prompts.py
   (Opus 4.7 via           (GPT-5.5 xhigh via      (manual ChatGPT,
    claude CLI)             codex CLI)              optional 3rd vote)
     │                          │                          │
@@ -59,7 +59,7 @@
                             │
                             ▼
         ┌───────────────────────────────────────┐
-        │ apply_fixes.py                        │
+        │ resolve_disputes.py                        │
         │   • update enriched.json (consensus)  │
         │   • quarantine (ambiguous)            │
         ▼
@@ -77,14 +77,14 @@
 | [dedupe_questions.py](dedupe_questions.py) | Step 1 — пошук дублікатів між enriched-файлами. Нормалізація: NFKD + Cyr↔Lat homoglyph fold + strip пунктуації. |
 | [collect_uncertain.py](collect_uncertain.py) | Step 2 — об'єднує дублікати-mismatches + medium-confidence + AI/PDF disagreements + needsReview |
 | [split_batches.py](split_batches.py) | Розбиває `needs-reverification.json` на per-uid файли для CLI-конвеєрів |
-| [PROMPT.md](PROMPT.md) | System prompt для Opus 4.7 і codex. КРОК 1: blind judgment, КРОК 2: cross-check, КРОК 3: final, КРОК 4: best-of пояснень із існуючих кандидатів. |
-| [run.sh](run.sh) | Opus 4.7 max через `claude -p --model claude-opus-4-7`. Пише в `results/`. `xargs -P 3`. |
+| [REVERIFY_PROMPT.md](REVERIFY_PROMPT.md) | System prompt для Opus 4.7 і codex. КРОК 1: blind judgment, КРОК 2: cross-check, КРОК 3: final, КРОК 4: best-of пояснень із існуючих кандидатів. |
+| [run_opus.sh](run_opus.sh) | Opus 4.7 max через `claude -p --model claude-opus-4-7`. Пише в `results/`. `xargs -P 3`. |
 | [run_codex.sh](run_codex.sh) | GPT-5.5 (xhigh reasoning) через `codex exec --output-schema --output-last-message`. Підписка ChatGPT, не API. `xargs -P 2`. Пише в `chatgpt-prompts/responses/`. |
 | [codex-response.schema.json](codex-response.schema.json) | JSON Schema для `--output-schema` codex. Гарантує валідну форму виходу. |
 | [gen_chatgpt_prompts.py](gen_chatgpt_prompts.py) | Генерує self-contained `chatgpt-prompts/<uid>.md` (опціональна ручна перевірка через web ChatGPT) + порожні стаби в `responses/<uid>.json`. |
-| [independent-agent-prompt.md](independent-agent-prompt.md) | Generic blind-verification шаблон для сторонніх агентів (Gemini, GPT, Claude web). |
+| [INDEPENDENT_AGENT_PROMPT.md](INDEPENDENT_AGENT_PROMPT.md) | Generic blind-verification шаблон для сторонніх агентів (Gemini, GPT, Claude web). |
 | [build_disputed.py](build_disputed.py) | Агрегує: оригінальні sources + Opus result + codex/ChatGPT result → `src/data/disputed-questions.json` з 5-категорійним статусом фінального decision. |
-| [apply_fixes.py](apply_fixes.py) | Застосовує консенсусні fixes до `*.enriched.json`, виносить ambiguous у карантин. `--dry-run` для preview. |
+| [resolve_disputes.py](resolve_disputes.py) | Застосовує консенсусні fixes до `*.enriched.json`, виносить ambiguous у карантин. `--dry-run` для preview. |
 | [restore_from_quarantine.py](restore_from_quarantine.py) | Повертає питання з карантину назад в `*.enriched.json` (за uid або all). |
 
 ### Генеровані артефакти
@@ -108,17 +108,19 @@
 
 ## End-to-end runbook
 
+Pipeline працює для **довільного набору `krok-file-N(.enriched).json`** у `src/data/imports/` — нові файли підхоплюються автоматично (`dedupe_questions.py` сканує glob, не hardcoded список). Регенеровані артефакти (`batches/`, `results/`, `logs/`, `chatgpt-prompts/`, `needs-reverification.json`, `cross-file-duplicates.json`) gitignored — кожен прогін будує їх з нуля.
+
 ```bash
 cd scripts/reverification
 
 # Cвіже виявлення дублікатів + збір непевних
-python3 dedupe_questions.py
+python3 dedupe_questions.py            # auto-discovers krok-file-*.json в src/data/imports
 python3 collect_uncertain.py
 python3 split_batches.py
 python3 gen_chatgpt_prompts.py         # створює промти і пусті response-стаби
 
-# Прогін через Opus 4.7 max (Claude). Триває ~20-25 хв для 65 на JOBS=3.
-./run.sh
+# Прогін через Opus 4.7 max (Claude). ~20-25 хв на 65 items при JOBS=3.
+./run_opus.sh
 
 # Прогін через GPT-5.5 xhigh (codex CLI, ChatGPT subscription). ~15 хв на JOBS=2.
 ./run_codex.sh
@@ -132,15 +134,21 @@ python3 gen_chatgpt_prompts.py         # створює промти і пуст
 python3 build_disputed.py
 
 # Preview fix plan
-python3 apply_fixes.py --dry-run
+python3 resolve_disputes.py --dry-run
 
 # Застосувати fixes + перенести ambiguous у quarantine
-python3 apply_fixes.py
+python3 resolve_disputes.py
 ```
+
+### Додавання нового `krok-file-N`
+
+1. Завершити enrich pipeline (`krok-pdf-enrich` skill) — отримаєш `src/data/imports/krok-file-N.enriched.json`.
+2. Запустити runbook вище. `dedupe_questions.py` автоматично включить новий файл у пошук дублікатів.
+3. Якщо файл вводить нові duplicate groups з попередніми — вони з'являться в `cross-file-duplicates.json` і пройдуть повну re-verification.
 
 ## Status taxonomy (у `disputed-questions.json` → `finalDecision.status`)
 
-| Status | Що означає | Що робиться `apply_fixes.py` |
+| Status | Що означає | Що робиться `resolve_disputes.py` |
 |---|---|---|
 | `unanimous_agreement` | усі джерела + Opus + codex кажуть одне і те саме | no-op (вже правильно) |
 | `models_agree_with_majority_sources` | Opus + codex обидва погоджуються, і **≥1 джерело** з ними | **fix** — оновити неправильне джерело |
@@ -216,12 +224,12 @@ python3 scripts/reverification/restore_from_quarantine.py --all       # пове
 ## Reproducibility & idempotency
 
 - Усі скрипти можна перезапускати; ті, що пишуть results — мають skip-if-done логіку
-- `apply_fixes.py` **не ідемпотентний**: повторний прогін після фіксу не зробить нічого зайвого, але повторний прогін після того як ти вручну змінив enriched.json — може перезаписати твої правки. Запускати тільки один раз після нового `build_disputed.py`.
+- `resolve_disputes.py` **не ідемпотентний**: повторний прогін після фіксу не зробить нічого зайвого, але повторний прогін після того як ти вручну змінив enriched.json — може перезаписати твої правки. Запускати тільки один раз після нового `build_disputed.py`.
 - Усі модифікації `*.enriched.json` йдуть через git, тож `git diff` / `git checkout` — стандартний rollback.
 
 ## Known limitations
 
-- **Option drift**: коли одне й те саме питання у різних файлах має різні набори опцій (різна кількість, або інший переклад), pipeline робить best-effort fuzzy text match. Якщо консенсусний текст не знаходиться в опціях disagreeing source — `apply_fixes.py` пропускає з WARN. 3 такі випадки лишилися як були: q025, q045, q061 (файл-3).
+- **Option drift**: коли одне й те саме питання у різних файлах має різні набори опцій (різна кількість, або інший переклад), pipeline робить best-effort fuzzy text match. Якщо консенсусний текст не знаходиться в опціях disagreeing source — `resolve_disputes.py` пропускає з WARN. 3 такі випадки лишилися як були: q025, q045, q061 (файл-3).
 - **False positives у дедупі**: якщо question text майже однаковий між файлами але опції різні (різні питання насправді) — pipeline зарахує як дублікат. Безпечно, бо AI у переvereficiation бачить обидва набори опцій і не змішує їх; також `optionDrift: true` прапор у duplicates output попереджає.
 - **Codex galiucinaції**: 1 випадок `models_split_one_alone` (`krok-file-2-q044`) — codex проти Opus + обох джерел. Винесений у карантин.
 - **ChatGPT subscription quota**: при дуже великих re-verification раундах (>100 викликів за раз) може досягти ChatGPT Plus daily limit. JOBS=2 — обережне значення.

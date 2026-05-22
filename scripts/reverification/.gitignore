@@ -1,1 +1,11 @@
 __pycache__/
+
+# Regenerable artifacts — produced by the pipeline scripts. The committed
+# code + prompts + schema are enough to reproduce them from
+# `src/data/imports/krok-file-*.json`.
+batches/
+results/
+logs/
+chatgpt-prompts/
+needs-reverification.json
+cross-file-duplicates.json

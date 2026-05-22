@@ -1,8 +1,7 @@
 #!/bin/bash
 # Validate + enrich each per-question batch via Opus 4.7 CLI.
-# Mirrors the .tmp_rewrite/validate_cli.sh pattern (skip-if-done) and adds
-# parallel fan-out via xargs -P JOBS plus a trailing-comma-tolerant JSON
-# extractor.
+# Skip-if-done loop with parallel fan-out via xargs -P JOBS and a
+# trailing-comma-tolerant JSON extractor.
 #
 # Usage (run from inside .tmp_rewrite/<BLOCK_ID>_enrich/):
 #   ./run.sh                       # all batches, JOBS=3

@@ -7,9 +7,10 @@ Outputs:
       PDF original preserved under per-question `pdfOriginal`.
 
   ../../src/data/imports/<BLOCK_ID>-doubts.json
-      Sidecar mirroring src/data/imports/krok-file-8-doubts.json schema.
-      One entry per question where AI overrode the PDF OR validation
-      flagged the answer as needing review.
+      Sidecar with schema `krok-question-doubts.v1` (template:
+      ../resources/krok-question-doubts.v1.template.json). One entry per
+      question where AI overrode the PDF OR validation flagged the answer
+      as needing review.
 
 Usage:
   cd .tmp_rewrite/<BLOCK_ID>_enrich

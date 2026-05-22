@@ -1,0 +1,64 @@
+{
+  "$schema_note": "Template for schema `krok-question-block.v1`. Used by EXTRACT_PROMPT.md output. Placeholders (<BLOCK_ID>, <BLOCK_TITLE>, etc.) get filled in per import. Enrichment fields (topic, clinicalTopic, hint, why, validation, hintCandidates, whyCandidates) are NOT in this template — they are added later by the ENRICH_PROMPT.md stage.",
+
+  "schemaVersion": "krok-question-block.v1",
+  "generatedAt": "<ISO-8601 timestamp, e.g. 2026-05-22T12:00:00+03:00>",
+  "sourceBlock": {
+    "id": "<BLOCK_ID>",
+    "title": "<BLOCK_TITLE>",
+    "exam": "<EXAM>",
+    "sourceFileName": "<SOURCE_FILE_NAME>",
+    "sourceFilePath": "<SOURCE_FILE_PATH or omit>",
+    "questionCount": 2,
+    "description": "Імпортовано з PDF як окремий блок."
+  },
+  "blocks": [
+    {
+      "id": "<BLOCK_ID>",
+      "title": "<BLOCK_TITLE>",
+      "exam": "<EXAM>",
+      "source": "<SOURCE_FILE_NAME>",
+      "questionCount": 2,
+      "questions": [
+        {
+          "id": "<BLOCK_ID>-q001",
+          "number": 1,
+          "blockId": "<BLOCK_ID>",
+          "source": "<SOURCE_FILE_NAME>",
+          "sourceQuestion": "Питання 1",
+          "question": "<verbatim question text>",
+          "options": ["<opt a>", "<opt b>", "<opt c>", "<opt d>", "<opt e>"],
+          "answers": [
+            { "key": "a", "text": "<opt a>", "isCorrect": false },
+            { "key": "b", "text": "<opt b>", "isCorrect": false },
+            { "key": "c", "text": "<opt c>", "isCorrect": false },
+            { "key": "d", "text": "<opt d>", "isCorrect": true },
+            { "key": "e", "text": "<opt e>", "isCorrect": false }
+          ],
+          "correctAnswer": 3,
+          "correctAnswerKey": "d",
+          "correctAnswerText": "<opt d>"
+        },
+        {
+          "id": "<BLOCK_ID>-q002",
+          "number": 2,
+          "blockId": "<BLOCK_ID>",
+          "source": "<SOURCE_FILE_NAME>",
+          "sourceQuestion": "Питання 2",
+          "question": "<question with extraction issue — no plus marker found>",
+          "options": ["<opt a>", "<opt b>", "<opt c>", "<opt d>"],
+          "answers": [
+            { "key": "a", "text": "<opt a>", "isCorrect": false },
+            { "key": "b", "text": "<opt b>", "isCorrect": false },
+            { "key": "c", "text": "<opt c>", "isCorrect": false },
+            { "key": "d", "text": "<opt d>", "isCorrect": false }
+          ],
+          "correctAnswer": null,
+          "correctAnswerKey": null,
+          "correctAnswerText": null,
+          "extractionIssue": "no plus marker"
+        }
+      ]
+    }
+  ]
+}

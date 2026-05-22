@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Step 1: Cross-file duplicate detection across enriched Krok question files.
+"""Cross-file duplicate detection across enriched Krok question files.
 
-Reads all four `krok-file-{1,2,3,8}.enriched.json` files, groups questions by
-normalized question text, and writes `cross-file-duplicates.json` listing every
-group where the same question appears in 2+ files (consensus or mismatch).
+Auto-discovers every `src/data/imports/krok-file-N(.enriched).json`, groups
+questions by normalized question text, and writes `cross-file-duplicates.json`
+listing every group where the same question appears in 2+ files (consensus or
+mismatch). Adding a new `krok-file-N.enriched.json` requires no code change.
 """
 
 from __future__ import annotations
@@ -18,13 +19,33 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 IMPORTS_DIR = REPO_ROOT / "src" / "data" / "imports"
 OUTPUT_PATH = Path(__file__).resolve().parent / "cross-file-duplicates.json"
 
-# Files to scan. Each entry has a fallback chain: prefer enriched, fall back to raw.
-SOURCE_FILES = [
-    ("krok-file-1", ["krok-file-1.enriched.json", "krok-file-1.json"]),
-    ("krok-file-2", ["krok-file-2.enriched.json", "krok-file-2.json"]),
-    ("krok-file-3", ["krok-file-3.enriched.json", "krok-file-3.json"]),
-    ("krok-file-8", ["krok-file-8.enriched.json", "krok-file-8.json"]),
-]
+
+def discover_source_files():
+    """Return [(file_id, [candidate_filename, ...]), ...] sorted by file number.
+
+    Picks up any `krok-file-<N>.json` in IMPORTS_DIR. Each entry's candidate
+    list prefers `.enriched.json`, falls back to raw `.json`. Files that have
+    only enriched OR only raw still produce a single-candidate entry.
+    """
+    # Only pick up question banks: `krok-file-<digits>(.enriched).json`.
+    # Excludes `*-doubts.json`, `krok-disputed-quarantine.json`, etc.
+    pattern = re.compile(r"^(krok-file-\d+)(?:\.enriched)?\.json$")
+    file_ids = set()
+    for path in IMPORTS_DIR.iterdir():
+        m = pattern.match(path.name)
+        if m:
+            file_ids.add(m.group(1))
+
+    out = []
+    for fid in sorted(file_ids, key=lambda f: int(f.rsplit("-", 1)[1])):
+        candidates = [f"{fid}.enriched.json", f"{fid}.json"]
+        candidates = [c for c in candidates if (IMPORTS_DIR / c).exists()]
+        if candidates:
+            out.append((fid, candidates))
+    return out
+
+
+SOURCE_FILES = discover_source_files()
 
 # Cyrillic→Latin homoglyph fold for lookalike characters that appear interchangeably
 # in OCR'd Krok text (e.g. "С7" with Cyrillic С vs "C7" with Latin C — visually identical).

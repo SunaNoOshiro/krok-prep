@@ -1,6 +1,6 @@
 ---
 name: krok-pdf-enrich
-description: Extract Ukrainian Krok 2 «Фізична терапія» exam questions from a PDF (correct answer marked with `+`), then validate each question against Opus 4.7's independent clinical judgment, generate 5 candidate hints (best-of) plus 5 per-option `why` candidates (best-of), and emit a clean enriched JSON block + a sidecar doubts file mirroring `krok-file-8-doubts.json`. AI override applied on high-confidence clinical disagreements with the PDF.
+description: Extract Ukrainian Krok 2 «Фізична терапія» exam questions from a PDF (correct answer marked with `+`), then validate each question against Opus 4.7's independent clinical judgment, generate 5 candidate hints (best-of) plus 5 per-option `why` candidates (best-of), and emit a clean enriched JSON block + a sidecar `<BLOCK_ID>-doubts.json` (schema `krok-question-doubts.v1`). AI override applied on high-confidence clinical disagreements with the PDF.
 ---
 
 # Krok PDF → validate + enrich pipeline
@@ -33,7 +33,7 @@ cp .claude/skills/krok-pdf-enrich/scripts/{split.py,run.sh,autofix.py,validate.p
 chmod +x "$WORKDIR/run.sh"
 ```
 
-`split.py`, `autofix.py`, `validate.py`, and `merge.py` all take `<BLOCK_ID>` as their first arg. `run.sh` is cwd-sensitive (it `cd`s into its own directory) and reads `PROMPT.md` + `batches/` from there — block-id agnostic.
+`split.py`, `autofix.py`, `validate.py`, and `merge.py` all take `<BLOCK_ID>` as their first arg. `run.sh` is cwd-sensitive (it `cd`s into its own directory) and reads `PROMPT.md` + `batches/` from there — block-id agnostic. `topic_classify.py` (stage 9) is invoked from the skill directly, not copied to the workdir.
 
 ### 1. Extract PDF → JSON (skip if `src/data/imports/<BLOCK_ID>.json` already exists)
 
@@ -119,9 +119,19 @@ If a result still fails, check `logs/qNNN.raw.txt` for a trailing comma — the 
 Writes:
 
 - `src/data/imports/<BLOCK_ID>.enriched.json` — all questions with `hint`, per-option `why`, `hintCandidates`, `whyCandidates`, `validation`, and `pdfOriginal` (only on AI overrides).
-- `src/data/imports/<BLOCK_ID>-doubts.json` — sidecar mirroring `krok-file-8-doubts.json` schema. One entry per question where the AI overrode the PDF OR flagged the answer as needing clinical review.
+- `src/data/imports/<BLOCK_ID>-doubts.json` — sidecar with schema `krok-question-doubts.v1`. One entry per question where the AI overrode the PDF OR flagged the answer as needing clinical review.
 
-### 9. Report to the user
+### 9. Topic + clinicalTopic classification
+
+```bash
+python3 .claude/skills/krok-pdf-enrich/scripts/topic_classify.py "$BLOCK_ID"
+```
+
+One Opus 4.7 call that fills `topic` + `clinicalTopic` on every question in `src/data/imports/<BLOCK_ID>.enriched.json`. The taxonomy is auto-discovered: the script picks whichever existing `krok-file-N(.enriched).json` already has the richest `topic` + `clinicalTopic` coverage and uses its label set as the source of truth — so labels stay consistent across files without coupling to any specific filename. Raw model output is dumped to `$WORKDIR/topic_classify.raw.txt` for debugging.
+
+The script prints the final topic/clinicalTopic distribution. Any number flagged as `bad_topic` / `bad_clinical` means the model returned a label outside the taxonomy — falls back to the most-common topic / `Загальна фізична терапія`. Spot-check the enriched file if those counts are non-zero.
+
+### 10. Report to the user
 
 Always surface:
 
@@ -130,6 +140,10 @@ Always surface:
 - How many need-review items (`needsClinicalReviewCount`).
 - A bullet list of overrides as `q### [pdf → ai]` so the user can spot-check (look at the doubts file's `items[]`).
 - Explicitly flag questions where `pdfCorrectAnswer === "None"` — these are PDF entries the extractor couldn't find a `+` marker for, so the AI filled the answer in.
+
+### Next step (separate pipeline) — cross-file reverification
+
+After 2+ krok files exist, run [scripts/reverification/](../../../scripts/reverification/) to find questions that appear in multiple files with conflicting `correctAnswerKey`, plus medium-confidence items from this enrich pass. That pipeline uses a second model (codex GPT-5.5) as an independent voter and applies consensus fixes / quarantines ambiguous cases. It's **not** part of this skill — `dedupe_questions.py` auto-discovers any `krok-file-N.enriched.json`, so no code changes are needed when adding a new file. See [scripts/reverification/README.md](../../../scripts/reverification/README.md) for the runbook.
 
 ## Output schema (per question in the enriched file)
 
@@ -181,6 +195,8 @@ Always surface:
 
 - [resources/EXTRACT_PROMPT.md](resources/EXTRACT_PROMPT.md) — PDF → JSON extraction prompt (stage 1).
 - [resources/ENRICH_PROMPT.md](resources/ENRICH_PROMPT.md) — validate + 5 hint candidates + 5 per-option whys (stage 3+).
+- [resources/krok-question-block.v1.template.json](resources/krok-question-block.v1.template.json) — shape produced by stage 1 (extraction output).
+- [resources/krok-question-doubts.v1.template.json](resources/krok-question-doubts.v1.template.json) — shape produced by stage 8 (`<BLOCK_ID>-doubts.json` sidecar).
 
 ## Scripts
 
@@ -189,3 +205,4 @@ Always surface:
 - [scripts/autofix.py](scripts/autofix.py) — fix common drift (extra candidates, text resync, options↔answers alignment).
 - [scripts/validate.py](scripts/validate.py) — structural validator; reports 0 issues when output is clean.
 - [scripts/merge.py](scripts/merge.py) — produce final `<BLOCK_ID>.enriched.json` + `<BLOCK_ID>-doubts.json`.
+- [scripts/topic_classify.py](scripts/topic_classify.py) — stage 9: classify `topic` + `clinicalTopic` against the auto-discovered taxonomy.

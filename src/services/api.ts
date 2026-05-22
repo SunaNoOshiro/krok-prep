@@ -61,14 +61,6 @@ export interface UserStats {
 
 export type QuestionSource = 'quiz' | 'selfControl' | 'edki' | 'krokFile8' | 'krokFile1' | 'krokFile2' | 'krokFile3' | 'combined';
 
-const defaultStats: UserStats = {
-  totalAnswers: 0,
-  correctAnswers: 0,
-  topicStats: {},
-  streak: 0,
-  lastSession: null,
-};
-
 function mapImportedQuestion(question: typeof krokFile8Import.blocks[number]['questions'][number]): Question {
   return {
     ...question,
@@ -153,18 +145,6 @@ function getSourceData(source?: QuestionSource): Question[] {
   return dataBySource[source ?? 'quiz'];
 }
 
-async function fetchJsonWithFallback<T>(path: string, fallback: () => T): Promise<T> {
-  try {
-    const res = await fetch(path);
-    if (!res.ok) {
-      return fallback();
-    }
-    return await res.json() as T;
-  } catch {
-    return fallback();
-  }
-}
-
 export const api = {
   async getTopics(source?: QuestionSource): Promise<string[]> {
     const sourceData = getSourceData(source);
@@ -206,34 +186,4 @@ export const api = {
       .map(([label, count]) => ({ label, count }))
       .sort((a, b) => b.count - a.count);
   },
-
-  async submitAnswer(topic: string, isCorrect: boolean): Promise<UserStats> {
-    try {
-      const res = await fetch('/api/submitAnswer', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ topic, isCorrect })
-      });
-      if (!res.ok) {
-        throw new Error('API unavailable');
-      }
-      const data = await res.json();
-      return data.stats;
-    } catch {
-      return {
-        ...defaultStats,
-        topicStats: {
-          [topic]: { count: 1, correct: isCorrect ? 1 : 0 },
-        },
-        totalAnswers: 1,
-        correctAnswers: isCorrect ? 1 : 0,
-        streak: isCorrect ? 1 : 0,
-        lastSession: new Date().toISOString(),
-      };
-    }
-  },
-
-  async getStats(): Promise<UserStats> {
-    return fetchJsonWithFallback('/api/getStats', () => defaultStats);
-  }
 };

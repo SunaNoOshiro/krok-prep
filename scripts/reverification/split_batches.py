@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Split `needs-reverification.json` into per-uid batch files for run.sh."""
+"""Split `needs-reverification.json` into per-uid batch files for run_opus.sh / run_codex.sh."""
 
 from __future__ import annotations
 

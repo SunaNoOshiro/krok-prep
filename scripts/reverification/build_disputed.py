@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Step 6: Build the final consolidated disputed-questions.json.
+"""Build the final consolidated disputed-questions.json.
 
 For every item in `needs-reverification.json`, combine:
   - original per-file source records (correctAnswerKey, why, hint, validation)
@@ -8,7 +8,7 @@ For every item in `needs-reverification.json`, combine:
     after running the matching `chatgpt-prompts/<uid>.md` prompt
 
 Then write to `src/data/disputed-questions.json` with summary stats. The script
-works even before run.sh has executed — uncomputed items will have
+works even before run_opus.sh has executed — uncomputed items will have
 `reverification: null`.
 """
 
@@ -42,7 +42,7 @@ def load_chatgpt_response(uid: str) -> dict | None:
     """Read user-pasted ChatGPT response, returning None if the stub is unfilled.
 
     A stub is "unfilled" if every value-bearing field (`independentChoice`,
-    `finalAnswer`, `perSourceVerdict`) is still null — i.e. the user hasn't
+    `finalAnswer`, `crossCheck`) is still null — i.e. the user hasn't
     pasted anything yet. Malformed JSON returns None and surfaces a warning.
     """
     path = CHATGPT_RESPONSES_DIR / f"{uid}.json"
@@ -54,7 +54,7 @@ def load_chatgpt_response(uid: str) -> dict | None:
     except json.JSONDecodeError as e:
         print(f"WARN: malformed JSON in {path}: {e}")
         return None
-    if not any(data.get(k) for k in ("independentChoice", "finalAnswer", "perSourceVerdict")):
+    if not any(data.get(k) for k in ("independentChoice", "finalAnswer", "crossCheck")):
         return None
     return data
 

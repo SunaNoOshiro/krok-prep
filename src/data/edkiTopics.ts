@@ -1,4 +1,4 @@
-export const KROK_TOPIC_ORDER = [
+const KROK_TOPIC_ORDER = [
   'Обстеження',
   'Аналіз отриманих даних, планування та прогнозування',
   'Втручання та контроль',
@@ -6,14 +6,14 @@ export const KROK_TOPIC_ORDER = [
   'Педіатрія',
 ] as const;
 
-export type KrokTopic = typeof KROK_TOPIC_ORDER[number];
+type KrokTopic = typeof KROK_TOPIC_ORDER[number];
 
 const O = KROK_TOPIC_ORDER[0];
 const A = KROK_TOPIC_ORDER[1];
 const W = KROK_TOPIC_ORDER[2];
 const G = KROK_TOPIC_ORDER[3];
 
-export const EDKI_TOPIC_BY_ID: Record<number, KrokTopic> = {
+const EDKI_TOPIC_BY_ID: Record<number, KrokTopic> = {
   1: W,
   2: W,
   3: W,

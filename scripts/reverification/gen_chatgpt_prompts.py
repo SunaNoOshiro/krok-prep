@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Step 5: Generate one self-contained ChatGPT prompt per uncertain question.
+"""Generate one self-contained ChatGPT prompt per uncertain question.
 
 For each item in `needs-reverification.json`, emit a Markdown prompt
 (`chatgpt-prompts/<uid>.md`) that the user can paste into ChatGPT (or any
@@ -10,7 +10,7 @@ chat-based LLM) for a manual second opinion. Each prompt is fully self-contained
   2. Compare its verdict against the table of existing per-file answers.
   3. Cite ASIA/ICF/clinical guidelines where applicable.
 
-Also writes a generic `independent-agent-prompt.md` template the user can use
+Also writes a generic `INDEPENDENT_AGENT_PROMPT.md` template the user can use
 with sister models (Gemini, GPT, Claude web) for blind cross-verification.
 """
 
@@ -23,7 +23,7 @@ REVERIFY_DIR = Path(__file__).resolve().parent
 INPUT = REVERIFY_DIR / "needs-reverification.json"
 OUT_DIR = REVERIFY_DIR / "chatgpt-prompts"
 RESPONSES_DIR = OUT_DIR / "responses"
-INDEP_TEMPLATE = REVERIFY_DIR / "independent-agent-prompt.md"
+INDEP_TEMPLATE = REVERIFY_DIR / "INDEPENDENT_AGENT_PROMPT.md"
 
 
 def pick_canonical_source(sources: list[dict]) -> dict:
@@ -62,11 +62,10 @@ def build_prompt(item: dict) -> str:
     reasons = ", ".join(item["reasons"])
 
     # Per-source verdict stub — one row per actual source in this item
-    per_source_stub = ",\n    ".join(
-        f'{{"file": "{s["file"]}", "claimedKey": "{(s.get("correctAnswerKey") or "?").lower()}", "agrees": <true|false>, "reason": "<1-2 речення>"}}'
+    per_source_stub = ",\n      ".join(
+        f'{{"file": "{s["file"]}", "qId": "{s.get("qId", "<qId>")}", "claimedKey": "{(s.get("correctAnswerKey") or "?").lower()}", "agrees": <true|false>, "verdict": "correct|incorrect|ambiguous", "reason": "<1-2 речення>"}}'
         for s in item["sources"]
     )
-    first_source_file = item["sources"][0]["file"]
 
     return f"""# Експертна перевірка спірного питання КРОК 2 «Фізична терапія»
 
@@ -151,43 +150,55 @@ Confidence: __
     "confidence": "high|medium|low",
     "reasoning": "<3-5 речень із посиланням на стандарт>"
   }},
-  "perSourceVerdict": [
-    {per_source_stub}
-  ],
+  "crossCheck": {{
+    "perSource": [
+      {per_source_stub}
+    ]
+  }},
   "finalAnswer": {{
     "key": "a|b|c|d|e",
     "text": "<verbatim>",
     "confidence": "high|medium|low",
-    "agreeingSources": ["<файл(и) з perSourceVerdict, де agrees=true>"],
-    "disagreeingSources": ["<файл(и) з perSourceVerdict, де agrees=false>"],
-    "ambiguityNote": null
+    "reasoning": "<3-5 речень>",
+    "agreeingSources": ["<файл(и) з perSource, де agrees=true>"],
+    "disagreeingSources": ["<файл(и) з perSource, де agrees=false>"]
   }},
-  "bestExistingExplanation": {{
-    "source": "{first_source_file}",
-    "verbatim": "<процитуй дослівно або null, якщо всі слабкі>"
+  "bestWhys": {{
+    "a": {{"source": "<file>", "angle": "<angle>", "text": "<verbatim>", "reason": "<коротко>"}},
+    "b": {{"source": null, "angle": null, "text": null, "reason": "no candidate matches verified answer"}},
+    "c": {{"source": null, "angle": null, "text": null, "reason": "no candidate matches verified answer"}},
+    "d": {{"source": null, "angle": null, "text": null, "reason": "no candidate matches verified answer"}},
+    "e": {{"source": null, "angle": null, "text": null, "reason": "no candidate matches verified answer"}}
   }},
+  "bestHint": {{"source": "<file>", "angle": "<angle>", "text": "<verbatim>", "reason": "<коротко>"}},
   "notes": "<коротко: що варто переглянути людині-арбітру, або null>"
 }}
 ```
 
 **Важливо**:
 - JSON має бути валідним (без коментарів, без trailing commas, з подвійними лапками).
-- `perSourceVerdict[]` має містити рядок для **кожного** файлу з таблиці вище.
+- `crossCheck.perSource[]` має містити рядок для **кожного** файлу з таблиці вище.
 - `confidence` лише з набору {{`high`, `medium`, `low`}}.
-- Якщо питання справді неоднозначне — заповни `ambiguityNote` 1-2 реченнями, інакше `null`.
+- Якщо немає підхожого whyCandidate для якогось key — постав `null` (або об'єкт з полем `reason`).
 """
 
 
 def response_stub(item: dict) -> dict:
-    """Empty skeleton the user fills by pasting ChatGPT's JSON output."""
+    """Empty skeleton the user fills by pasting ChatGPT's JSON output.
+
+    Shape matches `codex-response.schema.json` (which mirrors REVERIFY_PROMPT.md
+    output). build_disputed.py treats a stub as "unfilled" if all of
+    independentChoice/finalAnswer/crossCheck are null.
+    """
     return {
         "uid": item["uid"],
         "verifiedBy": None,
         "verifiedAt": None,
         "independentChoice": None,
-        "perSourceVerdict": None,
+        "crossCheck": None,
         "finalAnswer": None,
-        "bestExistingExplanation": None,
+        "bestWhys": None,
+        "bestHint": None,
         "notes": None,
     }
 

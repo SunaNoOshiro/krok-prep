@@ -1,11 +1,12 @@
 # Krok PDF → JSON extraction prompt
 
 Use this prompt with an LLM that can read the attached PDF. It produces a single
-JSON file whose shape matches [src/data/imports/krok-file-8.json](../src/data/imports/krok-file-8.json)
-(schema `krok-question-block.v1`). Only the directly-extractable fields are filled in;
-enrichment fields (`topic`, `clinicalTopic`, `hint`, `explanation`,
-`explanationDetails`, `verification`, `existingDatasetMatch`) are left out so a
-later pipeline can add them.
+JSON file matching schema `krok-question-block.v1` — see
+[krok-question-block.v1.template.json](krok-question-block.v1.template.json) for
+a self-contained template (or the inline shape under **Output** below). Only the
+directly-extractable fields are filled in; enrichment fields (`topic`,
+`clinicalTopic`, `hint`, `explanation`, `explanationDetails`, `verification`,
+`existingDatasetMatch`) are left out so a later pipeline can add them.
 
 ---
 
@@ -120,5 +121,4 @@ Return **only** valid JSON, no prose, no Markdown fences. Top-level shape:
 ### File naming
 
 Save the output as `src/data/imports/<BLOCK_ID>.json` (e.g.
-`src/data/imports/krok-file-9.json`), matching the layout already used for
-`krok-file-8.json`.
+`src/data/imports/krok-file-9.json`).

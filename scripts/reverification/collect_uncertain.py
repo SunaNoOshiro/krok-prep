@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Step 2: Collect all questions that need re-verification.
+"""Collect all questions that need re-verification.
 
 A question is "uncertain" if ANY of:
   - validation.confidence ∈ {medium, low}
   - validation.clinicalAgreement ∈ {disagree, uncertain}
   - validation.needsReview == true
-  - it is part of a cross-file `mismatch` group (from Step 1)
+  - it is part of a cross-file `mismatch` group (from dedupe_questions.py)
 
 Output (`needs-reverification.json`) is a flat list of items keyed by the
 normalized question text — so the same question appearing in 2 files is merged
@@ -108,7 +108,7 @@ def main() -> None:
     }
 
     all_q = load_all_questions()
-    # Group every question by normalized text (mirror Step 1 logic)
+    # Group every question by normalized text (mirror dedupe_questions.py logic)
     by_norm: dict[str, list[tuple]] = {}
     for entry in all_q:
         file_id, is_enriched, source_file, q = entry

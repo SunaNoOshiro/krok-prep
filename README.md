@@ -1,20 +1,34 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# KROK/EDKI Prep
 
-# Run and deploy your AI Studio app
-
-This contains everything you need to run your app locally.
-
-View your app in AI Studio: https://ai.studio/apps/ed9b8c43-bdf8-41af-9373-06ee763174c6
+Interactive learning platform for Physical Therapy students preparing for the KROK/EDKI exam.
 
 ## Run Locally
 
-**Prerequisites:**  Node.js
+**Prerequisites:** Node.js
 
+1. Install dependencies: `npm install`
+2. Run the app: `npm run dev`
+3. Run tests: `npm test` (TypeScript typecheck + Python unittest)
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## Tests
+
+Located in [tests/](tests/). Two tiers:
+
+### Offline (default — runs in `npm test`, free + fast)
+LLM calls are mocked via `subprocess.run` patching.
+- [tests/test_skill_pipeline.py](tests/test_skill_pipeline.py) — end-to-end skill pipeline (split → autofix → validate → merge) against `krok-file-1.json` as fixture.
+- [tests/test_one_batch_full_flow.py](tests/test_one_batch_full_flow.py) — one question through enrich + topic_classify + reverification with mocked Opus/codex responses.
+- [tests/test_templates_and_prompts.py](tests/test_templates_and_prompts.py) — schema templates match real data shape; prompts contain required sections.
+
+### Live (opt-in — real CLI calls via subscriptions, ~3-8 min)
+[tests/test_live_one_question.py](tests/test_live_one_question.py) runs ONE real question through stages 2-6 with actual `claude -p` (Opus 4.7 via Claude subscription) and `codex exec` (GPT-5 xhigh via ChatGPT subscription) calls. No per-call API charges — just time + rate-limit consumption.
+
+Stage 1 (PDF extraction) is **always skipped** in this test — PDF attachments aren't a clean fit for `claude -p` stdin. The SKILL.md flow is: drop the PDF into claude.ai web, save the returned JSON to `src/data/imports/<BLOCK_ID>.json`, then run downstream stages. This test covers everything downstream.
+
+```bash
+RUN_LIVE_LLM_TESTS=1 python3 -m unittest tests.test_live_one_question -v
+```
+
+Requires `claude` and `codex` CLIs on `$PATH`. Defaults to `krok-file-1.json` as the fixture; override with `TEST_BLOCK_ID=krok-file-N`.
+
+Run just the Python tests: `python3 -m unittest discover -s tests -v`.

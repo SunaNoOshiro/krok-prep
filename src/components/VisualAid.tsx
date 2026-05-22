@@ -1,4 +1,4 @@
-export type VisualAidType =
+type VisualAidType =
   | 'shoulder-muscle'
   | 'foot-nerve'
   | 'ashworth-scale'
