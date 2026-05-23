@@ -78,11 +78,11 @@ const EXAM_CONFIGS: Record<ExamFamily, {
     title: 'ЄДКІ',
     subtitle: 'Бакалаври "Фізична терапія, ерготерапія"',
     sourceText: 'ЄДКІ Бакалаври "Фізична терапія, ерготерапія"',
-    sourceNote: 'Тестові завдання ЄДКІ від 2026 року, «крок 4 курс.pdf» (Педіатрія), «крок файл 1.pdf», «крок файл 2.pdf», «крок файл 3.pdf», «крок файл 4.pdf» та «крок файл 8.pdf».',
+    sourceNote: 'Тестові завдання ЄДКІ від 2026 року, «крок 4 курс.pdf» (Педіатрія), «крок файл 1.pdf», «крок файл 2.pdf», «крок файл 3.pdf», «крок файл 4.pdf», «крок файл 5.pdf» та «крок файл 8.pdf».',
     defaultSource: 'combined',
     variantSource: 'combined',
     variantTitle: 'ЄДКІ',
-    variantDescription: 'Об\'єднаний банк ЄДКІ + Крок файл 1 + Крок файл 2 + Крок файл 3 + Крок файл 4 + Крок файл 8.',
+    variantDescription: 'Об\'єднаний банк ЄДКІ + Крок файл 1 + Крок файл 2 + Крок файл 3 + Крок файл 4 + Крок файл 5 + Крок файл 8.',
     variantName: 'ЄДКІ',
     variantUnit: 'ЄДКІ',
   },
@@ -702,15 +702,15 @@ const Dashboard = ({
   const totalQuestionCount = Object.values(topicCounts).reduce((sum, count) => sum + count, 0);
   const totalSourceCount = sources.reduce((sum, s) => sum + s.count, 0);
   const edkiQuestionBankDescription = totalSourceCount > 0
-    ? `${totalSourceCount} питань з ${sources.length} джерел: ЄДКІ 2026, крок файл 1, крок файл 2, крок файл 3, крок файл 8 та «крок 4 курс.pdf» (Педіатрія).`
+    ? `${totalSourceCount} питань з ${sources.length} джерел: ЄДКІ 2026, крок файл 1, крок файл 2, крок файл 3, крок файл 4, крок файл 5, крок файл 8 та «крок 4 курс.pdf» (Педіатрія).`
     : config.variantDescription;
   const sourceNote = examFamily === 'edki' ? edkiQuestionBankDescription : config.sourceNote;
   const variantDescription = examFamily === 'edki' ? edkiQuestionBankDescription : config.variantDescription;
   const mixedDescription = examFamily === 'edki'
-    ? `Випадкова вибірка з усіх ${totalSourceCount || 0} питань ЄДКІ + Крок файл 1 + Крок файл 2 + Крок файл 3 + Крок файл 4 + Крок файл 8.`
+    ? `Випадкова вибірка з усіх ${totalSourceCount || 0} питань ЄДКІ + Крок файл 1 + Крок файл 2 + Крок файл 3 + Крок файл 4 + Крок файл 5 + Крок файл 8.`
     : 'Випадкова вибірка з усього банку Крок.';
   const topicsDescription = examFamily === 'edki'
-    ? `Теми KROK з усіх джерел (ЄДКІ + Крок файл 1 + Крок файл 2 + Крок файл 3 + Крок файл 4 + Крок файл 8 + Педіатрія).`
+    ? `Теми KROK з усіх джерел (ЄДКІ + Крок файл 1 + Крок файл 2 + Крок файл 3 + Крок файл 4 + Крок файл 5 + Крок файл 8 + Педіатрія).`
     : 'Виберіть конкретний розділ для глибокого вивчення.';
 
   useEffect(() => {
