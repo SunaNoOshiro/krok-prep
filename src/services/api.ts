@@ -5,6 +5,7 @@ import krokFile8Import from '../data/imports/krok-file-8.json';
 import krokFile1Import from '../data/imports/krok-file-1.enriched.json';
 import krokFile2Import from '../data/imports/krok-file-2.enriched.json';
 import krokFile3Import from '../data/imports/krok-file-3.enriched.json';
+import krokFile4Import from '../data/imports/krok-file-4.enriched.json';
 import { applyEdkiTopic, sortKrokTopics } from '../data/edkiTopics';
 import { normalizeDisplayText } from '../utils/text';
 
@@ -59,7 +60,7 @@ export interface UserStats {
   lastSession: string | null;
 }
 
-export type QuestionSource = 'quiz' | 'selfControl' | 'edki' | 'krokFile8' | 'krokFile1' | 'krokFile2' | 'krokFile3' | 'combined';
+export type QuestionSource = 'quiz' | 'selfControl' | 'edki' | 'krokFile8' | 'krokFile1' | 'krokFile2' | 'krokFile3' | 'krokFile4' | 'combined';
 
 function mapImportedQuestion(question: typeof krokFile8Import.blocks[number]['questions'][number]): Question {
   return {
@@ -89,10 +90,18 @@ function mapKrokFile3Question(question: typeof krokFile3Import.blocks[number]['q
   } as unknown as Question;
 }
 
+function mapKrokFile4Question(question: typeof krokFile4Import.blocks[number]['questions'][number]): Question {
+  return {
+    ...question,
+    id: question.number,
+  } as unknown as Question;
+}
+
 const krokFile8Questions = krokFile8Import.blocks.flatMap((block) => block.questions.map(mapImportedQuestion));
 const krokFile1Questions = krokFile1Import.blocks.flatMap((block) => block.questions.map(mapKrokFile1Question));
 const krokFile2Questions = krokFile2Import.blocks.flatMap((block) => block.questions.map(mapKrokFile2Question));
 const krokFile3Questions = krokFile3Import.blocks.flatMap((block) => block.questions.map(mapKrokFile3Question));
+const krokFile4Questions = krokFile4Import.blocks.flatMap((block) => block.questions.map(mapKrokFile4Question));
 const edkiQuestions = (edkiData as Question[]).map(applyEdkiTopic);
 
 const dataBySource: Record<QuestionSource, Question[]> = {
@@ -103,7 +112,8 @@ const dataBySource: Record<QuestionSource, Question[]> = {
   krokFile1: krokFile1Questions,
   krokFile2: krokFile2Questions,
   krokFile3: krokFile3Questions,
-  combined: [...edkiQuestions, ...krokFile8Questions, ...krokFile1Questions, ...krokFile2Questions, ...krokFile3Questions],
+  krokFile4: krokFile4Questions,
+  combined: [...edkiQuestions, ...krokFile8Questions, ...krokFile1Questions, ...krokFile2Questions, ...krokFile3Questions, ...krokFile4Questions],
 };
 
 function normalizeQuestion(question: Question): Question {
