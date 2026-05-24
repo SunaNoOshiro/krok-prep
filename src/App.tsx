@@ -78,11 +78,11 @@ const EXAM_CONFIGS: Record<ExamFamily, {
     title: 'ЄДКІ',
     subtitle: 'Бакалаври "Фізична терапія, ерготерапія"',
     sourceText: 'ЄДКІ Бакалаври "Фізична терапія, ерготерапія"',
-    sourceNote: 'Тестові завдання ЄДКІ від 2026 року, «крок 4 курс.pdf» (Педіатрія), «крок файл 1.pdf», «крок файл 2.pdf», «крок файл 3.pdf», «крок файл 4.pdf», «крок файл 5.pdf», «крок файл 6.pdf» та «крок файл 8.pdf».',
+    sourceNote: 'Тестові завдання ЄДКІ від 2026 року + крок-файли (1–8) + педіатрія.',
     defaultSource: 'combined',
     variantSource: 'combined',
     variantTitle: 'ЄДКІ',
-    variantDescription: 'Об\'єднаний банк ЄДКІ + Крок файл 1 + Крок файл 2 + Крок файл 3 + Крок файл 4 + Крок файл 5 + Крок файл 6 + Крок файл 8.',
+    variantDescription: 'Об\'єднаний банк ЄДКІ + усі крок-файли.',
     variantName: 'ЄДКІ',
     variantUnit: 'ЄДКІ',
   },
@@ -133,6 +133,14 @@ function shuffleQuestionOptions(question: Question): Question {
 
 function escapeRegExp(value: string): string {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function pluralizeSources(count: number): string {
+  const mod10 = count % 10;
+  const mod100 = count % 100;
+  if (mod10 === 1 && mod100 !== 11) return 'джерело';
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return 'джерела';
+  return 'джерел';
 }
 
 function getLearningExplanation(question?: Question) {
@@ -702,15 +710,15 @@ const Dashboard = ({
   const totalQuestionCount = Object.values(topicCounts).reduce((sum, count) => sum + count, 0);
   const totalSourceCount = sources.reduce((sum, s) => sum + s.count, 0);
   const edkiQuestionBankDescription = totalSourceCount > 0
-    ? `${totalSourceCount} питань з ${sources.length} джерел: ЄДКІ 2026, крок файл 1, крок файл 2, крок файл 3, крок файл 4, крок файл 5, крок файл 8 та «крок 4 курс.pdf» (Педіатрія).`
+    ? `${totalSourceCount} питань з ${sources.length} ${pluralizeSources(sources.length)}.`
     : config.variantDescription;
   const sourceNote = examFamily === 'edki' ? edkiQuestionBankDescription : config.sourceNote;
   const variantDescription = examFamily === 'edki' ? edkiQuestionBankDescription : config.variantDescription;
   const mixedDescription = examFamily === 'edki'
-    ? `Випадкова вибірка з усіх ${totalSourceCount || 0} питань ЄДКІ + Крок файл 1 + Крок файл 2 + Крок файл 3 + Крок файл 4 + Крок файл 5 + Крок файл 6 + Крок файл 8.`
+    ? `Випадкова вибірка з усіх ${totalSourceCount || 0} питань (${sources.length} ${pluralizeSources(sources.length)}).`
     : 'Випадкова вибірка з усього банку Крок.';
   const topicsDescription = examFamily === 'edki'
-    ? `Теми KROK з усіх джерел (ЄДКІ + Крок файл 1 + Крок файл 2 + Крок файл 3 + Крок файл 4 + Крок файл 5 + Крок файл 6 + Крок файл 8 + Педіатрія).`
+    ? `Теми KROK з усіх ${sources.length} ${pluralizeSources(sources.length)}.`
     : 'Виберіть конкретний розділ для глибокого вивчення.';
 
   useEffect(() => {
@@ -771,7 +779,9 @@ const Dashboard = ({
           <div className="mt-3 rounded-2xl bg-slate-50 px-3 py-2">
             <p className="text-[9px] font-black uppercase tracking-[0.18em] text-indigo-500">Джерело</p>
             <p className="mt-1 text-xs font-bold leading-snug text-slate-500">
-              {topicSourceLabels.join(' · ')}
+              {topicSourceLabels.length === 1
+                ? topicSourceLabels[0]
+                : `${topicSourceLabels.length} ${pluralizeSources(topicSourceLabels.length)}`}
             </p>
           </div>
         )}
