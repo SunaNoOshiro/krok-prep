@@ -9,10 +9,10 @@ A question is "uncertain" if ANY of:
 
 Output (`needs-reverification.json`) is a flat list of items keyed by the
 normalized question text — so the same question appearing in 2 files is merged
-into ONE item with multiple `sources[]`, avoiding duplicate Opus 4.7 calls.
+into ONE item with multiple `sources[]`, avoiding duplicate Opus 4.8 calls.
 
 Each item carries the full enrichment payload (answers, whyCandidates,
-hintCandidates, validation) from every source so the Opus 4.7 prompt has access
+hintCandidates, validation) from every source so the Opus 4.8 prompt has access
 to all explanation candidates for best-of selection.
 """
 

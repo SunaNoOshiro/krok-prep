@@ -9,6 +9,7 @@ import krokFile4Import from '../data/imports/krok-file-4.enriched.json';
 import krokFile5Import from '../data/imports/krok-file-5.enriched.json';
 import krokFile6Import from '../data/imports/krok-file-6.enriched.json';
 import krokFile7Import from '../data/imports/krok-file-7.enriched.json';
+import krokFile9Import from '../data/imports/krok-file-9.enriched.json';
 import { applyEdkiTopic, sortKrokTopics } from '../data/edkiTopics';
 import { normalizeDisplayText } from '../utils/text';
 
@@ -63,7 +64,7 @@ export interface UserStats {
   lastSession: string | null;
 }
 
-export type QuestionSource = 'quiz' | 'selfControl' | 'edki' | 'krokFile8' | 'krokFile1' | 'krokFile2' | 'krokFile3' | 'krokFile4' | 'krokFile5' | 'krokFile6' | 'krokFile7' | 'combined';
+export type QuestionSource = 'quiz' | 'selfControl' | 'edki' | 'krokFile8' | 'krokFile1' | 'krokFile2' | 'krokFile3' | 'krokFile4' | 'krokFile5' | 'krokFile6' | 'krokFile7' | 'krokCombined' | 'combined';
 
 function mapImportedQuestion(question: typeof krokFile8Import.blocks[number]['questions'][number]): Question {
   return {
@@ -121,6 +122,13 @@ function mapKrokFile7Question(question: typeof krokFile7Import.blocks[number]['q
   } as unknown as Question;
 }
 
+function mapKrokFile9Question(question: typeof krokFile9Import.blocks[number]['questions'][number]): Question {
+  return {
+    ...question,
+    id: question.number,
+  } as unknown as Question;
+}
+
 const krokFile8Questions = krokFile8Import.blocks.flatMap((block) => block.questions.map(mapImportedQuestion));
 const krokFile1Questions = krokFile1Import.blocks.flatMap((block) => block.questions.map(mapKrokFile1Question));
 const krokFile2Questions = krokFile2Import.blocks.flatMap((block) => block.questions.map(mapKrokFile2Question));
@@ -129,6 +137,7 @@ const krokFile4Questions = krokFile4Import.blocks.flatMap((block) => block.quest
 const krokFile5Questions = krokFile5Import.blocks.flatMap((block) => block.questions.map(mapKrokFile5Question));
 const krokFile6Questions = krokFile6Import.blocks.flatMap((block) => block.questions.map(mapKrokFile6Question));
 const krokFile7Questions = krokFile7Import.blocks.flatMap((block) => block.questions.map(mapKrokFile7Question));
+const krokFile9Questions = krokFile9Import.blocks.flatMap((block) => block.questions.map(mapKrokFile9Question));
 const edkiQuestions = (edkiData as Question[]).map(applyEdkiTopic);
 
 const dataBySource: Record<QuestionSource, Question[]> = {
@@ -143,6 +152,7 @@ const dataBySource: Record<QuestionSource, Question[]> = {
   krokFile5: krokFile5Questions,
   krokFile6: krokFile6Questions,
   krokFile7: krokFile7Questions,
+  krokCombined: [...(quizData as Question[]), ...krokFile9Questions],
   combined: [...edkiQuestions, ...krokFile8Questions, ...krokFile1Questions, ...krokFile2Questions, ...krokFile3Questions, ...krokFile4Questions, ...krokFile5Questions, ...krokFile6Questions, ...krokFile7Questions],
 };
 

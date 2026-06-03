@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Stage 9: classify `topic` + `clinicalTopic` on every question in
-`src/data/imports/<BLOCK_ID>.enriched.json` via one Opus 4.7 call.
+`src/data/imports/<BLOCK_ID>.enriched.json` via chunked Opus 4.8 calls.
 
 Taxonomy is auto-discovered: the script scans every other
 `src/data/imports/krok-file-N(.enriched).json` and picks the one with the
@@ -124,8 +124,7 @@ def build_prompt(topics: list[str], clinicals: list[str]) -> str:
 """
 
 
-def build_input(enriched: dict) -> str:
-    qs = enriched["blocks"][0]["questions"]
+def build_input_questions(qs: list[dict]) -> str:
     lines = []
     for q in qs:
         n = q["number"]
@@ -135,22 +134,35 @@ def build_input(enriched: dict) -> str:
     return "\n\n".join(lines)
 
 
+def build_input(enriched: dict) -> str:
+    return build_input_questions(enriched["blocks"][0]["questions"])
+
+
 def call_claude(prompt: str, user_msg: str) -> str:
     proc = subprocess.run(
         [
             "claude", "-p",
-            "--model", "claude-opus-4-7",
+            "--model", "claude-opus-4-8",
             "--system-prompt", prompt,
             "--output-format", "text",
         ],
         input=user_msg,
         capture_output=True,
         text=True,
-        timeout=900,
+        timeout=600,
     )
     if proc.returncode != 0:
         sys.exit(f"claude exited {proc.returncode}: {proc.stderr[:500]}")
     return proc.stdout
+
+
+def call_claude_retry(prompt: str, user_msg: str, attempts: int = 3) -> str:
+    for a in range(1, attempts + 1):
+        try:
+            return call_claude(prompt, user_msg)
+        except subprocess.TimeoutExpired:
+            print(f"    timeout on attempt {a}/{attempts}" + (" — retrying..." if a < attempts else " — giving up"))
+    sys.exit("chunk failed after retries (timeout)")
 
 
 def extract_json(raw: str) -> dict:
@@ -192,14 +204,23 @@ def main() -> None:
 
     qs = enriched["blocks"][0]["questions"]
     prompt = build_prompt(topics, clinicals)
-    user_msg = f"Класифікуй ці {len(qs)} питань:\n\n" + build_input(enriched)
 
-    print(f"calling Opus 4.7 with {len(user_msg)} chars input...")
-    raw = call_claude(prompt, user_msg)
-    raw_dump.write_text(raw)
-    out = extract_json(raw)
+    # Chunked: one big call over all questions is too slow/timeout-prone on
+    # Opus 4.8 (55k-char single shot exceeded the 900s CLI limit). Smaller
+    # chunks each return well within the per-call timeout and are retried.
+    CHUNK = 25
+    chunks = [qs[i:i + CHUNK] for i in range(0, len(qs), CHUNK)]
+    print(f"classifying {len(qs)} questions in {len(chunks)} chunk(s) of <= {CHUNK} via Opus 4.8...")
+    results: list[dict] = []
+    raw_parts: list[str] = []
+    for ci, chunk in enumerate(chunks, 1):
+        user_msg = f"Класифікуй ці {len(chunk)} питань:\n\n" + build_input_questions(chunk)
+        print(f"  chunk {ci}/{len(chunks)}: {len(chunk)} questions ({len(user_msg)} chars)...")
+        raw = call_claude_retry(prompt, user_msg)
+        raw_parts.append(f"=== chunk {ci} (q{chunk[0]['number']}-q{chunk[-1]['number']}) ===\n{raw}")
+        results.extend(extract_json(raw).get("results", []))
+    raw_dump.write_text("\n\n".join(raw_parts))
 
-    results = out.get("results", [])
     print(f"got {len(results)} classifications")
     by_num = {r["number"]: r for r in results}
 

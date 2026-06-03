@@ -1,5 +1,5 @@
 #!/bin/bash
-# Re-verify uncertain/disputed Krok questions via Opus 4.7 max (claude CLI).
+# Re-verify uncertain/disputed Krok questions via Opus 4.8 max (claude CLI).
 # Same parallel-CLI pattern as `.claude/skills/krok-pdf-enrich/scripts/run.sh`
 # (skip-if-done + xargs -P + trailing-comma-tolerant JSON extractor), but
 # iterates over arbitrary uid'd batch files instead of a fixed q### range.
@@ -43,10 +43,10 @@ process_one() {
 
     local t0; t0=$(date +%s)
 
-    local prompt; prompt=$(sed 's/{{MODEL_IDENTIFIER}}/claude-opus-4-7/g' "$PROMPT_FILE")
+    local prompt; prompt=$(sed 's/{{MODEL_IDENTIFIER}}/claude-opus-4-8/g' "$PROMPT_FILE")
 
     local raw
-    raw=$(cat "$batch" | claude -p --model claude-opus-4-7 \
+    raw=$(cat "$batch" | claude -p --model claude-opus-4-8 \
                                     --system-prompt "$prompt" \
                                     --output-format text 2>"$log")
 

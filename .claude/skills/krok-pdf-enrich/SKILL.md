@@ -1,6 +1,6 @@
 ---
 name: krok-pdf-enrich
-description: Extract Ukrainian Krok 2 «Фізична терапія» exam questions from a PDF (correct answer marked with `+`), then validate each question against Opus 4.7's independent clinical judgment, generate 5 candidate hints (best-of) plus 5 per-option `why` candidates (best-of), and emit a clean enriched JSON block + a sidecar `<BLOCK_ID>-doubts.json` (schema `krok-question-doubts.v1`). AI override applied on high-confidence clinical disagreements with the PDF.
+description: Extract Ukrainian Krok 2 «Фізична терапія» exam questions from a PDF (correct answer marked with `+`), then validate each question against Opus 4.8's independent clinical judgment, generate 5 candidate hints (best-of) plus 5 per-option `why` candidates (best-of), and emit a clean enriched JSON block + a sidecar `<BLOCK_ID>-doubts.json` (schema `krok-question-doubts.v1`). AI override applied on high-confidence clinical disagreements with the PDF.
 ---
 
 # Krok PDF → validate + enrich pipeline
@@ -54,7 +54,7 @@ If the user already has the extracted JSON (e.g. `src/data/imports/krok-file-1.j
 ( cd "$WORKDIR" && ./run.sh 1 1 1 )
 ```
 
-Takes 60–120 s on Opus 4.7. Inspect `$WORKDIR/results/q001.json` against the schema described below before launching the rest. If the smoke test fails, **stop** and diagnose — do not fan out.
+Takes 60–120 s on Opus 4.8. Inspect `$WORKDIR/results/q001.json` against the schema described below before launching the rest. If the smoke test fails, **stop** and diagnose — do not fan out.
 
 ### 4. Launch the full batch in background
 
@@ -75,7 +75,7 @@ A run can hit "You've hit your limit · resets HH:MM Europe/Kiev". Symptoms in `
 
 When this happens:
 
-1. Probe with `cat batches/q001.json | claude -p --model claude-opus-4-7 --system-prompt "reply OK" --output-format text` — if it answers `OK`, the limit has rolled off.
+1. Probe with `cat batches/q001.json | claude -p --model claude-opus-4-8 --system-prompt "reply OK" --output-format text` — if it answers `OK`, the limit has rolled off.
 2. Delete the stale `.log` / `.raw.txt` dumps for the failed q###.
 3. Re-launch with `JOBS=2`.
 
@@ -127,7 +127,7 @@ Writes:
 python3 .claude/skills/krok-pdf-enrich/scripts/topic_classify.py "$BLOCK_ID"
 ```
 
-One Opus 4.7 call that fills `topic` + `clinicalTopic` on every question in `src/data/imports/<BLOCK_ID>.enriched.json`. The taxonomy is auto-discovered: the script picks whichever existing `krok-file-N(.enriched).json` already has the richest `topic` + `clinicalTopic` coverage and uses its label set as the source of truth — so labels stay consistent across files without coupling to any specific filename. Raw model output is dumped to `$WORKDIR/topic_classify.raw.txt` for debugging.
+One Opus 4.8 call that fills `topic` + `clinicalTopic` on every question in `src/data/imports/<BLOCK_ID>.enriched.json`. The taxonomy is auto-discovered: the script picks whichever existing `krok-file-N(.enriched).json` already has the richest `topic` + `clinicalTopic` coverage and uses its label set as the source of truth — so labels stay consistent across files without coupling to any specific filename. Raw model output is dumped to `$WORKDIR/topic_classify.raw.txt` for debugging.
 
 The script prints the final topic/clinicalTopic distribution. Any number flagged as `bad_topic` / `bad_clinical` means the model returned a label outside the taxonomy — falls back to the most-common topic / `Загальна фізична терапія`. Spot-check the enriched file if those counts are non-zero.
 
@@ -180,7 +180,7 @@ After 2+ krok files exist, run [scripts/reverification/](../../../scripts/reveri
   ],
   "hintChoice": {"selectedAngle": "...", "reason": "..."},
   "hint": "<= verbatim text of selected candidate",
-  "enrichedAt": "ISO-8601", "enrichedBy": "claude-opus-4-7"
+  "enrichedAt": "ISO-8601", "enrichedBy": "claude-opus-4-8"
 }
 ```
 

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Validate + enrich each per-question batch via Opus 4.7 CLI.
+# Validate + enrich each per-question batch via Opus 4.8 CLI.
 # Skip-if-done loop with parallel fan-out via xargs -P JOBS and a
 # trailing-comma-tolerant JSON extractor.
 #
@@ -49,7 +49,7 @@ process_one() {
     # Stream the question on stdin; system prompt holds the instructions.
     # --print = one-shot non-interactive.
     local raw
-    raw=$(cat "$batch" | claude -p --model claude-opus-4-7 \
+    raw=$(cat "$batch" | claude -p --model claude-opus-4-8 \
                                     --system-prompt "$prompt" \
                                     --output-format text 2>"$log")
 

@@ -108,7 +108,7 @@ def main() -> None:
         "sourceBlock": {
             **src_data.get("sourceBlock", {}),
             "description": (src_data.get("sourceBlock", {}).get("description") or "")
-            + " | Validated and enriched with claude-opus-4-7 (hints + per-option whys; AI override applied on high-confidence clinical disagreements).",
+            + " | Validated and enriched with claude-opus-4-8 (hints + per-option whys; AI override applied on high-confidence clinical disagreements).",
         },
         "blocks": [{**block, "questions": enriched_questions}],
     }

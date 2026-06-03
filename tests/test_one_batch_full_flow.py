@@ -106,7 +106,7 @@ class TopicClassifyOneBatchTest(unittest.TestCase):
             def responder(argv, stdin):
                 self.assertEqual(argv[0], "claude", "topic_classify should call claude")
                 self.assertIn("--model", argv)
-                self.assertIn("claude-opus-4-7", argv)
+                self.assertIn("claude-opus-4-8", argv)
                 return make_topic_classify_response(mock_items)
 
             with mock_subprocess_run(responder), \

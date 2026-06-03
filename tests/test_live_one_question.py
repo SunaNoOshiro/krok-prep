@@ -1,6 +1,6 @@
 """Live end-to-end test of ONE krok question — full model × stage matrix.
 
-Runs REAL `claude -p` (Opus 4.7) and `codex exec` (GPT-5 xhigh) calls. Both
+Runs REAL `claude -p` (Opus 4.8) and `codex exec` (GPT-5 xhigh) calls. Both
 go through subscription auth (Claude Pro/Max + ChatGPT Pro) — no per-call
 API charges. Cost is just time (~6-12 min) and rate-limit consumption.
 
@@ -60,7 +60,7 @@ def _claude_call(system_prompt: str, user_input: str, *, timeout: int = 600) -> 
     """Invoke `claude -p` with a system prompt + stdin user input. Returns raw stdout."""
     res = subprocess.run(
         ["claude", "-p",
-         "--model", "claude-opus-4-7",
+         "--model", "claude-opus-4-8",
          "--system-prompt", system_prompt,
          "--output-format", "text"],
         input=user_input,
@@ -266,13 +266,13 @@ class LiveOneQuestionPipelineTest(unittest.TestCase):
         }
         reverify_prompt = _sub_model_id(
             (REVERIFY_DIR / "REVERIFY_PROMPT.md").read_text(),
-            "claude-opus-4-7",
+            "claude-opus-4-8",
         )
         raw = _claude_call(reverify_prompt, json.dumps(batch, ensure_ascii=False))
         verdict = _extract_balanced_json(raw)
 
         self.assertEqual(verdict["uid"], batch["uid"])
-        self.assertEqual(verdict["verifiedBy"], "claude-opus-4-7",
+        self.assertEqual(verdict["verifiedBy"], "claude-opus-4-8",
             f"opus didn't fill placeholder correctly: {verdict.get('verifiedBy')!r}")
         self.assertIn("finalAnswer", verdict)
         self.assertIn(verdict["finalAnswer"]["key"], ("a", "b", "c", "d", "e"))

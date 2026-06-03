@@ -272,11 +272,11 @@ def main(dry_run: bool) -> None:
                 "reasons": item.get("reasons", []),
                 "quarantinedAt": timestamp,
                 "modelVotes": {
-                    "opus-4.7": ((item.get("reverification") or {}).get("finalAnswer") or {}).get("key"),
+                    "opus-4.8": ((item.get("reverification") or {}).get("finalAnswer") or {}).get("key"),
                     "codex-gpt-5.5": ((item.get("userChatGptVerification") or {}).get("finalAnswer") or {}).get("key"),
                 },
                 "modelConfidence": {
-                    "opus-4.7": ((item.get("reverification") or {}).get("finalAnswer") or {}).get("confidence"),
+                    "opus-4.8": ((item.get("reverification") or {}).get("finalAnswer") or {}).get("confidence"),
                     "codex-gpt-5.5": ((item.get("userChatGptVerification") or {}).get("finalAnswer") or {}).get("confidence"),
                 },
                 "candidateBreakdown": item["finalDecision"].get("candidateBreakdown"),

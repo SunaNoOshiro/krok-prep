@@ -1,6 +1,6 @@
 # Cross-file Question Re-verification Pipeline
 
-Виявляє дублікати / неоднозначності у `*.enriched.json` файлах КРОК 2, проганяє повторну верифікацію через дві незалежні моделі (Claude Opus 4.7 max + GPT-5.5 xhigh), і автоматично виправляє те, де моделі сходяться, а решту виносить у карантин для ручної перевірки.
+Виявляє дублікати / неоднозначності у `*.enriched.json` файлах КРОК 2, проганяє повторну верифікацію через дві незалежні моделі (Claude Opus 4.8 max + GPT-5.5 xhigh), і автоматично виправляє те, де моделі сходяться, а решту виносить у карантин для ручної перевірки.
 
 ## Що вирішує
 
@@ -43,7 +43,7 @@
     ┌──────────────────────────┬──────────────────────────┐
     ▼                          ▼                          ▼
   run_opus.sh             run_codex.sh           gen_chatgpt_prompts.py
-  (Opus 4.7 via           (GPT-5.5 xhigh via      (manual ChatGPT,
+  (Opus 4.8 via           (GPT-5.5 xhigh via      (manual ChatGPT,
    claude CLI)             codex CLI)              optional 3rd vote)
     │                          │                          │
     ▼                          ▼                          ▼
@@ -77,8 +77,8 @@
 | [dedupe_questions.py](dedupe_questions.py) | Step 1 — пошук дублікатів між enriched-файлами. Нормалізація: NFKD + Cyr↔Lat homoglyph fold + strip пунктуації. |
 | [collect_uncertain.py](collect_uncertain.py) | Step 2 — об'єднує дублікати-mismatches + medium-confidence + AI/PDF disagreements + needsReview |
 | [split_batches.py](split_batches.py) | Розбиває `needs-reverification.json` на per-uid файли для CLI-конвеєрів |
-| [REVERIFY_PROMPT.md](REVERIFY_PROMPT.md) | System prompt для Opus 4.7 і codex. КРОК 1: blind judgment, КРОК 2: cross-check, КРОК 3: final, КРОК 4: best-of пояснень із існуючих кандидатів. |
-| [run_opus.sh](run_opus.sh) | Opus 4.7 max через `claude -p --model claude-opus-4-7`. Пише в `results/`. `xargs -P 3`. |
+| [REVERIFY_PROMPT.md](REVERIFY_PROMPT.md) | System prompt для Opus 4.8 і codex. КРОК 1: blind judgment, КРОК 2: cross-check, КРОК 3: final, КРОК 4: best-of пояснень із існуючих кандидатів. |
+| [run_opus.sh](run_opus.sh) | Opus 4.8 max через `claude -p --model claude-opus-4-8`. Пише в `results/`. `xargs -P 3`. |
 | [run_codex.sh](run_codex.sh) | GPT-5.5 (xhigh reasoning) через `codex exec --output-schema --output-last-message`. Підписка ChatGPT, не API. `xargs -P 2`. Пише в `chatgpt-prompts/responses/`. |
 | [codex-response.schema.json](codex-response.schema.json) | JSON Schema для `--output-schema` codex. Гарантує валідну форму виходу. |
 | [gen_chatgpt_prompts.py](gen_chatgpt_prompts.py) | Генерує self-contained `chatgpt-prompts/<uid>.md` (опціональна ручна перевірка через web ChatGPT) + порожні стаби в `responses/<uid>.json`. |
@@ -94,7 +94,7 @@
 | `cross-file-duplicates.json` | Step 1 output — групи питань що з'являються в 2+ файлах |
 | `needs-reverification.json` | Step 2 output — повний контекст для re-verification (включно з усіма whyCandidates/hintCandidates) |
 | `batches/<uid>.json` | Один JSON на uid, вхід для CLI-конвеєрів |
-| `results/<uid>.json` | Opus 4.7 max вихід — finalAnswer + bestWhys + bestHint + crossCheck |
+| `results/<uid>.json` | Opus 4.8 max вихід — finalAnswer + bestWhys + bestHint + crossCheck |
 | `chatgpt-prompts/<uid>.md` | Self-contained промт для ручного web ChatGPT (опційно) |
 | `chatgpt-prompts/responses/<uid>.json` | codex GPT-5.5 вихід (АБО ручний ChatGPT якщо ти переписав вручну) |
 | `logs/` | Опуси: stderr + raw outputs при failure |
@@ -119,7 +119,7 @@ python3 collect_uncertain.py
 python3 split_batches.py
 python3 gen_chatgpt_prompts.py         # створює промти і пусті response-стаби
 
-# Прогін через Opus 4.7 max (Claude). ~20-25 хв на 65 items при JOBS=3.
+# Прогін через Opus 4.8 max (Claude). ~20-25 хв на 65 items при JOBS=3.
 ./run_opus.sh
 
 # Прогін через GPT-5.5 xhigh (codex CLI, ChatGPT subscription). ~15 хв на JOBS=2.

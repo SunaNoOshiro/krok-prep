@@ -3,7 +3,7 @@
 
 For every item in `needs-reverification.json`, combine:
   - original per-file source records (correctAnswerKey, why, hint, validation)
-  - the Opus 4.7 max re-verification result from `results/<uid>.json` (if present)
+  - the Opus 4.8 max re-verification result from `results/<uid>.json` (if present)
   - a placeholder `userChatGptVerification: null` field for the user to fill in
     after running the matching `chatgpt-prompts/<uid>.md` prompt
 
@@ -92,7 +92,7 @@ def compute_final_decision(item_sources: list[dict], reverification: dict | None
 
     Voting members:
       - each source file (with its `correctAnswerKey`)
-      - Opus 4.7 re-verification (`reverification.finalAnswer.key`)
+      - Opus 4.8 re-verification (`reverification.finalAnswer.key`)
       - codex/ChatGPT verification (`chatgpt.finalAnswer.key`)
 
     Status:
@@ -140,7 +140,7 @@ def compute_final_decision(item_sources: list[dict], reverification: dict | None
         c["weight"] += weight
 
     if opus_key:
-        _bump(opus_key, f"opus-4.7({opus_conf})")
+        _bump(opus_key, f"opus-4.8({opus_conf})")
     if codex_key:
         _bump(codex_key, f"codex-gpt-5.5({codex_conf})")
     for f, k in source_keys:
